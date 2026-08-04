@@ -1,6 +1,6 @@
 site_name: Renesas RA8P1 AI 应用开发指南
 site_description: 基于 Ethos-U55 NPU 和 TensorFlow Lite Micro 的 RA8P1 端侧 AI 部署指南
-site_url: https://renesas-epae-ai-docs.github.io
+site_url: https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/
 
 theme:
   name: material

@@ -1,87 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/01-overview/development-flow/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/01-overview/development-flow/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/01-overview/platform/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/01-overview/platform/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/02-getting-started/prerequisites/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/02-getting-started/prerequisites/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/02-getting-started/quick-start/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/02-getting-started/quick-start/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/03-model-preparation/int8-quantization/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/03-model-preparation/int8-quantization/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/03-model-preparation/model-requirements/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/03-model-preparation/model-requirements/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/03-model-preparation/onnx-to-tflite/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/03-model-preparation/onnx-to-tflite/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/04-platform-configuration/clock-and-memory/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/04-platform-configuration/clock-and-memory/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/04-platform-configuration/storage-selection/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/04-platform-configuration/storage-selection/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/05-npu-deployment/inference-flow/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/05-npu-deployment/inference-flow/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/05-npu-deployment/model-integration/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/05-npu-deployment/model-integration/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/05-npu-deployment/run-and-verify/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/05-npu-deployment/run-and-verify/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/06-optimization/performance/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/06-optimization/performance/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/07-custom-operators/custom-operator/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/07-custom-operators/custom-operator/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/07-custom-operators/operator-support/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/07-custom-operators/operator-support/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/08-application/ruhmi/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/08-application/ruhmi/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/08-application/rz-v-placeholder/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/08-application/rz-v-placeholder/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/09-troubleshooting/common-errors/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/09-troubleshooting/common-errors/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/10-reference/source-documents/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/10-reference/source-documents/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
     <url>
-         <loc>https://renesas-epae-ai-docs.github.io/10-reference/version-matrix/</loc>
+         <loc>https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/10-reference/version-matrix/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
 </urlset>
