@@ -16,7 +16,7 @@
         <link rel="prev" href="../clock-and-memory/">
       
       
-        <link rel="next" href="../../05-npu-deployment/inference-flow/">
+        <link rel="next" href="../../05-npu-deployment/mnist-deployment/">
       
       
         
@@ -789,6 +789,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#mnist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MNIST 参考工程的模型放置方式
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -868,6 +879,34 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-npu-deployment/mnist-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MNIST 端到端部署
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1248,34 +1287,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../08-application/rz-v-placeholder/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    RZ/V 系列芯片
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1546,6 +1557,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#mnist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MNIST 参考工程的模型放置方式
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1582,6 +1604,44 @@
 | 片内 RAM | Tensor Arena、热点缓冲 | 访问快 | 空间宝贵 |
 | 外部 Flash | 大模型、资源文件 | 容量大 | 初始化、读取带宽和映射方式 |
 | 外部 RAM | 大型 Arena 或图像缓冲 | 容量大 | 接口时钟、对齐和稳定性 |</p>
+<h2 id="mnist">MNIST 参考工程的模型放置方式</h2>
+<p><code>xxd -i mnist_quant.vela.tflite array.h</code> 生成模型数组。根据链接段和变量属性，模型可部署到以下位置：</p>
+<table>
+<thead>
+<tr>
+<th>放置方式</th>
+<th>示例</th>
+<th>适用情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>片内 Flash</td>
+<td><code>const uint8_t model[] = {...};</code></td>
+<td>小模型，部署简单</td>
+</tr>
+<tr>
+<td>OSPI Flash</td>
+<td><code>section(".ospi0_cs1")</code>，16 字节对齐</td>
+<td>模型超过片内 Flash 容量</td>
+</tr>
+<tr>
+<td>SDRAM</td>
+<td><code>section(".sdram_from_flash")</code> 或 <code>.sdram_from_ospi0_cs1</code></td>
+<td>启动时复制模型，换取运行读取性能</td>
+</tr>
+<tr>
+<td>SRAM</td>
+<td>非 <code>const</code> 数组或 <code>.ram_from_ospi0_cs1</code></td>
+<td>超小模型且需要极低延迟</td>
+</tr>
+</tbody>
+</table>
+<p>Tensor Arena 优先放在 SRAM；当 Arena 容量超过 SRAM 时，使用 16 字节对齐的 <code>.sdram</code> 段：</p>
+<pre><code class="language-c">uint8_t tensor_arena[ARENA_SIZE]
+  __attribute__((aligned(16), section(&quot;.sdram&quot;)));
+</code></pre>
+<p>在参考工程中，<code>LOCATE_MODEL_IN_OSPI</code> 控制模型权重是否位于 OSPI，<code>RUN_MODEL_FROM_SDRAM</code> 控制是否从 OSPI 复制到 SDRAM 运行。修改任一宏后，都要重新验证链接区域、启动时间与推理延迟。</p>
 <h2 id="_3">决策路径</h2>
 <pre><code class="language-text">模型可放入片内 Flash？
   是 -&gt; 评估片内存储和启动时间
@@ -1641,13 +1701,13 @@
         
         
           
-          <a href="../../05-npu-deployment/inference-flow/" class="md-footer__link md-footer__link--next" aria-label="下一页: NPU 推理流程">
+          <a href="../../05-npu-deployment/mnist-deployment/" class="md-footer__link md-footer__link--next" aria-label="下一页: MNIST 端到端部署">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                NPU 推理流程
+                MNIST 端到端部署
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -11,6 +11,26 @@
 | 外部 Flash | 大模型、资源文件 | 容量大 | 初始化、读取带宽和映射方式 |
 | 外部 RAM | 大型 Arena 或图像缓冲 | 容量大 | 接口时钟、对齐和稳定性 |
 
+## MNIST 参考工程的模型放置方式
+
+`xxd -i mnist_quant.vela.tflite array.h` 生成模型数组。根据链接段和变量属性，模型可部署到以下位置：
+
+| 放置方式 | 示例 | 适用情况 |
+| --- | --- | --- |
+| 片内 Flash | `const uint8_t model[] = {...};` | 小模型，部署简单 |
+| OSPI Flash | `section(".ospi0_cs1")`，16 字节对齐 | 模型超过片内 Flash 容量 |
+| SDRAM | `section(".sdram_from_flash")` 或 `.sdram_from_ospi0_cs1` | 启动时复制模型，换取运行读取性能 |
+| SRAM | 非 `const` 数组或 `.ram_from_ospi0_cs1` | 超小模型且需要极低延迟 |
+
+Tensor Arena 优先放在 SRAM；当 Arena 容量超过 SRAM 时，使用 16 字节对齐的 `.sdram` 段：
+
+```c
+uint8_t tensor_arena[ARENA_SIZE]
+  __attribute__((aligned(16), section(".sdram")));
+```
+
+在参考工程中，`LOCATE_MODEL_IN_OSPI` 控制模型权重是否位于 OSPI，`RUN_MODEL_FROM_SDRAM` 控制是否从 OSPI 复制到 SDRAM 运行。修改任一宏后，都要重新验证链接区域、启动时间与推理延迟。
+
 ## 决策路径
 
 ```text

@@ -30,7 +30,7 @@ TFLM + Ethos-U55 NPU 部署
     v
 应用集成
     |
-    +-- RUHMI 与 RZ/V 系列芯片内容入口
+    +-- RUHMI 与实际应用集成
 ```
 
 ## 部署前确认

@@ -6,12 +6,12 @@
 | --- | --- |
 | `NPU_inference_flow.md` | NPU 模型部署 / NPU 推理流程 |
 | `ONNX转TFLite与INT8量化指南_中文版.md` | 模型准备 |
-| `RA8P1 + Ethos-U55 AI 模型部署：时钟配置与存储介质选型指南.pdf` | 平台配置 |
-| `RA8P1 TFLM 自定义算子部署与调试指南.pdf` | 自定义算子 |
+| `RA8P1 + Ethos-U55 AI 模型部署：时钟配置与存储介质选型指南.md` | 平台配置、MNIST 端到端部署 |
+| `RA8P1_TFLM_Custom_Operator_Deployment_Debug_Guide_v1.md` | 自定义算子 |
 
 ## 维护原则
 
 - 原始资料中的具体命令、截图、型号参数和测试数据应由资料所有者复核后补入对应页面。
 - 每项可操作步骤均应包含前置条件、预期结果和失败时的排查入口。
 - 一项事实只维护一个权威来源，其余章节以链接引用，避免版本漂移。
-- 发布前将 [RUHMI 页面](../08-application/ruhmi.md)中的 URL 占位符替换为官方链接，并补充 RZ/V 系列资料。
+- 发布前将 [RUHMI 页面](../08-application/ruhmi.md)中的 URL 占位符替换为官方链接。

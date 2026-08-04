@@ -807,6 +807,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../05-npu-deployment/mnist-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MNIST 端到端部署
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../05-npu-deployment/inference-flow/" class="md-nav__link">
         
   
@@ -1129,6 +1157,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#rfft2d-complex_abs-myscale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考模型：RFFT2D -&gt; COMPLEX_ABS -&gt; MyScale
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1155,6 +1194,17 @@
     <span class="md-ellipsis">
       
         调试步骤
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分阶段验收
       
     </span>
   </a>
@@ -1246,34 +1296,6 @@
     
   
     Renesas RUHMI
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../08-application/rz-v-placeholder/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    RZ/V 系列芯片
   
 
     
@@ -1546,6 +1568,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#rfft2d-complex_abs-myscale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考模型：RFFT2D -&gt; COMPLEX_ABS -&gt; MyScale
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1578,6 +1611,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分阶段验收
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1596,6 +1640,10 @@
 
 
 <h1 id="_1">自定义算子部署与调试</h1>
+<h2 id="rfft2d-complex_abs-myscale">参考模型：RFFT2D -&gt; COMPLEX_ABS -&gt; MyScale</h2>
+<p>本文使用 EK-RA8P1 上的 <code>RFFT2D -&gt; COMPLEX_ABS -&gt; MyScale</code> 模型说明完整调试闭环。输入为 <code>float32 [1,16,32]</code>，RFFT2D 输出为 <code>complex64 [1,16,17]</code>，最终输出为 <code>float32 [1,16,17]</code>。当前参考模型的三个节点都由 CPU 执行；Vela 结果为 3 个 CPU operators、0 个 NPU operators。</p>
+<p><code>MyScale</code> 的参数为 <code>scale=3.0</code>、<code>bias=1.0</code>，参考结果为：</p>
+<p>$$final = |RFFT2D(input)| \times 3.0 + 1.0$$</p>
 <h2 id="_2">适用条件</h2>
 <p>仅当模型结构不能合理替换、且 CPU 实现的性能和内存成本可以接受时，再引入自定义算子。</p>
 <h2 id="_3">实现要点</h2>
@@ -1605,6 +1653,12 @@
 <li>在 <code>Eval</code> 中执行计算，严格处理边界、对齐和量化。</li>
 <li>将算子注册到工程实际使用的 resolver。</li>
 </ul>
+<p>对于本参考模型，<code>RFFT2D</code> 与 <code>COMPLEX_ABS</code> 是 builtin 节点，按 builtin opcode 注册；只有 <code>MyScale</code> 是 CUSTOM 节点，必须使用模型内完全一致的字符串注册：</p>
+<pre><code class="language-cpp">AddBuiltin(BuiltinOperator_RFFT2D, Register_RFFT2D(), ParseNoBuiltinOptions);
+AddBuiltin(BuiltinOperator_COMPLEX_ABS, Register_COMPLEX_ABS(), ParseNoBuiltinOptions);
+AddCustom(&quot;MyScale&quot;, Register_MY_SCALE());
+</code></pre>
+<p>不能将 builtin 节点以 <code>AddCustom()</code> 注册，也不能以输出 tensor 名 <code>myscale_output</code> 替代 <code>MyScale</code>。</p>
 <h2 id="_4">调试步骤</h2>
 <ol>
 <li>先在 PC 侧针对固定输入创建单元测试。</li>
@@ -1613,7 +1667,15 @@
 <li>遇到 HardFault 时检查 Arena、栈、张量索引和指针边界。</li>
 <li>记录该算子是 CPU fallback 还是可被 NPU 后端处理。</li>
 </ol>
-<p>每个自定义算子应有已知输入、预期输出和边界条件测试，而不应只依赖最终应用画面判断正确性。</p>
+<h2 id="_5">分阶段验收</h2>
+<ol>
+<li>在 Python 侧生成 <code>model_rfft2d_myscale.tflite</code>、输入和参考输出，并确认 CUSTOM code 为 <code>MyScale</code>。</li>
+<li>检查 Resolver 的 <code>RFFT2D</code>、<code>COMPLEX_ABS</code>、<code>MyScale</code> 和 Ethos-U 注册均成功。</li>
+<li>确认三个 <code>Prepare</code> 成功；MyScale 输出应为 272 个 <code>float32</code> 元素，即 1088 字节。</li>
+<li>确认 <code>AllocateTensors()</code>、输入复制和 <code>Invoke()</code> 成功。</li>
+<li>将板端最终输出与 <code>test_output_ref</code> 比较，记录最大绝对误差。</li>
+</ol>
+<p><code>RFFT2D</code> 可在 <code>Eval()</code> 中使用 CMSIS-DSP 优化路径；这仍在 Cortex-M85 CPU 上执行，并不代表节点已经由 Ethos-U55 加速。</p>
 
 
 

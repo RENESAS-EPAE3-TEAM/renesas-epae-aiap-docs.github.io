@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/08-application/rz-v-placeholder/">
+        <link rel="canonical" href="https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/05-npu-deployment/mnist-deployment/">
       
       
-        <link rel="prev" href="../ruhmi/">
+        <link rel="prev" href="../../04-platform-configuration/storage-selection/">
       
       
-        <link rel="next" href="../../09-troubleshooting/common-errors/">
+        <link rel="next" href="../inference-flow/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>RZ/V 系列芯片 - Renesas RA8P1 AI 应用开发指南</title>
+        <title>MNIST 端到端部署 - Renesas RA8P1 AI 应用开发指南</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#rzv" class="md-skip">
+        <a href="#mnist" class="md-skip">
           跳转至
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              RZ/V 系列芯片
+              MNIST 端到端部署
             
           </span>
         </div>
@@ -750,8 +750,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -762,13 +764,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
           <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
@@ -789,7 +789,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
@@ -804,10 +804,173 @@
                 
   
   
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MNIST 端到端部署
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MNIST 端到端部署
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        目标
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 选择时钟配置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-vela" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 使用 Vela 转换模型
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 生成固件模型数组
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-arena" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 选择模型与 Arena 存储
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-rtt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 编译、烧录并观察 RTT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 验证全部样本
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        完成标准
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
   
   
     <li class="md-nav__item">
-      <a href="../../05-npu-deployment/inference-flow/" class="md-nav__link">
+      <a href="../inference-flow/" class="md-nav__link">
         
   
   
@@ -835,7 +998,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../05-npu-deployment/model-integration/" class="md-nav__link">
+      <a href="../model-integration/" class="md-nav__link">
         
   
   
@@ -863,7 +1026,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../05-npu-deployment/run-and-verify/" class="md-nav__link">
+      <a href="../run-and-verify/" class="md-nav__link">
         
   
   
@@ -1101,8 +1264,6 @@
       
   
   
-    
-  
   
   
     
@@ -1115,11 +1276,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
         
           
           <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
@@ -1140,7 +1303,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_9">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1158,7 +1321,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ruhmi/" class="md-nav__link">
+      <a href="../../08-application/ruhmi/" class="md-nav__link">
         
   
   
@@ -1174,92 +1337,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    RZ/V 系列芯片
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    RZ/V 系列芯片
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        后续建议内容
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1527,7 +1604,84 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        后续建议内容
+        目标
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 选择时钟配置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-vela" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 使用 Vela 转换模型
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 生成固件模型数组
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-arena" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 选择模型与 Arena 存储
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-rtt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 编译、烧录并观察 RTT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 验证全部样本
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        完成标准
       
     </span>
   </a>
@@ -1551,18 +1705,51 @@
 
 
 
-<h1 id="rzv">RZ/V 系列芯片</h1>
-<blockquote>
-<p><strong>内容待补充</strong>：此位置预留给 Renesas RZ/V 系列芯片的 AI 开发、模型部署、评估板和应用集成资料。</p>
-</blockquote>
-<h2 id="_1">后续建议内容</h2>
+<h1 id="mnist">MNIST 端到端部署</h1>
+<h2 id="_1">目标</h2>
+<p>使用 <code>mnist_quant.tflite</code> 在 EK-RA8P1 上完成 Vela 转换、模型数组生成、编译烧录和 0 到 9 的推理验证。</p>
+<h2 id="1">1. 选择时钟配置</h2>
+<p>在工程 Clock 页面设置 CPU0、NPU、ICLK 与 MRICLK，并在 <code>inference.cpp</code> 中选择相同的 <code>MODEL_SETTING</code>。详细组合和 Vela 时钟比例参见<a href="../../04-platform-configuration/clock-and-memory/">时钟、Vela 与内存规划</a>。</p>
+<h2 id="2-vela">2. 使用 Vela 转换模型</h2>
+<p>进入与所选时钟配置对应的目录，确认 <code>ra8p1_vela420.ini</code> 的 <code>core_clock</code>、<code>Sram_clock_scale</code> 和 <code>OffChipFlash_clock_scale</code> 已同步后运行：</p>
+<pre><code class="language-bash">vela ../model/mnist_quant.tflite \
+     --config ra8p1_vela420.ini \
+     --system-config RA8P1 \
+     --memory-mode Sram_Only \
+     --optimise Performance \
+     --output-dir output_0 \
+     &gt; dbg0.log
+</code></pre>
+<p>预期输出：</p>
 <ul>
-<li>RZ/V 系列产品定位和适用 AI 场景。</li>
-<li>与 RA8P1 在算力、软件栈、模型格式和部署流程上的差异。</li>
-<li>RZ/V 评估板、SDK、工具链与官方资源链接。</li>
-<li>模型迁移、性能评估和 HMI/视觉应用示例。</li>
+<li><code>dbg0.log</code>：Vela 转换日志；</li>
+<li><code>output_0/mnist_quant.vela.tflite</code>：部署模型；</li>
+<li><code>output_0/mnist_quant_summary_RA8P1.csv</code>：Vela 汇总数据。</li>
 </ul>
-<p>在补充该章节前，请明确具体芯片型号、SDK 版本、目标操作系统或裸机环境，以及引用的官方资料来源。</p>
+<h2 id="3">3. 生成固件模型数组</h2>
+<p>将转换后的模型转为 C 头文件：</p>
+<pre><code class="language-bash">xxd -i output_0/mnist_quant.vela.tflite array.h
+</code></pre>
+<p>将生成的 <code>array.h</code> 放入当前时钟配置对应的 <code>output_0</code> 目录。确认 <code>inference.cpp</code> 的 <code>#include</code> 路径与 <code>MODEL_SETTING</code> 一致。</p>
+<h2 id="4-arena">4. 选择模型与 Arena 存储</h2>
+<p>小型 MNIST 模型可直接放片内 Flash。若使用 OSPI、SDRAM 或 SRAM，请按<a href="../../04-platform-configuration/storage-selection/">模型存储介质选择</a>设置 section、对齐和启动复制策略。Tensor Arena 必须放在可写 RAM。</p>
+<h2 id="5-rtt">5. 编译、烧录并观察 RTT</h2>
+<p>使用 e2 studio 构建并烧录工程，然后通过 SEGGER RTT Viewer 观察输出。以数字 9 的测试数据为例，预期日志如下：</p>
+<pre><code class="language-text">mnist output:
+0 0 0 0 0 0 0 0 0 -1
+Status of executed job:
+Success
+</code></pre>
+<p>输出张量为 INT8，shape 为 <code>[1, 10]</code>。<code>-1</code> 所在索引是预测类别，<code>0</code> 表示非预测类别。上例的索引 9 为识别结果。</p>
+<h2 id="6">6. 验证全部样本</h2>
+<p>工程提供 <code>input_mnist_0.h</code> 至 <code>input_mnist_9.h</code>。在 <code>inference.cpp</code> 中切换包含的输入文件，逐一运行 0 到 9 的样本，并记录预测类别、时钟配置、模型位置与推理时间。</p>
+<h2 id="_2">完成标准</h2>
+<ul>
+<li>Vela 配置与实际 CPU/NPU/ICLK/MRICLK 配置一致。</li>
+<li>模型加载、Tensor Arena 分配和 Ethos-U55 任务均返回成功。</li>
+<li>RTT 显示 <code>Success</code>，且每个 MNIST 输入的预测索引符合样本标签。</li>
+<li>已记录模型所在介质与相应的性能数据。</li>
+</ul>
 
 
 
@@ -1598,7 +1785,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href="../ruhmi/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Renesas RUHMI">
+          <a href="../../04-platform-configuration/storage-selection/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 模型存储介质选择">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1608,20 +1795,20 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                Renesas RUHMI
+                模型存储介质选择
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../09-troubleshooting/common-errors/" class="md-footer__link md-footer__link--next" aria-label="下一页: 9. 常见问题">
+          <a href="../inference-flow/" class="md-footer__link md-footer__link--next" aria-label="下一页: NPU 推理流程">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                9. 常见问题
+                NPU 推理流程
               </div>
             </div>
             <div class="md-footer__button md-icon">

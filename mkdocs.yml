@@ -43,6 +43,7 @@ nav:
     - 时钟与内存规划: 04-platform-configuration/clock-and-memory.md
     - 模型存储介质选择: 04-platform-configuration/storage-selection.md
   - 5. NPU 模型部署:
+    - MNIST 端到端部署: 05-npu-deployment/mnist-deployment.md
     - NPU 推理流程: 05-npu-deployment/inference-flow.md
     - 模型集成: 05-npu-deployment/model-integration.md
     - 编译、烧录与运行验证: 05-npu-deployment/run-and-verify.md
@@ -53,7 +54,6 @@ nav:
     - 自定义算子部署与调试: 07-custom-operators/custom-operator.md
   - 8. 应用集成:
     - Renesas RUHMI: 08-application/ruhmi.md
-    - RZ/V 系列芯片: 08-application/rz-v-placeholder.md
   - 9. 常见问题: 09-troubleshooting/common-errors.md
   - 10. 参考资料:
     - 版本兼容表: 10-reference/version-matrix.md

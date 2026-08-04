@@ -1,27 +1,69 @@
-# 时钟与内存规划
+# 时钟、Vela 与内存规划
 
-## 目标
+## 本章目标
 
-在集成模型前确定影响推理性能和稳定性的时钟、内存区域与缓冲区预算。
+以 `mnist_quant.tflite` 为例，配置 RA8P1 的 CPU0、Ethos-U55 NPU、ICLK 与 MRICLK，并使 Vela 配置、模型位置和运行时内存保持一致。
+
+## 已验证的工具组合
+
+| 工具 | 版本 |
+| --- | --- |
+| TensorFlow | 2.18.0 |
+| ethos-u-vela | 4.2.0 |
+| Python | 3.10.5 |
+| e2 studio | 2026-04.2 |
+| FSP | 6.5.1 |
+| SEGGER RTT Viewer | 9.42.0 |
+| LLVM | 21.1.1 |
+
+FSP 6.5.1 用于此参考工程；其修复了 FSP 6.5.0 中的 SDRAM 初始化问题。
 
 ## 时钟配置
 
-推理性能不仅受 NPU 时钟影响，也取决于 CPU、总线、外部存储和内存接口。应记录实际工程的时钟配置，并在性能测试报告中一并给出。
+在工程 `configuration.xml` 的 Clock 页面设置 CPU、NPU、ICLK 与 MRICLK。以下组合是 MNIST 参考工程提供的可选设置：
 
-配置后需确认：
+| 配置标识 | CPU0 | NPU | ICLK / MRICLK |
+| --- | ---: | ---: | ---: |
+| `MODEL_SETTING_CPU_1000_NPU_500_ICLK_250_MRICLK_250` | 1000 MHz | 500 MHz | 250 / 250 MHz |
+| `MODEL_SETTING_CPU_1000_NPU_250_ICLK_250_MRICLK_250` | 1000 MHz | 250 MHz | 250 / 250 MHz |
+| `MODEL_SETTING_CPU_500_NPU_500_ICLK_250_MRICLK_250` | 500 MHz | 500 MHz | 250 / 250 MHz |
+| `MODEL_SETTING_CPU_500_NPU_250_ICLK_250_MRICLK_250` | 500 MHz | 250 MHz | 250 / 250 MHz |
+| `MODEL_SETTING_CPU_250_NPU_250_ICLK_250_MRICLK_250` | 250 MHz | 250 MHz | 250 / 250 MHz |
 
-- NPU 相关时钟与模块初始化顺序正确。
-- CPU、总线和外部存储接口能满足数据搬运需求。
-- 低功耗或时钟切换策略不会中断模型推理。
+`inference.cpp` 应选择与工程时钟匹配的模型头文件，例如：
 
-## 内存规划
+```c
+#define MODEL_SETTING MODEL_SETTING_CPU_1000_NPU_250_ICLK_250_MRICLK_250
 
-| 内存对象 | 规划要点 |
-| --- | --- |
-| 模型数据 | 大小、对齐、可访问区域和加载方式 |
-| Tensor Arena | 按运行时峰值预留，避免与其他大缓冲区重叠 |
-| 栈和堆 | 推理任务与驱动初始化期间的峰值空间 |
-| 输入输出缓冲 | 图像、传感器和后处理的并发占用 |
-| 图形缓冲 | 与 HMI 共用内存时的总量与带宽 |
+#if MODEL_SETTING == MODEL_SETTING_CPU_1000_NPU_250_ICLK_250_MRICLK_250
+#include "MODEL_SETTING_CPU_1000_NPU_250_ICLK_250_MRICLK_250/output_0/array.h"
+#endif
+```
 
-具体频率、地址和容量应以板卡、FSP 配置及官方资料为准。
+## Vela 参数必须同步
+
+Vela 的 `ra8p1_vela420.ini` 必须与实际工程时钟一致。`core_clock` 对应 NPUCLK，单位为 Hz：
+
+```ini
+[System_Config.RA8P1]
+core_clock=250e6
+```
+
+按实际时钟计算以下比例，并以浮点格式写入配置：
+
+$$Sram\_clock\_scale = \frac{ICLK}{NPUCLK}$$
+
+$$OffChipFlash\_clock\_scale = \frac{MRICLK}{NPUCLK}$$
+
+两个值范围为 $0.0$ 到 $1.0$。即使结果为整数，也写为浮点数，例如 `1.0`。
+
+## Tensor Arena 与模型的职责
+
+| 对象 | 读写特性 | 推荐介质 |
+| --- | --- | --- |
+| Model 权重与算子图 | 运行期只读 | Flash 类介质或加载后的 RAM |
+| Tensor Arena、输入输出和 NPU 临时区 | 推理期间高频读写 | SRAM；容量不足时使用 SDRAM |
+
+模型权重是只读常量；Tensor Arena 必须位于可写 RAM。不要将两者按同一种内存需求处理。
+
+下一步：[模型存储介质选择](storage-selection.md) 和 [MNIST 端到端部署](../05-npu-deployment/mnist-deployment.md)。

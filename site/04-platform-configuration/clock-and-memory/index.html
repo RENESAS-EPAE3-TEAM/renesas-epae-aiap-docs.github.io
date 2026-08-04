@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#vela" class="md-skip">
           跳转至
         </a>
       
@@ -750,10 +750,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本章目标
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        目标
+        已验证的工具组合
       
     </span>
   </a>
@@ -772,10 +783,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#vela_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        内存规划
+        Vela 参数必须同步
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tensor-arena" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tensor Arena 与模型的职责
       
     </span>
   </a>
@@ -879,6 +901,34 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-npu-deployment/mnist-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MNIST 端到端部署
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1259,34 +1309,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../08-application/rz-v-placeholder/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    RZ/V 系列芯片
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1546,10 +1568,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本章目标
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        目标
+        已验证的工具组合
       
     </span>
   </a>
@@ -1568,10 +1601,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#vela_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        内存规划
+        Vela 参数必须同步
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tensor-arena" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tensor Arena 与模型的职责
       
     </span>
   </a>
@@ -1595,49 +1639,133 @@
 
 
 
-<h1 id="_1">时钟与内存规划</h1>
-<h2 id="_2">目标</h2>
-<p>在集成模型前确定影响推理性能和稳定性的时钟、内存区域与缓冲区预算。</p>
-<h2 id="_3">时钟配置</h2>
-<p>推理性能不仅受 NPU 时钟影响，也取决于 CPU、总线、外部存储和内存接口。应记录实际工程的时钟配置，并在性能测试报告中一并给出。</p>
-<p>配置后需确认：</p>
-<ul>
-<li>NPU 相关时钟与模块初始化顺序正确。</li>
-<li>CPU、总线和外部存储接口能满足数据搬运需求。</li>
-<li>低功耗或时钟切换策略不会中断模型推理。</li>
-</ul>
-<h2 id="_4">内存规划</h2>
+<h1 id="vela">时钟、Vela 与内存规划</h1>
+<h2 id="_1">本章目标</h2>
+<p>以 <code>mnist_quant.tflite</code> 为例，配置 RA8P1 的 CPU0、Ethos-U55 NPU、ICLK 与 MRICLK，并使 Vela 配置、模型位置和运行时内存保持一致。</p>
+<h2 id="_2">已验证的工具组合</h2>
 <table>
 <thead>
 <tr>
-<th>内存对象</th>
-<th>规划要点</th>
+<th>工具</th>
+<th>版本</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>模型数据</td>
-<td>大小、对齐、可访问区域和加载方式</td>
+<td>TensorFlow</td>
+<td>2.18.0</td>
 </tr>
 <tr>
-<td>Tensor Arena</td>
-<td>按运行时峰值预留，避免与其他大缓冲区重叠</td>
+<td>ethos-u-vela</td>
+<td>4.2.0</td>
 </tr>
 <tr>
-<td>栈和堆</td>
-<td>推理任务与驱动初始化期间的峰值空间</td>
+<td>Python</td>
+<td>3.10.5</td>
 </tr>
 <tr>
-<td>输入输出缓冲</td>
-<td>图像、传感器和后处理的并发占用</td>
+<td>e2 studio</td>
+<td>2026-04.2</td>
 </tr>
 <tr>
-<td>图形缓冲</td>
-<td>与 HMI 共用内存时的总量与带宽</td>
+<td>FSP</td>
+<td>6.5.1</td>
+</tr>
+<tr>
+<td>SEGGER RTT Viewer</td>
+<td>9.42.0</td>
+</tr>
+<tr>
+<td>LLVM</td>
+<td>21.1.1</td>
 </tr>
 </tbody>
 </table>
-<p>具体频率、地址和容量应以板卡、FSP 配置及官方资料为准。</p>
+<p>FSP 6.5.1 用于此参考工程；其修复了 FSP 6.5.0 中的 SDRAM 初始化问题。</p>
+<h2 id="_3">时钟配置</h2>
+<p>在工程 <code>configuration.xml</code> 的 Clock 页面设置 CPU、NPU、ICLK 与 MRICLK。以下组合是 MNIST 参考工程提供的可选设置：</p>
+<table>
+<thead>
+<tr>
+<th>配置标识</th>
+<th style="text-align: right;">CPU0</th>
+<th style="text-align: right;">NPU</th>
+<th style="text-align: right;">ICLK / MRICLK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MODEL_SETTING_CPU_1000_NPU_500_ICLK_250_MRICLK_250</code></td>
+<td style="text-align: right;">1000 MHz</td>
+<td style="text-align: right;">500 MHz</td>
+<td style="text-align: right;">250 / 250 MHz</td>
+</tr>
+<tr>
+<td><code>MODEL_SETTING_CPU_1000_NPU_250_ICLK_250_MRICLK_250</code></td>
+<td style="text-align: right;">1000 MHz</td>
+<td style="text-align: right;">250 MHz</td>
+<td style="text-align: right;">250 / 250 MHz</td>
+</tr>
+<tr>
+<td><code>MODEL_SETTING_CPU_500_NPU_500_ICLK_250_MRICLK_250</code></td>
+<td style="text-align: right;">500 MHz</td>
+<td style="text-align: right;">500 MHz</td>
+<td style="text-align: right;">250 / 250 MHz</td>
+</tr>
+<tr>
+<td><code>MODEL_SETTING_CPU_500_NPU_250_ICLK_250_MRICLK_250</code></td>
+<td style="text-align: right;">500 MHz</td>
+<td style="text-align: right;">250 MHz</td>
+<td style="text-align: right;">250 / 250 MHz</td>
+</tr>
+<tr>
+<td><code>MODEL_SETTING_CPU_250_NPU_250_ICLK_250_MRICLK_250</code></td>
+<td style="text-align: right;">250 MHz</td>
+<td style="text-align: right;">250 MHz</td>
+<td style="text-align: right;">250 / 250 MHz</td>
+</tr>
+</tbody>
+</table>
+<p><code>inference.cpp</code> 应选择与工程时钟匹配的模型头文件，例如：</p>
+<pre><code class="language-c">#define MODEL_SETTING MODEL_SETTING_CPU_1000_NPU_250_ICLK_250_MRICLK_250
+
+#if MODEL_SETTING == MODEL_SETTING_CPU_1000_NPU_250_ICLK_250_MRICLK_250
+#include &quot;MODEL_SETTING_CPU_1000_NPU_250_ICLK_250_MRICLK_250/output_0/array.h&quot;
+#endif
+</code></pre>
+<h2 id="vela_1">Vela 参数必须同步</h2>
+<p>Vela 的 <code>ra8p1_vela420.ini</code> 必须与实际工程时钟一致。<code>core_clock</code> 对应 NPUCLK，单位为 Hz：</p>
+<pre><code class="language-ini">[System_Config.RA8P1]
+core_clock=250e6
+</code></pre>
+<p>按实际时钟计算以下比例，并以浮点格式写入配置：</p>
+<p>$$Sram_clock_scale = \frac{ICLK}{NPUCLK}$$</p>
+<p>$$OffChipFlash_clock_scale = \frac{MRICLK}{NPUCLK}$$</p>
+<p>两个值范围为 $0.0$ 到 $1.0$。即使结果为整数，也写为浮点数，例如 <code>1.0</code>。</p>
+<h2 id="tensor-arena">Tensor Arena 与模型的职责</h2>
+<table>
+<thead>
+<tr>
+<th>对象</th>
+<th>读写特性</th>
+<th>推荐介质</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model 权重与算子图</td>
+<td>运行期只读</td>
+<td>Flash 类介质或加载后的 RAM</td>
+</tr>
+<tr>
+<td>Tensor Arena、输入输出和 NPU 临时区</td>
+<td>推理期间高频读写</td>
+<td>SRAM；容量不足时使用 SDRAM</td>
+</tr>
+</tbody>
+</table>
+<p>模型权重是只读常量；Tensor Arena 必须位于可写 RAM。不要将两者按同一种内存需求处理。</p>
+<p>下一步：<a href="../storage-selection/">模型存储介质选择</a> 和 <a href="../../05-npu-deployment/mnist-deployment/">MNIST 端到端部署</a>。</p>
 
 
 
