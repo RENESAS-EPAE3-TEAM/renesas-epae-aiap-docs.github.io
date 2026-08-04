@@ -5,22 +5,27 @@ site_url: https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/
 theme:
   name: material
   language: zh
+  font: false
   features:
     - navigation.expand
     - navigation.sections
     - navigation.top
+    - navigation.footer
     - search.highlight
     - search.suggest
   palette:
     - scheme: default
-      primary: blue grey
-      accent: cyan
+      primary: custom
+      accent: custom
     - scheme: slate
-      primary: blue grey
-      accent: cyan
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-4
         name: Switch to dark mode
+
+extra_css:
+  - stylesheets/extra.css
 
 nav:
   - 首页: index.md
