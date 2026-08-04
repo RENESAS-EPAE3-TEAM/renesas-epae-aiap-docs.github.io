@@ -1,0 +1,60 @@
+site_name: Renesas RA8P1 AI 应用开发指南
+site_description: 基于 Ethos-U55 NPU 和 TensorFlow Lite Micro 的 RA8P1 端侧 AI 部署指南
+site_url: https://renesas-epae-ai-docs.github.io
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.expand
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - search.suggest
+  palette:
+    - scheme: default
+      primary: blue grey
+      accent: cyan
+    - scheme: slate
+      primary: blue grey
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+
+nav:
+  - 首页: index.md
+  - 1. RA8P1 AI 概述:
+    - 平台与软件架构: 01-overview/platform.md
+    - 完整开发流程: 01-overview/development-flow.md
+  - 2. 快速入门:
+    - 开发前置条件: 02-getting-started/prerequisites.md
+    - 运行第一个示例: 02-getting-started/quick-start.md
+  - 3. 模型准备:
+    - 模型要求: 03-model-preparation/model-requirements.md
+    - ONNX 转 TFLite: 03-model-preparation/onnx-to-tflite.md
+    - INT8 量化与精度验证: 03-model-preparation/int8-quantization.md
+  - 4. 平台配置:
+    - 时钟与内存规划: 04-platform-configuration/clock-and-memory.md
+    - 模型存储介质选择: 04-platform-configuration/storage-selection.md
+  - 5. NPU 模型部署:
+    - NPU 推理流程: 05-npu-deployment/inference-flow.md
+    - 模型集成: 05-npu-deployment/model-integration.md
+    - 编译、烧录与运行验证: 05-npu-deployment/run-and-verify.md
+  - 6. 性能优化:
+    - 性能与内存优化: 06-optimization/performance.md
+  - 7. 自定义算子:
+    - 算子支持检查: 07-custom-operators/operator-support.md
+    - 自定义算子部署与调试: 07-custom-operators/custom-operator.md
+  - 8. 应用集成:
+    - Renesas RUHMI: 08-application/ruhmi.md
+    - RZ/V 系列芯片: 08-application/rz-v-placeholder.md
+  - 9. 常见问题: 09-troubleshooting/common-errors.md
+  - 10. 参考资料:
+    - 版本兼容表: 10-reference/version-matrix.md
+    - 源文档与维护说明: 10-reference/source-documents.md
+  - RA8P1官网: https://www.renesas.cn/zh/products/ra8p1
+  - ONE FILED JIRA: https://onefieldjira.renesas.com/projects/MPU/queues/custom/1256
+  - Wiki Page: https://renesas-wiki.atlassian.net/wiki/spaces/REN/overview
+
+
