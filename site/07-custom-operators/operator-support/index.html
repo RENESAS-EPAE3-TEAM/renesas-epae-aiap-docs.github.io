@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#ethos-u55" class="md-skip">
           跳转至
         </a>
       
@@ -463,7 +463,7 @@
   <span class="md-ellipsis">
     
   
-    运行第一个示例
+    MNIST：运行第一个 AI 示例
   
 
     
@@ -516,7 +516,7 @@
   <span class="md-ellipsis">
     
   
-    3. 模型准备
+    3. 模型转换与量化
   
 
     
@@ -532,67 +532,11 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    3. 模型准备
+    3. 模型转换与量化
   
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../03-model-preparation/model-requirements/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    模型要求
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../03-model-preparation/onnx-to-tflite/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ONNX 转 TFLite
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -608,7 +552,7 @@
   <span class="md-ellipsis">
     
   
-    INT8 量化与精度验证
+    Keras/ONNX 转换、量化与验证
   
 
     
@@ -799,34 +743,6 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../05-npu-deployment/mnist-deployment/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    MNIST 端到端部署
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -1129,10 +1045,577 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        资料来源与版本说明
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        何时检查
+        如何理解“支持”
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ethos-u55-ethos-u65-tflite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ethos-U55 和 Ethos-U65 TFLite 算子支持汇总表
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ethos-u55_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ethos-U55 通用约束
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ethos-u55_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ethos-U55 专用约束
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ethos-U55 专用约束">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ABS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arg_max" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ARG_MAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#average_pool_2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AVERAGE_POOL_2D
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batch_matmul" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BATCH_MATMUL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#concatenation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CONCATENATION
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conv_2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CONV_2D
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#depthwise_conv_2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DEPTHWISE_CONV_2D
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EXP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fully_connected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FULLY_CONNECTED
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hard_swish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HARD_SWISH
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leaky_relu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LEAKY_RELU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LOG
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logistic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LOGISTIC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maximum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MAXIMUM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#max_pool_2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MAX_POOL_2D
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MEAN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MINIMUM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mirror_pad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MIRROR_PAD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PACK
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PAD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#padv2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PADV2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prelu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PRELU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quantize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        QUANTIZE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reduce_max" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REDUCE_MAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reduce_min" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REDUCE_MIN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RELU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relu6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RELU6
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relu_0_to_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RELU_0_TO_1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relu_n1_to_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RELU_N1_TO_1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resize_bilinear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RESIZE_BILINEAR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resize_nearest_neighbor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RESIZE_NEAREST_NEIGHBOR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reverse_v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REVERSE_V2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsqrt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RSQRT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SLICE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#softmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SOFTMAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#split" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SPLIT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#split_v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SPLIT_V
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#squared_difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQUARED_DIFFERENCE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strided_slice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        STRIDED_SLICE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SUM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tanh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TANH
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TILE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TRANSPOSE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transpose_conv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TRANSPOSE_CONV
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unidirectional_sequence_lstm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UNIDIRECTIONAL_SEQUENCE_LSTM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unpack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UNPACK
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tflm-npu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TFLM 支持与 NPU 支持的区别
       
     </span>
   </a>
@@ -1143,18 +1626,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        决策流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        必须区分
+        不支持算子的处理流程
       
     </span>
   </a>
@@ -1431,6 +1903,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-reference/release-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    发行说明
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1546,10 +2046,577 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        资料来源与版本说明
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        何时检查
+        如何理解“支持”
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ethos-u55-ethos-u65-tflite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ethos-U55 和 Ethos-U65 TFLite 算子支持汇总表
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ethos-u55_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ethos-U55 通用约束
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ethos-u55_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ethos-U55 专用约束
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ethos-U55 专用约束">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ABS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arg_max" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ARG_MAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#average_pool_2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AVERAGE_POOL_2D
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batch_matmul" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BATCH_MATMUL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#concatenation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CONCATENATION
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conv_2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CONV_2D
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#depthwise_conv_2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DEPTHWISE_CONV_2D
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EXP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fully_connected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FULLY_CONNECTED
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hard_swish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HARD_SWISH
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leaky_relu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LEAKY_RELU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LOG
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logistic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LOGISTIC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maximum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MAXIMUM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#max_pool_2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MAX_POOL_2D
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MEAN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MINIMUM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mirror_pad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MIRROR_PAD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PACK
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PAD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#padv2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PADV2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prelu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PRELU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quantize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        QUANTIZE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reduce_max" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REDUCE_MAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reduce_min" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REDUCE_MIN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RELU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relu6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RELU6
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relu_0_to_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RELU_0_TO_1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relu_n1_to_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RELU_N1_TO_1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resize_bilinear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RESIZE_BILINEAR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resize_nearest_neighbor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RESIZE_NEAREST_NEIGHBOR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reverse_v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REVERSE_V2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsqrt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RSQRT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SLICE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#softmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SOFTMAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#split" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SPLIT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#split_v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SPLIT_V
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#squared_difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQUARED_DIFFERENCE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strided_slice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        STRIDED_SLICE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SUM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tanh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TANH
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TILE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TRANSPOSE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transpose_conv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TRANSPOSE_CONV
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unidirectional_sequence_lstm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UNIDIRECTIONAL_SEQUENCE_LSTM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unpack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UNPACK
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tflm-npu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TFLM 支持与 NPU 支持的区别
       
     </span>
   </a>
@@ -1560,18 +2627,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        决策流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        必须区分
+        不支持算子的处理流程
       
     </span>
   </a>
@@ -1595,22 +2651,554 @@
 
 
 
-<h1 id="_1">算子支持检查</h1>
-<h2 id="_2">何时检查</h2>
-<p>在模型转换后、设备集成前检查算子。模型初始化失败、无法委派给 NPU 或性能异常时，也应重新确认该清单。</p>
-<h2 id="_3">决策流程</h2>
-<pre><code class="language-text">发现不支持算子
-  -&gt; 能否用受支持算子重写模型？
-       是 -&gt; 修改模型，重新转换和验证
-       否 -&gt; 评估 TFLM 自定义算子
-                -&gt; 确认 CPU 运行成本和 NPU 兼容性
-</code></pre>
-<h2 id="_4">必须区分</h2>
+<h1 id="ethos-u55">Ethos-U55 算子支持检查</h1>
+<h2 id="_1">资料来源与版本说明</h2>
+<p>本页依据 Arm Vela <code>5.1.0</code> tag 中的 <a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags">SUPPORTED_OPS.md</a> 整理。</p>
+<p>该官方文件由 Vela 的 <code>--supported-ops-report</code> 参数自动生成，文件标记的 Vela 版本为 <code>5.1.0</code>。不同 Vela 版本的支持范围和约束可能不同，因此：</p>
+<blockquote>
+<p>本页描述 Vela 5.1.0 对 Ethos-U55 的算子支持。实际部署时应使用相同版本，并以模型转换日志为最终判断依据。</p>
+</blockquote>
+<h2 id="_2">如何理解“支持”</h2>
+<p>官方清单列出的是<strong>可能被 Vela 放置到 Ethos-U55 NPU 的 TFLite 算子</strong>。算子名称出现在列表中，不代表任何参数组合都能在 NPU 上执行：</p>
 <ul>
-<li><strong>TFLM 可运行</strong>：解释器存在该算子的实现。</li>
-<li><strong>NPU 可加速</strong>：该算子及其参数满足 NPU 后端约束。</li>
+<li>算子必须满足通用约束。</li>
+<li>带有算子专用约束的算子还必须满足对应限制。</li>
+<li>未满足约束的算子会被调度到 CPU。</li>
+<li>未出现在清单中的 TFLite 算子会保持不变，并由 CPU 运行时处理；还需确认所选运行时是否提供对应实现。</li>
 </ul>
-<p>实现自定义 TFLM 算子不会自动使该算子在 Ethos-U55 上运行。需要单独确认实际执行后端。</p>
+<h2 id="ethos-u55-ethos-u65-tflite">Ethos-U55 和 Ethos-U65 TFLite 算子支持汇总表</h2>
+<p>Vela 5.1.0 的官方文件将 Ethos-U55 和 Ethos-U65 放在同一张 TFLite 支持表中。下表保持官方顺序和“通用约束/专用约束”形式：</p>
+<table>
+<thead>
+<tr>
+<th>算子</th>
+<th>TFLite 约束</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ABS</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-abs-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>ADD</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a></td>
+</tr>
+<tr>
+<td><code>ARG_MAX</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-arg_max-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>AVERAGE_POOL_2D</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-average_pool_2d-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>BATCH_MATMUL</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-batch_matmul-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>CONCATENATION</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-concatenation-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>CONV_2D</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-conv_2d-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>DEPTHWISE_CONV_2D</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-depthwise_conv_2d-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>EXP</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-exp-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>EXPAND_DIMS</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a></td>
+</tr>
+<tr>
+<td><code>FULLY_CONNECTED</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-fully_connected-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>HARD_SWISH</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-hard_swish-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>LEAKY_RELU</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-leaky_relu-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>LOG</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-log-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>LOGISTIC</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-logistic-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>MAXIMUM</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-maximum-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>MAX_POOL_2D</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-max_pool_2d-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>MEAN</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-mean-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>MINIMUM</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-minimum-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>MIRROR_PAD</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-mirror_pad-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>MUL</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a></td>
+</tr>
+<tr>
+<td><code>NEG</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a></td>
+</tr>
+<tr>
+<td><code>PACK</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-pack-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>PAD</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-pad-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>PADV2</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-padv2-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>PRELU</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-prelu-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>QUANTIZE</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-quantize-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>REDUCE_MAX</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-reduce_max-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>REDUCE_MIN</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-reduce_min-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>RELU</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-relu-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>RELU6</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-relu6-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>RELU_0_TO_1</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-relu_0_to_1-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>RELU_N1_TO_1</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-relu_n1_to_1-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>RESHAPE</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a></td>
+</tr>
+<tr>
+<td><code>RESIZE_BILINEAR</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-resize_bilinear-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>RESIZE_NEAREST_NEIGHBOR</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-resize_nearest_neighbor-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>REVERSE_V2</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-reverse_v2-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>RSQRT</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-rsqrt-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>SLICE</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-slice-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>SOFTMAX</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-softmax-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>SPLIT</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-split-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>SPLIT_V</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-split_v-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>SQUARED_DIFFERENCE</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-squared_difference-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>SQUEEZE</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a></td>
+</tr>
+<tr>
+<td><code>STRIDED_SLICE</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-strided_slice-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>SUB</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a></td>
+</tr>
+<tr>
+<td><code>SUM</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-sum-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>TANH</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-tanh-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>TILE</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-tile-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>TRANSPOSE</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-transpose-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>TRANSPOSE_CONV</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-transpose_conv-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>UNIDIRECTIONAL_SEQUENCE_LSTM</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-unidirectional_sequence_lstm-constraints">专用约束</a></td>
+</tr>
+<tr>
+<td><code>UNPACK</code></td>
+<td><a href="#ethos-u55-通用约束">通用约束</a>，<a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/SUPPORTED_OPS.md?ref_type=tags#ethos-u55-and-ethos-u65-tflite-unpack-constraints">专用约束</a></td>
+</tr>
+</tbody>
+</table>
+<p>“专用约束”链接指向 Vela 5.1.0 官方文件中对应算子的详细说明。</p>
+<!-- markdownlint-disable-next-line MD033 -->
+<p><a id="ethos-u55-通用约束"></a></p>
+<h2 id="ethos-u55_1">Ethos-U55 通用约束</h2>
+<p>官方文件列出的通用约束适用于大多数算子。部分算子存在例外，完整例外规则应查阅项目实际使用版本生成的报告。</p>
+<ul>
+<li>只有张量的第一个维度可以是动态维度。</li>
+<li>张量必须具有常量 shape。</li>
+<li>Feature map 数据类型必须属于 <code>INT8</code>、<code>UINT8</code>、<code>INT16</code>、<code>INT32</code> 或 <code>INT64</code>。</li>
+<li>算子必须至少有一个输入 feature map（IFM）和一个输出 feature map（OFM）。</li>
+<li>输入、输出和权重张量必须具有量化参数；部分形状、填充和量化算子除外。</li>
+<li>所有量化 scale 必须为正数；部分算子除外。</li>
+<li>通常不支持 per-axis quantization；<code>CONV_2D</code>、<code>DEPTHWISE_CONV_2D</code>、<code>FULLY_CONNECTED</code> 和 <code>TRANSPOSE_CONV</code> 是官方列出的例外。</li>
+<li>通常不支持 64 位 feature map；<code>ARG_MAX</code> 是官方列出的例外。</li>
+<li><code>INT32</code> 的 zero point 必须为 0；无符号数据类型的 zero point 必须为非负数。部分池化、缩放和 LSTM 算子存在例外。</li>
+</ul>
+<p>由于通用约束包含例外条件，不能只根据本页摘要手工判断最终放置结果。</p>
+<h2 id="ethos-u55_2">Ethos-U55 专用约束</h2>
+<p>以下约束来自 Vela 5.1.0 的 <strong>Ethos-U55 and Ethos-U65 Specific Operator constraints</strong>。算子必须同时满足<a href="#ethos-u55-通用约束">通用约束</a>和本节对应的专用约束，才能被调度到 NPU。</p>
+<h3 id="abs"><code>ABS</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="arg_max"><code>ARG_MAX</code></h3>
+<ul>
+<li>IFM 深度必须小于或等于 127。</li>
+<li>Kernel stride 必须在 <code>(1, 3)</code> 范围内。</li>
+<li>运算必须沿深度轴执行。</li>
+</ul>
+<h3 id="average_pool_2d"><code>AVERAGE_POOL_2D</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>当 padding 为 <code>VALID</code> 时，kernel 各维度乘积必须小于或等于 $256 \times 256$，且 kernel 高度必须小于或等于 256。</li>
+<li>当 padding 不是 <code>VALID</code> 时，kernel 宽度和高度必须小于或等于 8。</li>
+<li>只有在 dilation 为 1 且 padding 为 <code>VALID</code> 时，才支持大于 3 的 stride。</li>
+</ul>
+<h3 id="batch_matmul"><code>BATCH_MATMUL</code></h3>
+<p>对于 MatMul 或使用动态权重的 Fully Connected：</p>
+<ul>
+<li>IFM 精度必须为 <code>INT8</code>。</li>
+<li>OFM 深度必须小于或等于 $2^{16}$。</li>
+<li>归约轴大小必须小于或等于 $2^{16}$。</li>
+</ul>
+<h3 id="concatenation"><code>CONCATENATION</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="conv_2d"><code>CONV_2D</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>Bias 张量必须为常量。</li>
+<li>Bias 张量精度必须为 <code>INT32</code> 或 <code>INT64</code>。</li>
+<li>Bias 值必须存储在通道轴上。</li>
+<li><code>INT64</code> bias 必须小于 1099511627775。</li>
+<li>只有在 dilation 为 1 且 padding 为 <code>VALID</code> 时，才支持大于 3 的 stride。</li>
+<li>权重张量必须为 8 位精度。</li>
+<li>对于 8 位或 16 位 IFM，权重绝对值之和均不得超过 8323072。</li>
+</ul>
+<h3 id="depthwise_conv_2d"><code>DEPTHWISE_CONV_2D</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>Bias 张量必须为常量。</li>
+<li>Bias 张量精度必须为 <code>INT32</code> 或 <code>INT64</code>。</li>
+<li>Bias 值必须存储在通道轴上。</li>
+<li><code>INT64</code> bias 必须小于 1099511627775。</li>
+<li>Kernel stride 必须在 <code>(1, 3)</code> 范围内。</li>
+<li>权重张量必须为 8 位精度。</li>
+<li>对于 8 位或 16 位 IFM，权重绝对值之和均不得超过 8323072。</li>
+</ul>
+<h3 id="exp"><code>EXP</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="fully_connected"><code>FULLY_CONNECTED</code></h3>
+<ul>
+<li>Bias 张量必须为常量。</li>
+<li>Bias 张量精度必须为 <code>INT32</code> 或 <code>INT64</code>。</li>
+<li>Bias 值必须存储在通道轴上。</li>
+<li>Fully Connected 权重必须采用 <code>O, 1, 1, ..., 1, I</code> 形式。</li>
+<li>对于 MatMul 或使用动态权重的 Fully Connected，IFM 精度必须为 <code>INT8</code>。</li>
+<li>对于 MatMul 或使用动态权重的 Fully Connected，OFM 深度必须小于或等于 $2^{16}$。</li>
+<li>对于 MatMul 或使用动态权重的 Fully Connected，归约轴大小必须小于或等于 $2^{16}$。</li>
+<li><code>INT64</code> bias 必须小于 1099511627775。</li>
+<li>Kernel stride 必须在 <code>(1, 3)</code> 范围内。</li>
+<li>权重张量必须为 8 位精度。</li>
+<li>对于 8 位或 16 位 IFM，权重绝对值之和均不得超过 8323072。</li>
+</ul>
+<h3 id="hard_swish"><code>HARD_SWISH</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="leaky_relu"><code>LEAKY_RELU</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="log"><code>LOG</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>IFM 与 OFM 的数据类型必须相同，并且必须为 <code>INT8</code> 或 <code>INT16</code>。</li>
+<li>IFM 与 OFM 的 shape 必须相同。</li>
+</ul>
+<h3 id="logistic"><code>LOGISTIC</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="maximum"><code>MAXIMUM</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>两个输入的量化参数都必须与 OFM 的量化参数一致。</li>
+</ul>
+<h3 id="max_pool_2d"><code>MAX_POOL_2D</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>只有在 dilation 为 1 且 padding 为 <code>VALID</code> 时，才支持大于 3 的 stride。</li>
+<li>Kernel 各维度乘积必须小于或等于 $256 \times 256$，且 kernel 高度必须小于或等于 256。</li>
+</ul>
+<h3 id="mean"><code>MEAN</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>归约元素数量不得超过：<code>INT8</code> 为 16777216，<code>UINT8</code> 为 8388608，<code>INT16</code> 为 65536。</li>
+<li>Batch 必须为 1。</li>
+<li>IFM 精度必须为 <code>INT8</code>、<code>UINT8</code> 或 <code>INT16</code>。</li>
+<li>参数张量必须为常量。</li>
+<li>归约轴大小必须小于 4096。</li>
+<li>仅当 $H$、$W$、$C$ 中至少一个维度为 1 时，才支持沿深度方向归约。</li>
+</ul>
+<h3 id="minimum"><code>MINIMUM</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>两个输入的量化参数都必须与 OFM 的量化参数一致。</li>
+</ul>
+<h3 id="mirror_pad"><code>MIRROR_PAD</code></h3>
+<ul>
+<li>参数张量必须为常量。</li>
+<li>Params 张量必须为 <code>INT32</code> 或 <code>INT64</code>。</li>
+</ul>
+<h3 id="pack"><code>PACK</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="pad"><code>PAD</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>参数张量必须为常量。</li>
+<li>Params 张量必须为 <code>INT32</code> 或 <code>INT64</code>。</li>
+</ul>
+<h3 id="padv2"><code>PADV2</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>参数张量必须为常量。</li>
+<li>Params 张量必须为 <code>INT32</code> 或 <code>INT64</code>。</li>
+</ul>
+<h3 id="prelu"><code>PRELU</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="quantize"><code>QUANTIZE</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="reduce_max"><code>REDUCE_MAX</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>Kernel stride 必须在 <code>(1, 3)</code> 范围内。</li>
+</ul>
+<h3 id="reduce_min"><code>REDUCE_MIN</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>Kernel stride 必须在 <code>(1, 3)</code> 范围内。</li>
+</ul>
+<h3 id="relu"><code>RELU</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="relu6"><code>RELU6</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="relu_0_to_1"><code>RELU_0_TO_1</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="relu_n1_to_1"><code>RELU_N1_TO_1</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="resize_bilinear"><code>RESIZE_BILINEAR</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>当 IFM 不是 $H = W = 1$ 且 IFM 与 OFM shape 不同时：</li>
+<li>如果宽度与高度的 scale factor 不同，则 OFM 的宽度或高度必须为 1，并且该维度的缩放倍数也必须为 1。</li>
+<li>如果 <code>align_corners</code> 为 true，scale factor 定义为 <code>(OFM H - 1) / (IFM H - 1)</code>；否则定义为 <code>OFM H / IFM H</code>。</li>
+<li>如果 <code>half_pixel_centers</code> 为 true，scale factor 必须为 2 倍；否则必须为 2、4 或 8 倍。</li>
+</ul>
+<h3 id="resize_nearest_neighbor"><code>RESIZE_NEAREST_NEIGHBOR</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>当 IFM 不是 $H = W = 1$ 且 IFM 与 OFM shape 不同时：</li>
+<li>如果宽度与高度的 scale factor 不同，则 OFM 的宽度或高度必须为 1，并且该维度的缩放倍数也必须为 1。</li>
+<li>如果 <code>align_corners</code> 为 true，scale factor 定义为 <code>(OFM H - 1) / (IFM H - 1)</code>；否则定义为 <code>OFM H / IFM H</code>。</li>
+<li>Scale factor 必须为 2、4 或 8 倍。</li>
+</ul>
+<h3 id="reverse_v2"><code>REVERSE_V2</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>不支持 axis attribute。</li>
+</ul>
+<h3 id="rsqrt"><code>RSQRT</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>IFM 必须为 <code>INT8</code> 或 <code>INT16</code>。</li>
+</ul>
+<h3 id="slice"><code>SLICE</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>参数张量必须为常量。</li>
+</ul>
+<h3 id="softmax"><code>SOFTMAX</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>IFM 宽度与高度的乘积必须小于 65536。</li>
+</ul>
+<h3 id="split"><code>SPLIT</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li><code>num_splits</code> 必须与输出数量一致。</li>
+</ul>
+<h3 id="split_v"><code>SPLIT_V</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li><code>num_splits</code> 必须与输出数量一致。</li>
+</ul>
+<h3 id="squared_difference"><code>SQUARED_DIFFERENCE</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="strided_slice"><code>STRIDED_SLICE</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>参数张量必须为常量。</li>
+<li>Slice 必须表示一个 volume；stride 必须为非负数，并作用于 $W$ 或 $H$。</li>
+</ul>
+<h3 id="sum"><code>SUM</code></h3>
+<ul>
+<li>Kernel stride 必须在 <code>(1, 3)</code> 范围内。</li>
+</ul>
+<h3 id="tanh"><code>TANH</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="tile"><code>TILE</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h3 id="transpose"><code>TRANSPOSE</code></h3>
+<ul>
+<li>当 IFM 为 <code>INT32</code> 时：</li>
+<li>Rank 必须小于或等于 4。</li>
+<li><code>NHWC</code>：$C \leq 2^{16}$。</li>
+<li><code>NWHC</code>：$N = 1$、$H \leq 2^{16}$、$W \leq 2^{16}$、$C \leq 2^{14}$。</li>
+<li><code>NHCW</code>：$N \times H \leq 2^{16}$、$W \leq 2^{16}$、$C \leq 2^{16}$。</li>
+<li>不支持其他 permutation vector。</li>
+<li>当 IFM 为 <code>INT8</code> 或 <code>INT16</code> 时：</li>
+<li><code>NHWC</code> 没有 shape 限制。</li>
+<li>对于 <code>NWHC</code>、<code>NHCW</code>、<code>NCWH</code>、<code>NWCH</code> 或 <code>NCHW</code> 排列，如果张量是三维张量，或者更高 rank 张量在 $H/W/C$ 以外的轴均为 1，则 $(H, W, C) \leq (2^{16}, 2^{16}, 2^{16})$。</li>
+<li>对于其他情况，rank 为 $N$ 的张量中任意 $N-2$ 个轴的维度乘积必须小于或等于 $2^{16}$。例如 rank 为 4 时，$N \times H$、$N \times W$、$N \times C$、$H \times W$、$H \times C$ 和 $W \times C$ 均不得超过 $2^{16}$。</li>
+<li>参数张量必须为常量。</li>
+<li>张量维数必须小于或等于 8。</li>
+</ul>
+<h3 id="transpose_conv"><code>TRANSPOSE_CONV</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>Bias 张量必须为常量。</li>
+<li>Bias 张量精度必须为 <code>INT32</code> 或 <code>INT64</code>。</li>
+<li>Bias 值必须存储在通道轴上。</li>
+<li><code>INT64</code> bias 必须小于 1099511627775。</li>
+<li>当 padding 为 <code>SAME</code> 时，OFM 必须等于 <code>IFM * stride</code>；否则 OFM 必须等于 <code>IFM * stride + (kernel - stride)</code>。</li>
+<li>$W \times H$ stride 只允许 <code>1x1</code>、<code>2x2</code>、<code>2x1</code> 或 <code>1x2</code>。仅当 IFM 高度和 kernel 高度均为 1 时允许 <code>2x1</code>；仅当 IFM 宽度和 kernel 宽度均为 1 时允许 <code>1x2</code>。</li>
+<li>权重张量必须为 8 位精度。</li>
+<li>对于 8 位或 16 位 IFM，权重绝对值之和均不得超过 8323072。</li>
+</ul>
+<h3 id="unidirectional_sequence_lstm"><code>UNIDIRECTIONAL_SEQUENCE_LSTM</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+<li>不支持 gate normalization。</li>
+<li>不支持 implicit gate calculation。</li>
+<li>不支持 peephole variant。</li>
+<li>不支持 projection。</li>
+</ul>
+<h3 id="unpack"><code>UNPACK</code></h3>
+<ul>
+<li>不支持 32 位 feature map。</li>
+</ul>
+<h2 id="tflm-npu">TFLM 支持与 NPU 支持的区别</h2>
+<ul>
+<li><strong>TFLM 可运行</strong>：所选 TFLM 运行时存在该算子的 CPU kernel，且工程已将其注册到 Resolver。</li>
+<li><strong>NPU 可加速</strong>：Vela 识别该 TFLite 算子，并确认其参数满足 Ethos-U55 约束。</li>
+</ul>
+<p>实现 TFLM 自定义算子不会自动让该算子在 Ethos-U55 上运行。自定义算子通常仍需要 CPU kernel；是否能够由 NPU 执行必须由 Vela 的实际转换结果确认。</p>
+<h2 id="_3">不支持算子的处理流程</h2>
+<pre><code class="language-text">Vela 将算子留在 CPU
+  -&gt; 查看 Vela 日志中的约束失败原因
+    -&gt; 能否调整参数或用受支持结构重写模型？
+      是 -&gt; 修改模型，重新量化并运行 Vela
+      否 -&gt; 确认 TFLM 是否具有 CPU kernel
+        -&gt; 已有 kernel：评估 CPU 性能
+        -&gt; 没有 kernel：评估自定义算子
+</code></pre>
+<p>下一步：<a href="../custom-operator/">自定义算子部署与调试</a>。</p>
 
 
 
@@ -1684,6 +3272,10 @@
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      文档版本 v1.0.0 | 2026-08-05
+    </div>
   
   
     Made with

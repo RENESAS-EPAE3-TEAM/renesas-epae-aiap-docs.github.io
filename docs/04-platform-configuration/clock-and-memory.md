@@ -2,7 +2,7 @@
 
 ## 本章目标
 
-以 `mnist_quant.tflite` 为例，配置 RA8P1 的 CPU0、Ethos-U55 NPU、ICLK 与 MRICLK，并使 Vela 配置、模型位置和运行时内存保持一致。
+第 3 章已经从 Keras 或 ONNX 模型生成并验证了全整数 TFLite。本章以该模型的接口、大小和精度记录为输入，配置 RA8P1 的 CPU0、Ethos-U55 NPU、ICLK 与 MRICLK，并使 Vela 配置、模型位置和运行时内存保持一致。
 
 ## 已验证的工具组合
 
@@ -66,4 +66,4 @@ $$OffChipFlash\_clock\_scale = \frac{MRICLK}{NPUCLK}$$
 
 模型权重是只读常量；Tensor Arena 必须位于可写 RAM。不要将两者按同一种内存需求处理。
 
-下一步：[模型存储介质选择](storage-selection.md) 和 [MNIST 端到端部署](../05-npu-deployment/mnist-deployment.md)。
+下一步：[模型存储介质选择](storage-selection.md)。

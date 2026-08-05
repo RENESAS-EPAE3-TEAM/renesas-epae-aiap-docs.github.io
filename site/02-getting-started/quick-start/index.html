@@ -16,7 +16,7 @@
         <link rel="prev" href="../prerequisites/">
       
       
-        <link rel="next" href="../../03-model-preparation/model-requirements/">
+        <link rel="next" href="../../03-model-preparation/int8-quantization/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>运行第一个示例 - Renesas RA8P1 AI 应用开发指南</title>
+        <title>MNIST：运行第一个 AI 示例 - Renesas RA8P1 AI 应用开发指南</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#ai-mnist" class="md-skip">
           跳转至
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              运行第一个示例
+              MNIST：运行第一个 AI 示例
             
           </span>
         </div>
@@ -472,7 +472,7 @@
   <span class="md-ellipsis">
     
   
-    运行第一个示例
+    MNIST：运行第一个 AI 示例
   
 
     
@@ -490,7 +490,7 @@
   <span class="md-ellipsis">
     
   
-    运行第一个示例
+    MNIST：运行第一个 AI 示例
   
 
     
@@ -516,7 +516,7 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         目标
@@ -527,10 +527,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        操作步骤
+        1. 选择时钟配置
       
     </span>
   </a>
@@ -538,10 +538,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#2-vela" class="md-nav__link">
     <span class="md-ellipsis">
       
-        预期结果
+        2. 使用 Vela 转换模型
       
     </span>
   </a>
@@ -549,10 +549,54 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        失败时优先检查
+        3. 生成固件模型数组
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-arena" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 选择模型与 Arena 存储
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-rtt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 编译、烧录并观察 RTT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 验证全部样本
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        完成标准
       
     </span>
   </a>
@@ -607,7 +651,7 @@
   <span class="md-ellipsis">
     
   
-    3. 模型准备
+    3. 模型转换与量化
   
 
     
@@ -623,67 +667,11 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    3. 模型准备
+    3. 模型转换与量化
   
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../03-model-preparation/model-requirements/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    模型要求
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../03-model-preparation/onnx-to-tflite/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ONNX 转 TFLite
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -699,7 +687,7 @@
   <span class="md-ellipsis">
     
   
-    INT8 量化与精度验证
+    Keras/ONNX 转换、量化与验证
   
 
     
@@ -890,34 +878,6 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../05-npu-deployment/mnist-deployment/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    MNIST 端到端部署
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -1442,6 +1402,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-reference/release-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    发行说明
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1557,7 +1545,7 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         目标
@@ -1568,10 +1556,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        操作步骤
+        1. 选择时钟配置
       
     </span>
   </a>
@@ -1579,10 +1567,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#2-vela" class="md-nav__link">
     <span class="md-ellipsis">
       
-        预期结果
+        2. 使用 Vela 转换模型
       
     </span>
   </a>
@@ -1590,10 +1578,54 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        失败时优先检查
+        3. 生成固件模型数组
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-arena" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 选择模型与 Arena 存储
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-rtt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 编译、烧录并观察 RTT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 验证全部样本
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        完成标准
       
     </span>
   </a>
@@ -1617,47 +1649,58 @@
 
 
 
-<h1 id="_1">运行第一个示例</h1>
-<h2 id="_2">目标</h2>
-<p>使用已验证的示例工程完成一次从编译、烧录到串口或调试输出查看的端到端推理。</p>
-<h2 id="_3">操作步骤</h2>
-<ol>
-<li>使用项目指定的 IDE 和 FSP 版本导入示例工程。</li>
-<li>检查目标板、调试器和构建配置是否与工程一致。</li>
-<li>编译工程，确认模型数据、TFLM 组件和算子注册均已加入构建。</li>
-<li>烧录并复位开发板。</li>
-<li>输入样例数据，记录输出类别、置信度或数值结果。</li>
-</ol>
-<h2 id="_4">预期结果</h2>
+<h1 id="ai-mnist">运行第一个 AI 示例 - MNIST</h1>
+<h2 id="_1">目标</h2>
+<p>使用 <code>mnist_quant.tflite</code> 在 EK-RA8P1 上完成 Vela 转换、模型数组生成、编译烧录和 0 到 9 的推理验证。</p>
+<p>本章使用已量化模型快速走通部署主线：</p>
+<pre><code class="language-text">mnist_quant.tflite -&gt; Vela -&gt; mnist_quant.vela.tflite
+  -&gt; C 数组 -&gt; RA8P1 工程 -&gt; 编译烧录 -&gt; RTT 验证
+</code></pre>
+<p>完成本章后，再进入第 3 章学习如何从 Keras 模型直接生成全整数 TFLite，或将 ONNX 模型经 onnx2tf 转换后量化。</p>
+<h2 id="1">1. 选择时钟配置</h2>
+<p>在工程 Clock 页面设置 CPU0、NPU、ICLK 与 MRICLK，并在 <code>inference.cpp</code> 中选择相同的 <code>MODEL_SETTING</code>。详细组合和 Vela 时钟比例参见<a href="../../04-platform-configuration/clock-and-memory/">时钟、Vela 与内存规划</a>。</p>
+<h2 id="2-vela">2. 使用 Vela 转换模型</h2>
+<p>进入与所选时钟配置对应的目录，确认 <code>ra8p1_vela.ini</code> 的 <code>core_clock</code>、<code>Sram_clock_scale</code> 和 <code>OffChipFlash_clock_scale</code> 已同步后运行：</p>
+<p>Vela 命令参数参见 <a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-vela/-/blob/5.1.0/OPTIONS.md?ref_type=tags">Vela 5.1.0 OPTIONS.md</a>。在 DOS（Windows）或 Shell（Linux）环境中运行：</p>
+<pre><code class="language-bash">vela ../model/mnist_quant.tflite \
+  --config ra8p1_vela.ini \
+  --system-config RA8P1 \
+  --memory-mode Sram_Only \
+  --optimise Performance \
+  --output-dir output_0 \
+  &gt; dbg0.log
+</code></pre>
+<p>预期输出：</p>
 <ul>
-<li>编译无 Error，生成可烧录镜像。</li>
-<li>设备可以启动，且推理调用返回成功。</li>
-<li>输出与 PC 侧的参考输出在应用定义的容差内一致。</li>
+<li><code>dbg0.log</code>：Vela 转换日志；</li>
+<li><code>output_0/mnist_quant.vela.tflite</code>：部署模型；</li>
+<li><code>output_0/mnist_quant_summary_RA8P1.csv</code>：Vela 汇总数据。</li>
 </ul>
-<h2 id="_5">失败时优先检查</h2>
-<table>
-<thead>
-<tr>
-<th>现象</th>
-<th>首先检查</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>编译或链接失败</td>
-<td>工具版本、模型数组、组件和算子注册</td>
-</tr>
-<tr>
-<td>启动后 HardFault</td>
-<td>Tensor Arena、栈、模型地址和外部存储初始化</td>
-</tr>
-<tr>
-<td>输出明显错误</td>
-<td>前处理、张量类型、量化参数和后处理</td>
-</tr>
-</tbody>
-</table>
-<p>参见：<a href="../../09-troubleshooting/common-errors/">常见问题</a>。</p>
+<h2 id="3">3. 生成固件模型数组</h2>
+<p>将转换后的模型转为 C 头文件：</p>
+<pre><code class="language-bash">xxd -i output_0/mnist_quant.vela.tflite array.h
+</code></pre>
+<p>将生成的 <code>array.h</code> 放入当前时钟配置对应的 <code>output_0</code> 目录。确认 <code>inference.cpp</code> 的 <code>#include</code> 路径与 <code>MODEL_SETTING</code> 一致。</p>
+<h2 id="4-arena">4. 选择模型与 Arena 存储</h2>
+<p>小型 MNIST 模型可直接放片内 Flash。若使用 OSPI、SDRAM 或 SRAM，请按<a href="../../04-platform-configuration/storage-selection/">模型存储介质选择</a>设置 section、对齐和启动复制策略。Tensor Arena 必须放在可写 RAM。</p>
+<h2 id="5-rtt">5. 编译、烧录并观察 RTT</h2>
+<p>使用 e2 studio 构建并烧录工程，然后通过 SEGGER RTT Viewer 观察输出。以数字 9 的测试数据为例，预期日志如下：</p>
+<pre><code class="language-text">mnist output:
+0 0 0 0 0 0 0 0 0 -1
+Status of executed job:
+Success
+</code></pre>
+<p>输出张量为 INT8，shape 为 <code>[1, 10]</code>。<code>-1</code> 所在索引是预测类别，<code>0</code> 表示非预测类别。上例的索引 9 为识别结果。</p>
+<h2 id="6">6. 验证全部样本</h2>
+<p>工程提供 <code>input_mnist_0.h</code> 至 <code>input_mnist_9.h</code>。在 <code>inference.cpp</code> 中切换包含的输入文件，逐一运行 0 到 9 的样本，并记录预测类别、时钟配置、模型位置与推理时间。</p>
+<h2 id="_2">完成标准</h2>
+<ul>
+<li>Vela 配置与实际 CPU/NPU/ICLK/MRICLK 配置一致。</li>
+<li>模型加载、Tensor Arena 分配和 Ethos-U55 任务均返回成功。</li>
+<li>RTT 显示 <code>Success</code>，且每个 MNIST 输入的预测索引符合样本标签。</li>
+<li>已记录模型所在介质与相应的性能数据。</li>
+</ul>
+<p>下一步：<a href="../../03-model-preparation/int8-quantization/">模型转换、全整数量化与精度验证</a>。</p>
 
 
 
@@ -1710,13 +1753,13 @@
         
         
           
-          <a href="../../03-model-preparation/model-requirements/" class="md-footer__link md-footer__link--next" aria-label="下一页: 模型要求">
+          <a href="../../03-model-preparation/int8-quantization/" class="md-footer__link md-footer__link--next" aria-label="下一页: Keras/ONNX 转换、量化与验证">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                模型要求
+                Keras/ONNX 转换、量化与验证
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1731,6 +1774,10 @@
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      文档版本 v1.0.0 | 2026-08-05
+    </div>
   
   
     Made with

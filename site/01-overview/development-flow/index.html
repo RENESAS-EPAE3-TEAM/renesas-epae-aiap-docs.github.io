@@ -532,7 +532,7 @@
   <span class="md-ellipsis">
     
   
-    运行第一个示例
+    MNIST：运行第一个 AI 示例
   
 
     
@@ -585,7 +585,7 @@
   <span class="md-ellipsis">
     
   
-    3. 模型准备
+    3. 模型转换与量化
   
 
     
@@ -601,67 +601,11 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    3. 模型准备
+    3. 模型转换与量化
   
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../03-model-preparation/model-requirements/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    模型要求
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../03-model-preparation/onnx-to-tflite/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ONNX 转 TFLite
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -677,7 +621,7 @@
   <span class="md-ellipsis">
     
   
-    INT8 量化与精度验证
+    Keras/ONNX 转换、量化与验证
   
 
     
@@ -868,34 +812,6 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../05-npu-deployment/mnist-deployment/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    MNIST 端到端部署
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -1420,6 +1336,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-reference/release-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    发行说明
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1575,10 +1519,11 @@
 
 <h1 id="_1">完整开发流程</h1>
 <h2 id="_2">开发主线</h2>
-<pre><code class="language-text">准备环境 -&gt; 准备 ONNX 模型 -&gt; 转换 TFLite -&gt; INT8 量化
-     -&gt; 检查算子 -&gt; 配置时钟、内存和存储
+<pre><code class="language-text">了解平台 -&gt; 用 MNIST 走通部署流程 -&gt; Keras/ONNX 转换与全整数量化
+     -&gt; 配置时钟、内存和存储 -&gt; 使用 Vela 编译模型
      -&gt; 集成 TFLM 与模型 -&gt; NPU 推理 -&gt; 验证与优化 -&gt; 应用集成
 </code></pre>
+<p>第 2 章使用已经量化的 MNIST 模型快速展示一次完整部署，不要求先掌握每个转换参数。完成快速入门后，第 3 章再回到模型侧：Keras 模型可直接执行 TFLite 全整数量化，ONNX 模型先通过 onnx2tf 转换为 SavedModel/FP32 TFLite，再执行量化。第 4 章接收经过 PC 侧验证的全整数 TFLite，完成 RA8P1 的时钟、内存和存储规划。</p>
 <h2 id="_3">阶段产物</h2>
 <table>
 <thead>
@@ -1590,9 +1535,14 @@
 </thead>
 <tbody>
 <tr>
-<td>模型准备</td>
-<td>ONNX、TFLite、INT8 TFLite</td>
-<td>PC 侧精度符合预期</td>
+<td>快速入门</td>
+<td>MNIST 板端运行记录</td>
+<td>理解从 TFLite 到板端推理的完整路径</td>
+</tr>
+<tr>
+<td>模型转换与量化</td>
+<td>SavedModel/FP32 TFLite、已验证的全整数 TFLite</td>
+<td>转换基线、量化精度和接口符合预期</td>
 </tr>
 <tr>
 <td>平台配置</td>
@@ -1600,8 +1550,8 @@
 <td>资源规划可实施</td>
 </tr>
 <tr>
-<td>设备部署</td>
-<td>可烧录工程和模型数据</td>
+<td>NPU 部署</td>
+<td>Vela 模型、可烧录工程和模型数据</td>
 <td>设备能稳定推理</td>
 </tr>
 <tr>
@@ -1686,6 +1636,10 @@
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      文档版本 v1.0.0 | 2026-08-05
+    </div>
   
   
     Made with

@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/03-model-preparation/int8-quantization/">
       
       
-        <link rel="prev" href="../onnx-to-tflite/">
+        <link rel="prev" href="../../02-getting-started/quick-start/">
       
       
         <link rel="next" href="../../04-platform-configuration/clock-and-memory/">
@@ -27,7 +27,7 @@
     
     
       
-        <title>INT8 量化与精度验证 - Renesas RA8P1 AI 应用开发指南</title>
+        <title>Keras/ONNX 转换、量化与验证 - Renesas RA8P1 AI 应用开发指南</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#int8" class="md-skip">
+        <a href="#_1" class="md-skip">
           跳转至
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              INT8 量化与精度验证
+              Keras/ONNX 转换、量化与验证
             
           </span>
         </div>
@@ -463,7 +463,7 @@
   <span class="md-ellipsis">
     
   
-    运行第一个示例
+    MNIST：运行第一个 AI 示例
   
 
     
@@ -516,7 +516,7 @@
   <span class="md-ellipsis">
     
   
-    3. 模型准备
+    3. 模型转换与量化
   
 
     
@@ -532,67 +532,11 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    3. 模型准备
+    3. 模型转换与量化
   
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../model-requirements/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    模型要求
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../onnx-to-tflite/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ONNX 转 TFLite
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -617,7 +561,7 @@
   <span class="md-ellipsis">
     
   
-    INT8 量化与精度验证
+    Keras/ONNX 转换、量化与验证
   
 
     
@@ -635,7 +579,7 @@
   <span class="md-ellipsis">
     
   
-    INT8 量化与精度验证
+    Keras/ONNX 转换、量化与验证
   
 
     
@@ -661,32 +605,226 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#int8_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为什么使用 INT8
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        操作步骤
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        建议测试记录
+        本章目标
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 转换前固定模型接口
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 配置全整数量化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 明确量化模型接口类型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 明确量化模型接口类型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#int8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        INT8 输入输出接口
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uint8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UINT8 输入输出接口
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-a-keras-mnist-tflite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 路径 A：从 Keras MNIST 生成量化 TFLite
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 路径 A：从 Keras MNIST 生成量化 TFLite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 数据预处理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-representative-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Representative Dataset
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 转换并保存模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-bonnx-onnx2tf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 路径 B：ONNX 经 onnx2tf 转换并量化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 路径 B：ONNX 经 onnx2tf 转换并量化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 准备环境
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-onnx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 检查 ONNX 基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-onnx2tf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 使用 onnx2tf 转换
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-savedmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 从 SavedModel 执行全整数量化
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 检查输入输出与量化参数
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-pc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. PC 侧推理验证
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 建议测试记录
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 交付给平台配置的产物
       
     </span>
   </a>
@@ -697,7 +835,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        常见误区
+        常见问题
       
     </span>
   </a>
@@ -890,34 +1028,6 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../05-npu-deployment/mnist-deployment/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    MNIST 端到端部署
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -1442,6 +1552,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-reference/release-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    发行说明
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1557,32 +1695,226 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#int8_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为什么使用 INT8
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        操作步骤
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        建议测试记录
+        本章目标
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 转换前固定模型接口
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 配置全整数量化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 明确量化模型接口类型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 明确量化模型接口类型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#int8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        INT8 输入输出接口
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uint8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UINT8 输入输出接口
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-a-keras-mnist-tflite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 路径 A：从 Keras MNIST 生成量化 TFLite
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 路径 A：从 Keras MNIST 生成量化 TFLite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 数据预处理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-representative-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Representative Dataset
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 转换并保存模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-bonnx-onnx2tf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 路径 B：ONNX 经 onnx2tf 转换并量化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 路径 B：ONNX 经 onnx2tf 转换并量化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 准备环境
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-onnx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 检查 ONNX 基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-onnx2tf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 使用 onnx2tf 转换
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-savedmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 从 SavedModel 执行全整数量化
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 检查输入输出与量化参数
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-pc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. PC 侧推理验证
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 建议测试记录
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 交付给平台配置的产物
       
     </span>
   </a>
@@ -1593,7 +1925,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        常见误区
+        常见问题
       
     </span>
   </a>
@@ -1617,58 +1949,321 @@
 
 
 
-<h1 id="int8">INT8 量化与精度验证</h1>
-<h2 id="int8_1">为什么使用 INT8</h2>
-<p>INT8 量化通常可降低模型存储和运行时内存需求，并使模型满足 NPU 部署的精度格式要求。量化带来的精度变化必须用代表性数据验证。</p>
-<h2 id="_1">操作步骤</h2>
-<ol>
-<li>准备覆盖真实输入范围的 representative dataset。</li>
-<li>生成 INT8 TFLite 模型，并确认输入输出是否同样量化为 INT8。</li>
-<li>记录每个输入输出张量的 scale 与 zero point。</li>
-<li>使用同一批验证样本运行浮点基线与 INT8 模型。</li>
-<li>将设备输出与 PC 侧 INT8 参考结果比较。</li>
-</ol>
-<h2 id="_2">建议测试记录</h2>
+<h1 id="_1">模型转换、全整数量化与精度验证</h1>
+<h2 id="_2">本章目标</h2>
+<p>第 2 章使用现成的 <code>mnist_quant.tflite</code> 完成了板端部署。本章回到模型侧，说明如何从 Keras 或 ONNX 浮点模型生成全整数 TFLite，并在进入 RA8P1 平台配置前完成 PC 侧精度和接口检查。</p>
+<p>两条模型输入路径最终汇合到同一验证流程：</p>
+<pre><code class="language-text">Keras 模型 -----------------------&gt; TFLite Converter --+
+                                                        |
+ONNX -&gt; onnx2tf -&gt; SavedModel/FP32 TFLite ------------+
+                                                        v
+                 Representative Dataset -&gt; 全整数量化 TFLite
+                                                        |
+                                                        v
+                                   接口检查 -&gt; PC 精度验证
+</code></pre>
+<p>本章输入和输出如下：</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>产物</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入</td>
+<td>已完成浮点基线验证的 Keras 或 ONNX 模型</td>
+</tr>
+<tr>
+<td>中间产物</td>
+<td>ONNX 路径生成的 SavedModel 和 FP32 TFLite</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>已验证的全整数 TFLite、接口参数和精度记录</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1">1. 转换前固定模型接口</h2>
+<p>无论采用哪条路径，都应先保存一组固定的基准输入和浮点输出，并记录：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>需要确认的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入</td>
+<td>名称、shape、布局、数据类型和数值范围</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>名称、shape 和结果含义</td>
+</tr>
+<tr>
+<td>前处理</td>
+<td>尺寸调整、通道顺序、归一化和量化规则</td>
+</tr>
+<tr>
+<td>后处理</td>
+<td>反量化、阈值和标签映射</td>
+</tr>
+<tr>
+<td>工具</td>
+<td>Python、TensorFlow、ONNX 和 onnx2tf 版本</td>
+</tr>
+</tbody>
+</table>
+<p>优先固定模型输入维度。动态 shape、隐式布局转换或前处理差异会使“文件转换成功”与“推理结果正确”成为两件不同的事。</p>
+<h2 id="2">2. 配置全整数量化</h2>
+<p>使用以下配置执行全整数量化：</p>
+<pre><code class="language-python">converter.optimizations = [tf.lite.Optimize.DEFAULT]
+converter.representative_dataset = representative_dataset
+converter.target_spec.supported_ops = [
+    tf.lite.OpsSet.TFLITE_BUILTINS_INT8
+]
+</code></pre>
+<p>其中 Representative Dataset 用于确定量化范围。传给转换器的样本应为 <code>float32</code>，并采用与模型训练和实际推理一致的尺寸、布局和预处理方式。</p>
+<h2 id="3">3. 明确量化模型接口类型</h2>
+<p>整数算子模型的输入输出接口可以配置为 <code>int8</code> 或 <code>uint8</code>。接口类型会直接影响 PC 测试数据和 RA8P1 固件中的张量读写方式。</p>
+<h3 id="int8">INT8 输入输出接口</h3>
+<p>如果应用要求有符号接口，可使用以下配置：</p>
+<pre><code class="language-python">converter.inference_input_type = tf.int8
+converter.inference_output_type = tf.int8
+</code></pre>
+<h3 id="uint8">UINT8 输入输出接口</h3>
+<p>提供的 <code>mnist-tf.py</code> 使用以下配置：</p>
+<pre><code class="language-python">converter.inference_input_type = tf.uint8
+converter.inference_output_type = tf.uint8
+</code></pre>
+<p>因此，该 MNIST 脚本生成的是<strong>整数算子模型，输入输出接口为 UINT8</strong>。文档、测试数据和固件不能仅根据文件名 <code>mnist_quant.tflite</code> 推断接口类型。部署前必须读取模型 metadata 确认实际类型。</p>
+<h2 id="4-a-keras-mnist-tflite">4. 路径 A：从 Keras MNIST 生成量化 TFLite</h2>
+<h3 id="41">4.1 数据预处理</h3>
+<p><code>mnist-tf.py</code> 将 MNIST 图像转换为 <code>float32</code>，归一化到 $[0,1]$，并增加通道维度：</p>
+<pre><code class="language-python">def prepare_data():
+    (x_train, y_train), (x_test, y_test) = \
+        tf.keras.datasets.mnist.load_data()
+    x_train = np.expand_dims(x_train.astype(&quot;float32&quot;) / 255.0, -1)
+    x_test = np.expand_dims(x_test.astype(&quot;float32&quot;) / 255.0, -1)
+    return (x_train, y_train), (x_test, y_test)
+</code></pre>
+<p>模型输入 shape 为 <code>(28, 28, 1)</code>。设备侧输入必须采用与这里一致的图像尺寸、通道顺序和数值映射。</p>
+<h3 id="42-representative-dataset">4.2 Representative Dataset</h3>
+<p>参考脚本使用训练集前 100 个样本进行校准：</p>
+<pre><code class="language-python">def representative_dataset():
+    for i in range(100):
+        yield [x_train[i:i + 1]]
+</code></pre>
+<p>该写法可以完成转换。对于实际项目，应确认这些样本能够代表目标场景中的输入分布；不能用随机噪声得到的转换成功结果替代真实数据精度验证。</p>
+<h3 id="43">4.3 转换并保存模型</h3>
+<p>MNIST 参考脚本的量化代码如下：</p>
+<pre><code class="language-python">def quantize_and_export_tflite(model, x_train):
+    def representative_dataset():
+        for i in range(100):
+            yield [x_train[i:i + 1]]
+
+    converter = tf.lite.TFLiteConverter.from_keras_model(model)
+    converter.optimizations = [tf.lite.Optimize.DEFAULT]
+    converter.representative_dataset = representative_dataset
+    converter.target_spec.supported_ops = [
+        tf.lite.OpsSet.TFLITE_BUILTINS_INT8
+    ]
+    converter.inference_input_type = tf.uint8
+    converter.inference_output_type = tf.uint8
+
+    tflite_model = converter.convert()
+    with open(&quot;mnist_quant.tflite&quot;, &quot;wb&quot;) as file:
+        file.write(tflite_model)
+</code></pre>
+<p>本步骤的输出是：</p>
+<pre><code class="language-text">mnist_quant.tflite
+</code></pre>
+<p>它是 Vela 的输入模型，还不是最终编入 Ethos-U55 固件的 Vela 模型数组。</p>
+<h2 id="5-bonnx-onnx2tf">5. 路径 B：ONNX 经 onnx2tf 转换并量化</h2>
+<p>Vela 不直接接收 ONNX 模型。对于已有 ONNX 模型，先使用 <a href="https://github.com/PINTO0309/onnx2tf">onnx2tf</a> 生成 TensorFlow SavedModel 和 FP32 TFLite，再从 SavedModel 执行全整数量化。</p>
+<pre><code class="language-text">model.onnx
+    -&gt; onnx2tf
+    -&gt; SavedModel + FP32 TFLite
+    -&gt; TFLite Converter + Representative Dataset
+    -&gt; model_int8.tflite
+</code></pre>
+<h3 id="51">5.1 准备环境</h3>
+<p>参考工程验证过的基础组合包括 Python 3.10.5、TensorFlow 2.18.0 和 ONNX 1.17.0。<code>onnx2tf</code> 还需要与 TensorFlow 匹配的 <code>tf-keras</code>。实际安装时应固定并记录完整依赖版本，不要在同一次模型验证中更换转换工具版本。</p>
+<p>先确认命令来自预期的 Python 环境：</p>
+<pre><code class="language-bash">python --version
+onnx2tf --help
+</code></pre>
+<h3 id="52-onnx">5.2 检查 ONNX 基线</h3>
+<p>转换前至少完成以下检查：</p>
+<ul>
+<li>ONNX 模型可由 ONNX Runtime 加载并运行固定参考输入。</li>
+<li>输入 shape 已固定，并记录原始布局，例如 <code>NCHW</code>。</li>
+<li>已保存浮点输出，供后续 SavedModel、FP32 TFLite 和量化 TFLite 比较。</li>
+<li>已识别可能不受 TFLite、TFLM 或 Ethos-U55 支持的算子。</li>
+</ul>
+<h3 id="53-onnx2tf">5.3 使用 onnx2tf 转换</h3>
+<p>以下命令将 ONNX 模型转换到 <code>output_folder</code>，并输出可供 TensorFlow Lite Converter 使用的 SavedModel：</p>
+<pre><code class="language-bash">onnx2tf \
+    -i model.onnx \
+    -o output_folder \
+    --output_signaturedefs
+</code></pre>
+<p>转换完成后，不要只确认目录已经生成。应检查转换日志和输出文件，并使用固定参考输入验证 FP32 TFLite。</p>
+<p>onnx2tf 可能将 ONNX 的 <code>NCHW</code> 输入转换为 TensorFlow/TFLite 常用的 <code>NHWC</code> 布局。例如参考模型的输入由 ONNX <code>[1, 5, 1, 1024]</code> 变为 TFLite <code>[1, 1, 1024, 5]</code>。这不是可以忽略的 shape 变化；设备侧前处理和测试脚本必须按转换后的实际接口准备数据。</p>
+<h3 id="54-savedmodel">5.4 从 SavedModel 执行全整数量化</h3>
+<p>Representative Dataset 必须产生与<strong>转换后 SavedModel 输入接口</strong>一致的 <code>float32</code> 样本。以下示例使用 INT8 输入输出接口：</p>
+<pre><code class="language-python">import tensorflow as tf
+
+
+def representative_dataset():
+        for sample in calibration_samples:
+                yield [sample.astype(&quot;float32&quot;)]
+
+
+converter = tf.lite.TFLiteConverter.from_saved_model(&quot;output_folder&quot;)
+converter.optimizations = [tf.lite.Optimize.DEFAULT]
+converter.representative_dataset = representative_dataset
+converter.target_spec.supported_ops = [
+        tf.lite.OpsSet.TFLITE_BUILTINS_INT8
+]
+converter.inference_input_type = tf.int8
+converter.inference_output_type = tf.int8
+
+quantized_model = converter.convert()
+with open(&quot;model_int8.tflite&quot;, &quot;wb&quot;) as file:
+        file.write(quantized_model)
+</code></pre>
+<p>如果模型有多个输入，Representative Dataset 每次 <code>yield</code> 的张量数量、顺序、shape 和 dtype 都必须与 SavedModel signature 一致。随机数据只能用于检查转换流程，不能用于判断最终量化精度。</p>
+<h2 id="6">6. 检查输入输出与量化参数</h2>
+<p>转换完成后，使用 TFLite Interpreter 读取模型接口：</p>
+<pre><code class="language-python">model_path = &quot;mnist_quant.tflite&quot;  # 或 ONNX 路径生成的 model_int8.tflite
+interpreter = tf.lite.Interpreter(model_path=model_path)
+interpreter.allocate_tensors()
+
+input_details = interpreter.get_input_details()[0]
+output_details = interpreter.get_output_details()[0]
+
+print(&quot;input shape:&quot;, input_details[&quot;shape&quot;])
+print(&quot;input dtype:&quot;, input_details[&quot;dtype&quot;])
+print(&quot;input quantization:&quot;, input_details[&quot;quantization&quot;])
+print(&quot;output shape:&quot;, output_details[&quot;shape&quot;])
+print(&quot;output dtype:&quot;, output_details[&quot;dtype&quot;])
+print(&quot;output quantization:&quot;, output_details[&quot;quantization&quot;])
+</code></pre>
+<p>至少记录以下信息：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>记录内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入</td>
+<td>shape、dtype、scale、zero point</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>shape、dtype、scale、zero point</td>
+</tr>
+<tr>
+<td>文件</td>
+<td>文件名和模型大小</td>
+</tr>
+<tr>
+<td>工具</td>
+<td>TensorFlow、转换工具和 Python 版本</td>
+</tr>
+</tbody>
+</table>
+<p>若 Interpreter 返回的 dtype 与预期不一致，应先检查转换器的 <code>inference_input_type</code> 和 <code>inference_output_type</code>，不要直接修改设备侧指针类型来掩盖问题。</p>
+<p>对于 ONNX 路径，还应将这里读取的 TFLite shape 与原始 ONNX 接口记录并列保存，明确布局是否发生变化。</p>
+<h2 id="7-pc">7. PC 侧推理验证</h2>
+<p><code>mnist-tf.py</code> 使用量化模型随机显示若干测试样本的预测结果。对于 UINT8 接口，参考脚本先将归一化输入恢复到 $[0,255]$ 并转换为 <code>np.uint8</code>：</p>
+<pre><code class="language-python">sample_input = (
+    tf.image.resize(sample, [28, 28]).numpy() * 255
+).astype(np.uint8)[None, ...]
+
+interpreter.set_tensor(input_details[&quot;index&quot;], sample_input)
+interpreter.invoke()
+output = interpreter.get_tensor(output_details[&quot;index&quot;])[0]
+prediction = np.argmax(output)
+</code></pre>
+<p>随机显示少量样本只能用于功能检查，不能作为量化精度结论。发布模型前应使用固定测试集分别评估浮点模型和量化模型，并记录实际测得的精度；本指南不预设未经测试的准确率。</p>
+<p>ONNX 路径应至少比较三个阶段：</p>
+<pre><code class="language-text">ONNX 浮点基线 &lt;-&gt; FP32 TFLite &lt;-&gt; 全整数量化 TFLite
+</code></pre>
+<p>如果 FP32 TFLite 已明显偏离 ONNX 基线，问题位于模型转换或布局处理，不应通过调整量化参数掩盖。只有 FP32 转换基线通过后，才评估量化造成的精度变化。</p>
+<h2 id="8">8. 建议测试记录</h2>
 <table>
 <thead>
 <tr>
 <th>模型</th>
 <th style="text-align: right;">大小</th>
-<th style="text-align: right;">精度指标</th>
+<th style="text-align: right;">实测精度</th>
 <th>输入类型</th>
 <th>输出类型</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>原始 ONNX</td>
+<td>原始 Keras 或 ONNX</td>
 <td style="text-align: right;">待填写</td>
 <td style="text-align: right;">待填写</td>
 <td>FP32</td>
 <td>FP32</td>
 </tr>
 <tr>
-<td>TFLite</td>
+<td>FP32 TFLite</td>
 <td style="text-align: right;">待填写</td>
 <td style="text-align: right;">待填写</td>
-<td>待填写</td>
-<td>待填写</td>
+<td>FP32</td>
+<td>FP32</td>
 </tr>
 <tr>
-<td>INT8 TFLite</td>
+<td>量化 TFLite</td>
 <td style="text-align: right;">待填写</td>
 <td style="text-align: right;">待填写</td>
-<td>INT8</td>
-<td>INT8</td>
+<td>INT8 或 UINT8</td>
+<td>INT8 或 UINT8</td>
 </tr>
 </tbody>
 </table>
-<h2 id="_3">常见误区</h2>
+<p>精度比较必须使用相同的测试数据和等价的前处理、后处理。</p>
+<p>对于 ONNX 模型，另行记录 ONNX 输入布局、转换后 TFLite 输入布局，以及两者之间的数据重排规则。</p>
+<h2 id="9">9. 交付给平台配置的产物</h2>
+<p>进入第 4 章前，应准备以下内容：</p>
 <ul>
-<li>使用无法代表实际数据分布的校准集。</li>
-<li>设备端仍按 FP32 范围写入 INT8 输入张量。</li>
-<li>将输出的量化整数直接作为业务结果，未按量化参数解释。</li>
+<li>已通过 PC 侧固定测试集验证的全整数 TFLite，例如 <code>mnist_quant.tflite</code> 或 <code>model_int8.tflite</code>。</li>
+<li>输入和输出的 shape、dtype、scale 与 zero point。</li>
+<li>原始浮点模型、FP32 TFLite 和量化 TFLite 的实测精度记录。</li>
+<li>模型文件大小，以及 Representative Dataset 的来源和预处理说明。</li>
+<li>ONNX 路径的输入布局变化和数据重排规则。</li>
 </ul>
+<p>第 4 章将根据模型大小、Tensor Arena 和目标性能规划时钟、内存和存储。完成平台配置后，Ethos-U55 部署仍需经过 Vela：</p>
+<pre><code class="language-text">mnist_quant.tflite
+  -&gt; Vela
+  -&gt; mnist_quant.vela.tflite
+  -&gt; C 数组头文件
+  -&gt; RA8P1 工程
+</code></pre>
+<p>不要将普通 <code>mnist_quant.tflite</code> 直接生成的模型头文件，与 Vela 输出模型生成的头文件混为一谈。</p>
+<h2 id="_3">常见问题</h2>
+<ul>
+<li>Representative Dataset 的预处理与实际输入不一致。</li>
+<li>ONNX 的 <code>NCHW</code> 输入直接写入转换后的 <code>NHWC</code> TFLite 模型。</li>
+<li>只确认 onnx2tf 生成文件，没有比较 ONNX 与 FP32 TFLite 输出。</li>
+<li>未固定 onnx2tf、TensorFlow、tf-keras 和 ONNX 的版本。</li>
+<li>仅确认转换成功，没有比较量化前后的实测精度。</li>
+<li>将 UINT8 接口模型按 <code>int8_t</code> 读取，或将 INT8 接口模型按 <code>uint8_t</code> 读取。</li>
+<li>未记录输入输出的 scale 和 zero point。</li>
+<li>将普通量化 TFLite 模型数组直接用于预期由 Ethos-U55 执行的工程，而未经过 Vela。</li>
+</ul>
+<p>下一步：<a href="../../04-platform-configuration/clock-and-memory/">时钟、Vela 与内存规划</a>。</p>
 
 
 
@@ -1704,7 +2299,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href="../onnx-to-tflite/" class="md-footer__link md-footer__link--prev" aria-label="上一页: ONNX 转 TFLite">
+          <a href="../../02-getting-started/quick-start/" class="md-footer__link md-footer__link--prev" aria-label="上一页: MNIST：运行第一个 AI 示例">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1714,7 +2309,7 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                ONNX 转 TFLite
+                MNIST：运行第一个 AI 示例
               </div>
             </div>
           </a>
@@ -1742,6 +2337,10 @@
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      文档版本 v1.0.0 | 2026-08-05
+    </div>
   
   
     Made with

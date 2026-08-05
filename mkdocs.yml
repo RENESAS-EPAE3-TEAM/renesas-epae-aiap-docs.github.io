@@ -1,6 +1,7 @@
 site_name: Renesas RA8P1 AI 应用开发指南
 site_description: 基于 Ethos-U55 NPU 和 TensorFlow Lite Micro 的 RA8P1 端侧 AI 部署指南
 site_url: https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/
+copyright: 文档版本 v1.0.0 | 2026-08-05
 
 theme:
   name: material
@@ -34,16 +35,13 @@ nav:
     - 完整开发流程: 01-overview/development-flow.md
   - 2. 快速入门:
     - 开发前置条件: 02-getting-started/prerequisites.md
-    - 运行第一个示例: 02-getting-started/quick-start.md
-  - 3. 模型准备:
-    - 模型要求: 03-model-preparation/model-requirements.md
-    - ONNX 转 TFLite: 03-model-preparation/onnx-to-tflite.md
-    - INT8 量化与精度验证: 03-model-preparation/int8-quantization.md
+    - MNIST：运行第一个 AI 示例: 02-getting-started/quick-start.md
+  - 3. 模型转换与量化:
+    - Keras/ONNX 转换、量化与验证: 03-model-preparation/int8-quantization.md
   - 4. 平台配置:
     - 时钟与内存规划: 04-platform-configuration/clock-and-memory.md
     - 模型存储介质选择: 04-platform-configuration/storage-selection.md
   - 5. NPU 模型部署:
-    - MNIST 端到端部署: 05-npu-deployment/mnist-deployment.md
     - NPU 推理流程: 05-npu-deployment/inference-flow.md
     - 模型集成: 05-npu-deployment/model-integration.md
     - 编译、烧录与运行验证: 05-npu-deployment/run-and-verify.md
@@ -58,6 +56,7 @@ nav:
   - 10. 参考资料:
     - 版本兼容表: 10-reference/version-matrix.md
     - 源文档与维护说明: 10-reference/source-documents.md
+    - 发行说明: 10-reference/release-notes.md
   - RA8P1官网: https://www.renesas.cn/zh/products/ra8p1
   - ONE FILED JIRA: https://onefieldjira.renesas.com/projects/MPU/queues/custom/1256
   - Wiki Page: https://renesas-wiki.atlassian.net/wiki/spaces/REN/overview

@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/05-npu-deployment/inference-flow/">
       
       
-        <link rel="prev" href="../mnist-deployment/">
+        <link rel="prev" href="../../04-platform-configuration/storage-selection/">
       
       
         <link rel="next" href="../model-integration/">
@@ -463,7 +463,7 @@
   <span class="md-ellipsis">
     
   
-    运行第一个示例
+    MNIST：运行第一个 AI 示例
   
 
     
@@ -516,7 +516,7 @@
   <span class="md-ellipsis">
     
   
-    3. 模型准备
+    3. 模型转换与量化
   
 
     
@@ -532,67 +532,11 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    3. 模型准备
+    3. 模型转换与量化
   
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../03-model-preparation/model-requirements/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    模型要求
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../03-model-preparation/onnx-to-tflite/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ONNX 转 TFLite
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -608,7 +552,7 @@
   <span class="md-ellipsis">
     
   
-    INT8 量化与精度验证
+    Keras/ONNX 转换、量化与验证
   
 
     
@@ -804,34 +748,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../mnist-deployment/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    MNIST 端到端部署
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -898,7 +814,7 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        初始化阶段
+        部署阶段
       
     </span>
   </a>
@@ -909,7 +825,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        单次推理阶段
+        算子兼容性决策
       
     </span>
   </a>
@@ -918,6 +834,28 @@
       
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初始化阶段
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        单次推理阶段
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         验证阶段
@@ -1431,6 +1369,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-reference/release-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    发行说明
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1549,7 +1515,7 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        初始化阶段
+        部署阶段
       
     </span>
   </a>
@@ -1560,7 +1526,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        单次推理阶段
+        算子兼容性决策
       
     </span>
   </a>
@@ -1569,6 +1535,28 @@
       
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初始化阶段
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        单次推理阶段
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         验证阶段
@@ -1596,7 +1584,30 @@
 
 
 <h1 id="npu">NPU 推理流程</h1>
-<h2 id="_1">初始化阶段</h2>
+<p>第 4 章已经确定时钟、内存和存储方案。本章接收 <code>mnist_quant.tflite</code> 与平台配置，先使用 Vela 生成 NPU 可部署模型，再完成 TFLM 集成和板端验证。</p>
+<h2 id="_1">部署阶段</h2>
+<pre><code class="language-text">已验证的全整数 TFLite + RA8P1 Vela 配置
+  -&gt; 检查算子支持与 CPU fallback
+  -&gt; Vela 编译
+  -&gt; .vela.tflite
+  -&gt; C 数组与链接段
+  -&gt; TFLM 工程
+</code></pre>
+<p>Vela 编译必须使用与目标工程一致的 NPU 时钟、存储区域和 memory mode。普通量化 <code>.tflite</code> 是 Vela 的输入，<code>.vela.tflite</code> 才是后续 NPU 模型集成的输入。</p>
+<h2 id="_2">算子兼容性决策</h2>
+<p>Vela 编译和 TFLM 初始化之间存在一个算子兼容性检查点。先查看 Vela 日志确认各算子的执行后端，再确认 CPU fallback 算子是否具有可注册的 TFLM kernel：</p>
+<pre><code class="language-text">Vela 编译量化 TFLite
+  -&gt; 所有目标算子均满足 Ethos-U55 约束？
+    是 -&gt; 继续生成 .vela.tflite 并集成模型
+    否 -&gt; 查看 CPU fallback 原因
+      -&gt; 能调整参数或重写为受支持结构？
+        是 -&gt; 回到模型转换、量化与验证，重新运行 Vela
+        否 -&gt; TFLM 已有并可注册 CPU kernel？
+          是 -&gt; 注册 kernel，评估 CPU 性能后继续集成
+          否 -&gt; 进入自定义算子部署与调试
+</code></pre>
+<p>具体支持范围和参数限制参见<a href="../../07-custom-operators/operator-support/">Ethos-U55 算子支持检查</a>。只有在模型无法合理重写且运行时没有可用 kernel 时，才进入<a href="../../07-custom-operators/custom-operator/">自定义算子部署与调试</a>。自定义算子通常在 Cortex-M85 CPU 上执行，不会自动获得 Ethos-U55 加速。</p>
+<h2 id="_3">初始化阶段</h2>
 <ol>
 <li>初始化板级驱动、时钟和模型存储接口。</li>
 <li>取得模型数据，创建 TFLM 模型与解释器。</li>
@@ -1604,12 +1615,12 @@
 <li>分配 Tensor Arena，获取输入输出张量。</li>
 <li>校验张量形状、类型与量化参数。</li>
 </ol>
-<h2 id="_2">单次推理阶段</h2>
+<h2 id="_4">单次推理阶段</h2>
 <pre><code class="language-text">采集输入 -&gt; 前处理 -&gt; 写入输入 Tensor -&gt; Invoke
   -&gt; 读取输出 Tensor -&gt; 反量化与后处理 -&gt; 上报结果
 </code></pre>
 <p>输入写入前必须与模型期望的数据布局、类型、scale 和 zero point 一致。<code>Invoke</code> 成功仅表明运行时调用完成，仍需用参考样本验证结果。</p>
-<h2 id="_3">验证阶段</h2>
+<h2 id="_5">验证阶段</h2>
 <table>
 <thead>
 <tr>
@@ -1672,7 +1683,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href="../mnist-deployment/" class="md-footer__link md-footer__link--prev" aria-label="上一页: MNIST 端到端部署">
+          <a href="../../04-platform-configuration/storage-selection/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 模型存储介质选择">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1682,7 +1693,7 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                MNIST 端到端部署
+                模型存储介质选择
               </div>
             </div>
           </a>
@@ -1710,6 +1721,10 @@
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      文档版本 v1.0.0 | 2026-08-05
+    </div>
   
   
     Made with

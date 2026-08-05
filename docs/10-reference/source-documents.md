@@ -5,8 +5,9 @@
 | 源资料 | 对应站点章节 |
 | --- | --- |
 | `NPU_inference_flow.md` | NPU 模型部署 / NPU 推理流程 |
-| `ONNX转TFLite与INT8量化指南_中文版.md` | 模型准备 |
-| `RA8P1 + Ethos-U55 AI 模型部署：时钟配置与存储介质选型指南.md` | 平台配置、MNIST 端到端部署 |
+| `ONNX转TFLite与INT8量化指南_中文版.md` | 模型转换与量化 / ONNX 路径 |
+| MNIST Keras 量化参考脚本 | 模型转换与量化 / Keras 路径 |
+| `RA8P1 + Ethos-U55 AI 模型部署：时钟配置与存储介质选型指南.md` | 平台配置、MNIST 快速入门 |
 | `RA8P1_TFLM_Custom_Operator_Deployment_Debug_Guide_v1.md` | 自定义算子 |
 
 ## 维护原则
