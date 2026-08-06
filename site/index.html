@@ -369,28 +369,6 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        从哪里开始
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        开发主线
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         部署前确认
       
     </span>
@@ -1285,60 +1263,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="https://onefieldjira.renesas.com/projects/MPU/queues/custom/1256" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ONE FILED JIRA
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="https://renesas-wiki.atlassian.net/wiki/spaces/REN/overview" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Wiki Page
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1445,28 +1369,6 @@
       
         <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        从哪里开始
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        开发主线
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         部署前确认
@@ -1753,63 +1655,7 @@ RUHMI 底层整合了Arm Ethos-U Vela编译器实现模型转换，并持续扩�
 </tbody>
 </table>
 <p>我们就以使用Arm Ethos-U Vela编译器的方式，来开始RA8P1的AI开发旅程。OK！Let's go!:)</p>
-<h2 id="_4">从哪里开始</h2>
-<table>
-<thead>
-<tr>
-<th>你的目标</th>
-<th>建议路径</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>第一次使用 RA8P1 AI</td>
-<td>平台概述 -&gt; MNIST 快速入门 -&gt; 模型转换与量化 -&gt; 平台配置 -&gt; NPU 部署</td>
-</tr>
-<tr>
-<td>已有浮点 Keras 模型</td>
-<td>INT8量化 -&gt; 平台配置 -&gt; Vela 编译 -&gt; 模型集成</td>
-</tr>
-<tr>
-<td>已有 ONNX 模型</td>
-<td>onnx2tf -&gt; FP32 TFLite 基线验证 -&gt; INT8量化 -&gt; 平台配置 -&gt; Vela 编译</td>
-</tr>
-<tr>
-<td>已有INT8量化 TFLite</td>
-<td>平台配置 -&gt; Vela 编译 -&gt; 模型集成 -&gt; 板端验证</td>
-</tr>
-<tr>
-<td>模型运行失败</td>
-<td>算子支持检查 -&gt; 自定义算子 -&gt; 常见问题</td>
-</tr>
-</tbody>
-</table>
-<h2 id="_5">开发主线</h2>
-<div class="highlight"><pre><span></span><code>MNIST 快速入门
-    |
-    +-- 先走通 Vela、模型集成、烧录和推理验证
-    |
-    v
-模型转换与量化
-    |
-    +-- Keras 直转或 ONNX 经 onnx2tf 转换、INT8量化、PC 精度验证
-    |
-    v
-RA8P1 平台配置
-    |
-    +-- 时钟配置、内存规划、模型存储选择
-    |
-    v
-TFLM + Ethos-U55 NPU 部署
-    |
-    +-- 模型集成、编译烧录、推理验证、性能分析
-    |
-    v
-应用集成
-    |
-    +-- RUHMI 与实际应用集成
-</code></pre></div>
-<h2 id="_6">部署前确认</h2>
+<h2 id="_4">部署前确认</h2>
 <p>请从左侧导航的“1. RA8P1 AI 概述”开始按顺序阅读，或从 <a href="https://www.renesas.cn/zh/products/ra8p1">RA8P1 产品页面</a> 获取平台资料。</p>
 
 
