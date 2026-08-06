@@ -16,7 +16,7 @@
         <link rel="prev" href="../../04-platform-configuration/storage-selection/">
       
       
-        <link rel="next" href="../model-integration/">
+        <link rel="next" href="../../06-custom-operators/operator-support/">
       
       
         
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#npu" class="md-skip">
+        <a href="#ra8p1" class="md-skip">
           跳转至
         </a>
       
@@ -811,10 +811,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#1-npu" class="md-nav__link">
     <span class="md-ellipsis">
       
-        部署阶段
+        1. NPU 上电与推理流程概览
       
     </span>
   </a>
@@ -822,10 +822,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        算子兼容性决策
+        2. 流程图
       
     </span>
   </a>
@@ -833,32 +833,93 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        初始化阶段
+        3. 分步详解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 分步详解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 程序入口
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#32-npu-open" class="md-nav__link">
     <span class="md-ellipsis">
       
-        单次推理阶段
+        3.2 板级启动与 NPU Open
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
     <span class="md-ellipsis">
       
-        验证阶段
+        3.3 推理测试初始化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 推理前数据准备
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 进入推理流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 正式开始推理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 简化调用链
       
     </span>
   </a>
@@ -869,62 +930,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../model-integration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    模型集成
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../run-and-verify/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    编译、烧录与运行验证
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -969,7 +974,7 @@
   <span class="md-ellipsis">
     
   
-    6. 性能优化
+    6. 自定义算子
   
 
     
@@ -985,7 +990,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    6. 性能优化
+    6. 自定义算子
   
 
           </label>
@@ -998,14 +1003,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../../06-optimization/performance/" class="md-nav__link">
+      <a href="../../06-custom-operators/operator-support/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    性能与内存优化
+    算子支持检查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-custom-operators/custom-operator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    自定义算子部署与调试
   
 
     
@@ -1058,7 +1091,7 @@
   <span class="md-ellipsis">
     
   
-    7. 自定义算子
+    7. 性能调优
   
 
     
@@ -1074,7 +1107,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    7. 自定义算子
+    7. 性能调优
   
 
           </label>
@@ -1087,42 +1120,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../07-custom-operators/operator-support/" class="md-nav__link">
+      <a href="../../07-optimization/performance/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    算子支持检查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../07-custom-operators/custom-operator/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    自定义算子部署与调试
+    性能调优
   
 
     
@@ -1175,7 +1180,7 @@
   <span class="md-ellipsis">
     
   
-    8. 应用集成
+    8. 参考资料
   
 
     
@@ -1191,7 +1196,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    8. 应用集成
+    8. 参考资料
   
 
           </label>
@@ -1204,151 +1209,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../08-application/ruhmi/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Renesas RUHMI
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../09-troubleshooting/common-errors/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    9. 常见问题
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
-        
-          
-          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    10. 参考资料
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_11">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    10. 参考资料
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../10-reference/version-matrix/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    版本兼容表
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../10-reference/source-documents/" class="md-nav__link">
+      <a href="../../08-reference/source-documents/" class="md-nav__link">
         
   
   
@@ -1376,7 +1237,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../10-reference/release-notes/" class="md-nav__link">
+      <a href="../../08-reference/release-notes/" class="md-nav__link">
         
   
   
@@ -1512,10 +1373,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#1-npu" class="md-nav__link">
     <span class="md-ellipsis">
       
-        部署阶段
+        1. NPU 上电与推理流程概览
       
     </span>
   </a>
@@ -1523,10 +1384,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        算子兼容性决策
+        2. 流程图
       
     </span>
   </a>
@@ -1534,32 +1395,93 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        初始化阶段
+        3. 分步详解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 分步详解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 程序入口
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#32-npu-open" class="md-nav__link">
     <span class="md-ellipsis">
       
-        单次推理阶段
+        3.2 板级启动与 NPU Open
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
     <span class="md-ellipsis">
       
-        验证阶段
+        3.3 推理测试初始化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 推理前数据准备
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 进入推理流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 正式开始推理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 简化调用链
       
     </span>
   </a>
@@ -1583,71 +1505,205 @@
 
 
 
-<h1 id="npu">NPU 推理流程</h1>
-<p>第 4 章已经确定时钟、内存和存储方案。本章接收 <code>mnist_quant.tflite</code> 与平台配置，先使用 Vela 生成 NPU 可部署模型，再完成 TFLM 集成和板端验证。</p>
-<h2 id="_1">部署阶段</h2>
-<pre><code class="language-text">已验证的全整数 TFLite + RA8P1 Vela 配置
-  -&gt; 检查算子支持与 CPU fallback
-  -&gt; Vela 编译
-  -&gt; .vela.tflite
-  -&gt; C 数组与链接段
-  -&gt; TFLM 工程
-</code></pre>
-<p>Vela 编译必须使用与目标工程一致的 NPU 时钟、存储区域和 memory mode。普通量化 <code>.tflite</code> 是 Vela 的输入，<code>.vela.tflite</code> 才是后续 NPU 模型集成的输入。</p>
-<h2 id="_2">算子兼容性决策</h2>
-<p>Vela 编译和 TFLM 初始化之间存在一个算子兼容性检查点。先查看 Vela 日志确认各算子的执行后端，再确认 CPU fallback 算子是否具有可注册的 TFLM kernel：</p>
-<pre><code class="language-text">Vela 编译量化 TFLite
-  -&gt; 所有目标算子均满足 Ethos-U55 约束？
-    是 -&gt; 继续生成 .vela.tflite 并集成模型
-    否 -&gt; 查看 CPU fallback 原因
-      -&gt; 能调整参数或重写为受支持结构？
-        是 -&gt; 回到模型转换、量化与验证，重新运行 Vela
-        否 -&gt; TFLM 已有并可注册 CPU kernel？
-          是 -&gt; 注册 kernel，评估 CPU 性能后继续集成
-          否 -&gt; 进入自定义算子部署与调试
-</code></pre>
-<p>具体支持范围和参数限制参见<a href="../../07-custom-operators/operator-support/">Ethos-U55 算子支持检查</a>。只有在模型无法合理重写且运行时没有可用 kernel 时，才进入<a href="../../07-custom-operators/custom-operator/">自定义算子部署与调试</a>。自定义算子通常在 Cortex-M85 CPU 上执行，不会自动获得 Ethos-U55 加速。</p>
-<h2 id="_3">初始化阶段</h2>
+<h1 id="ra8p1">RA8P1推理流程</h1>
+<p>本部分描述 RA8P1 上从<strong>上电启动</strong>到<strong>正式进入推理</strong>的完整函数调用流程。</p>
+<h2 id="1-npu">1. NPU 上电与推理流程概览</h2>
 <ol>
-<li>初始化板级驱动、时钟和模型存储接口。</li>
-<li>取得模型数据，创建 TFLM 模型与解释器。</li>
-<li>注册模型需要的算子，并初始化 NPU 相关后端。</li>
-<li>分配 Tensor Arena，获取输入输出张量。</li>
-<li>校验张量形状、类型与量化参数。</li>
+<li><strong>板级启动与 NPU 驱动初始化</strong> —— 完成 NPU 模块上电、驱动对象初始化和中断使能</li>
+<li><strong>推理前准备与执行</strong> —— 包括模型解析、张量分配、输入拷贝，最终调用 <code>Invoke()</code> 进入推理</li>
 </ol>
-<h2 id="_4">单次推理阶段</h2>
-<pre><code class="language-text">采集输入 -&gt; 前处理 -&gt; 写入输入 Tensor -&gt; Invoke
-  -&gt; 读取输出 Tensor -&gt; 反量化与后处理 -&gt; 上报结果
-</code></pre>
-<p>输入写入前必须与模型期望的数据布局、类型、scale 和 zero point 一致。<code>Invoke</code> 成功仅表明运行时调用完成，仍需用参考样本验证结果。</p>
-<h2 id="_5">验证阶段</h2>
+<hr />
+<h2 id="2">2. 流程图</h2>
+<pre class="mermaid"><code>flowchart TD
+    A[main] --&gt; B[hal_entry]
+    B --&gt; C[RM_ETHOSU_Open]
+    C --&gt; C1[R_BSP_MODULE_START]
+    C --&gt; C2[ethosu_init]
+    C --&gt; C3[R_BSP_IrqCfgEnable]
+    C3 --&gt; C4[rm_ethosu_isr ready]
+    B --&gt; D[npu_test_init]
+    D --&gt; D1[RegisterDebugLogCallback]
+    D --&gt; D2[EventRecorderInitialize]
+    D --&gt; E[runInference]
+    E --&gt; E1[memcpy inputDataROM to inputData]
+    E --&gt; E2[build inputs outputs expectedOutputs]
+    E --&gt; E3[create InferenceJob]
+    E --&gt; F[inferenceProcess.runJob]
+    F --&gt; F1[parser.getModel]
+    F --&gt; F2[create MicroInterpreter]
+    F --&gt; F3[AllocateTensors]
+    F --&gt; F4[copyIfm]
+    F4 --&gt; G[interpreter.Invoke]
+    G -. callback .-&gt; H[ethosu_inference_begin]
+    G -. irq .-&gt; I[rm_ethosu_isr]
+    G -. callback .-&gt; J[ethosu_inference_end]</code></pre>
+<hr />
+<h2 id="3">3. 分步详解</h2>
+<h3 id="31">3.1 程序入口</h3>
+<ul>
+<li><code>main()</code> 位于 <code>ra_gen/main.c</code></li>
+<li><code>main()</code> 只做一件事：调用 <code>hal_entry()</code></li>
+</ul>
+<h3 id="32-npu-open">3.2 板级启动与 NPU Open</h3>
+<ul>
+<li><code>hal_entry()</code> 位于 <code>src/hal_entry.cpp</code></li>
+<li>在进入主应用前，启动流程先经过 <code>R_BSP_WarmStart()</code>，完成 IOPORT 和 SDRAM 等基础初始化</li>
+<li><code>hal_entry()</code> 中调用 <code>RM_ETHOSU_Open(&amp;g_rm_ethosu0_ctrl, &amp;g_rm_ethosu0_cfg)</code>，这是 NPU 驱动的打开入口</li>
+</ul>
+<p><code>RM_ETHOSU_Open()</code> 位于 <code>ra/fsp/src/rm_ethosu/rm_ethosu.c</code>，主要完成以下工作：</p>
 <table>
 <thead>
 <tr>
-<th>维度</th>
-<th>验证内容</th>
+<th>调用</th>
+<th>作用</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>功能</td>
-<td>程序稳定运行并输出结果</td>
+<td><code>R_BSP_MODULE_START(FSP_IP_NPU, 0)</code></td>
+<td>打开 NPU 模块（取消时钟门控）</td>
 </tr>
 <tr>
-<td>精度</td>
-<td>与 PC 侧 INT8 参考结果接近</td>
+<td><code>ethosu_init(...)</code></td>
+<td>使用 <code>R_NPU_BASE</code> 初始化 Ethos-U 驱动对象</td>
 </tr>
 <tr>
-<td>后端</td>
-<td>确认预期算子实际使用 NPU 或记录 CPU fallback</td>
-</tr>
-<tr>
-<td>性能</td>
-<td>延迟、吞吐和峰值内存达到项目目标</td>
+<td><code>R_BSP_IrqCfgEnable(...)</code></td>
+<td>使能 NPU 中断</td>
 </tr>
 </tbody>
 </table>
-<p>下一步：<a href="../model-integration/">模型集成</a>。</p>
+<p><strong>相关实例配置</strong>（位于 <code>ra_gen/common_data.c</code>）：</p>
+<table>
+<thead>
+<tr>
+<th>实例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>g_ethosu0</code></td>
+<td>底层 Ethos-U driver 实例</td>
+</tr>
+<tr>
+<td><code>g_rm_ethosu0_ctrl</code></td>
+<td>FSP 控制块</td>
+</tr>
+<tr>
+<td><code>g_rm_ethosu0_cfg</code></td>
+<td>NPU 配置（IRQ、IPL、安全/特权属性）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NPU 中断向量绑定</strong>（位于 <code>ra_gen/vector_data.c</code>）：</p>
+<ul>
+<li><code>rm_ethosu_isr</code> —— NPU 完成推理后由此 ISR 处理</li>
+</ul>
+<h3 id="33">3.3 推理测试初始化</h3>
+<ul>
+<li><code>hal_entry()</code> 在打开 NPU 后调用 <code>npu_test_init()</code></li>
+<li><code>npu_test_init()</code> 位于 <code>src/inference.cpp</code></li>
+</ul>
+<p>它主要做三件事：</p>
+<ol>
+<li><code>RegisterDebugLogCallback(print_log)</code> —— 注册调试日志输出</li>
+<li><code>EventRecorderInitialize(EventRecordAll, 1)</code> —— 初始化事件记录器</li>
+<li>进入 <code>while(1)</code> 循环，持续调用 <code>runInference()</code></li>
+</ol>
+<h3 id="34">3.4 推理前数据准备</h3>
+<ul>
+<li><code>runInference()</code> 位于 <code>src/inference.cpp</code></li>
+<li>这里开始组织本次推理所需的数据</li>
+</ul>
+<p><strong>主要步骤：</strong></p>
+<ol>
+<li><code>memcpy(&amp;inputData, &amp;inputDataROM, sizeof(inputData))</code> —— 将输入数据从只读区复制到 DTCM 运行缓冲区</li>
+<li>构造 <code>inputs</code>、<code>outputs</code>、<code>expectedOutputs</code></li>
+<li>使用 <code>networkModelDataPtr</code> 和 <code>networkModelDataSize</code> 组装 <code>InferenceJob</code></li>
+</ol>
+<h3 id="35">3.5 进入推理流程</h3>
+<ul>
+<li><code>runInference()</code> 中调用 <code>inferenceProcess.runJob(job)</code></li>
+<li><code>runJob()</code> 实现位于 <code>src/ethos-u-core-software/applications/inference_process/src/inference_process.cpp</code></li>
+</ul>
+<p>在真正执行推理前，依次完成：</p>
+<table>
+<thead>
+<tr>
+<th>调用</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>parser.getModel(...)</code></td>
+<td>解析并校验 tflite 模型</td>
+</tr>
+<tr>
+<td>创建 <code>tflite::MicroInterpreter</code></td>
+<td>构造 TFLM 解释器</td>
+</tr>
+<tr>
+<td><code>interpreter.AllocateTensors()</code></td>
+<td>在 tensor arena 中分配张量内存</td>
+</tr>
+<tr>
+<td><code>copyIfm(job, interpreter)</code></td>
+<td>将输入数据拷贝到解释器输入张量</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>📌 到这里为止，仍处于"进入推理前"的准备阶段。</p>
+</blockquote>
+<h3 id="36">3.6 正式开始推理</h3>
+<ul>
+<li><code>interpreter.Invoke()</code> 是正式开始推理的入口</li>
+<li>当 <code>Invoke()</code> 内部调度到 Ethos-U NPU 时，会触发以下机制：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>调用</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>推理开始</td>
+<td><code>ethosu_inference_begin(...)</code></td>
+<td>开始 NPU 监控采样</td>
+</tr>
+<tr>
+<td>NPU 中断</td>
+<td><code>rm_ethosu_isr</code></td>
+<td>处理 NPU IRQ（推理完成通知）</td>
+</tr>
+<tr>
+<td>推理结束</td>
+<td><code>ethosu_inference_end(...)</code></td>
+<td>结束监控并释放相关状态</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4">4. 简化调用链</h2>
+<p>如果只关注主链路，可以简化为：</p>
+<div class="highlight"><pre><span></span><code>main
+  └─&gt; hal_entry
+        ├─&gt; RM_ETHOSU_Open                # NPU 模块上电 + 驱动初始化
+        └─&gt; npu_test_init
+              └─&gt; runInference            # 输入准备 + Job 构造
+                    └─&gt; inferenceProcess.runJob
+                          ├─&gt; parser.getModel
+                          ├─&gt; MicroInterpreter 构造
+                          ├─&gt; AllocateTensors
+                          ├─&gt; copyIfm     # 拷贝输入到 input tensor
+                          └─&gt; Invoke      # 🚀 正式推理
+</code></pre></div>
+<p>下一步：<a href="../../06-custom-operators/operator-support/">算子支持</a>。</p>
 
 
 
@@ -1700,13 +1756,13 @@
         
         
           
-          <a href="../model-integration/" class="md-footer__link md-footer__link--next" aria-label="下一页: 模型集成">
+          <a href="../../06-custom-operators/operator-support/" class="md-footer__link md-footer__link--next" aria-label="下一页: 算子支持检查">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                模型集成
+                算子支持检查
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1723,7 +1779,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      文档版本 v1.0.0 | 2026-08-05
+      文档版本 v1.0.0 | 2026-08-06
     </div>
   
   
@@ -1751,6 +1807,14 @@
     
     
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@11/dist/mermaid.min.js"></script>
+      
+        <script src="../../javascripts/mermaid.js"></script>
       
     
   </body>

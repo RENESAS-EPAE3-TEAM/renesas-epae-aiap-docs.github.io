@@ -733,35 +733,80 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mnist" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        MNIST 参考工程的模型放置方式
+        1. 模型权重放置到不同存储介质
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 模型权重放置到不同存储介质">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 激活张量与权重
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
     <span class="md-ellipsis">
       
-        决策路径
+        1.2 存储介质
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 存储介质">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-rom-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.1 ROM放 Model（模型权重）
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#122-ram-tensor-arena" class="md-nav__link">
     <span class="md-ellipsis">
       
-        平台配置完成标准
+        1.2.2 RAM 放 Tensor Arena（激活张量）
       
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-tcm-tightly-coupled-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.3 TCM（紧耦合内存）使用 / Tightly Coupled Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -863,62 +908,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../05-npu-deployment/model-integration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    模型集成
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../05-npu-deployment/run-and-verify/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    编译、烧录与运行验证
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -958,7 +947,7 @@
   <span class="md-ellipsis">
     
   
-    6. 性能优化
+    6. 自定义算子
   
 
     
@@ -974,7 +963,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    6. 性能优化
+    6. 自定义算子
   
 
           </label>
@@ -987,14 +976,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../../06-optimization/performance/" class="md-nav__link">
+      <a href="../../06-custom-operators/operator-support/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    性能与内存优化
+    算子支持检查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-custom-operators/custom-operator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    自定义算子部署与调试
   
 
     
@@ -1047,7 +1064,7 @@
   <span class="md-ellipsis">
     
   
-    7. 自定义算子
+    7. 性能调优
   
 
     
@@ -1063,7 +1080,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    7. 自定义算子
+    7. 性能调优
   
 
           </label>
@@ -1076,42 +1093,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../07-custom-operators/operator-support/" class="md-nav__link">
+      <a href="../../07-optimization/performance/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    算子支持检查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../07-custom-operators/custom-operator/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    自定义算子部署与调试
+    性能调优
   
 
     
@@ -1164,7 +1153,7 @@
   <span class="md-ellipsis">
     
   
-    8. 应用集成
+    8. 参考资料
   
 
     
@@ -1180,7 +1169,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    8. 应用集成
+    8. 参考资料
   
 
           </label>
@@ -1193,151 +1182,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../08-application/ruhmi/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Renesas RUHMI
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../09-troubleshooting/common-errors/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    9. 常见问题
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
-        
-          
-          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    10. 参考资料
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_11">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    10. 参考资料
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../10-reference/version-matrix/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    版本兼容表
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../10-reference/source-documents/" class="md-nav__link">
+      <a href="../../08-reference/source-documents/" class="md-nav__link">
         
   
   
@@ -1365,7 +1210,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../10-reference/release-notes/" class="md-nav__link">
+      <a href="../../08-reference/release-notes/" class="md-nav__link">
         
   
   
@@ -1512,35 +1357,80 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mnist" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        MNIST 参考工程的模型放置方式
+        1. 模型权重放置到不同存储介质
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 模型权重放置到不同存储介质">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 激活张量与权重
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
     <span class="md-ellipsis">
       
-        决策路径
+        1.2 存储介质
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 存储介质">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-rom-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.1 ROM放 Model（模型权重）
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#122-ram-tensor-arena" class="md-nav__link">
     <span class="md-ellipsis">
       
-        平台配置完成标准
+        1.2.2 RAM 放 Tensor Arena（激活张量）
       
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-tcm-tightly-coupled-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.3 TCM（紧耦合内存）使用 / Tightly Coupled Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1562,68 +1452,184 @@
 
 
 <h1 id="_1">模型存储介质选择</h1>
-<p>时钟与内存规划确定了 NPU、总线和可写内存条件。本页继续决定 Vela 输出模型和 Tensor Arena 的实际放置位置，为第 5 章的模型编译与工程集成提供确定的地址空间方案。</p>
+<p>时钟与内存规划确定了 NPU、总线和可写内存条件。本页继续讨论说明决定 Vela 输出模型和 Tensor Arena 的实际放置位置。</p>
 <h2 id="_2">选择原则</h2>
 <p>模型存放位置同时影响容量、启动时间、读取带宽、布板复杂度和系统内存预算。</p>
-<p>| 存储位置 | 适用内容 | 优点 | 注意事项 |
-| --- | --- | --- |
-| 片内 Flash | 小型固定模型 | 集成简单、启动方便 | 容量有限 |
-| 片内 RAM | Tensor Arena、热点缓冲 | 访问快 | 空间宝贵 |
-| 外部 Flash | 大模型、资源文件 | 容量大 | 初始化、读取带宽和映射方式 |
-| 外部 RAM | 大型 Arena 或图像缓冲 | 容量大 | 接口时钟、对齐和稳定性 |</p>
-<h2 id="mnist">MNIST 参考工程的模型放置方式</h2>
-<p><code>xxd -i mnist_quant.vela.tflite array.h</code> 生成模型数组。根据链接段和变量属性，模型可部署到以下位置：</p>
+<h2 id="1">1. 模型权重放置到不同存储介质</h2>
+<h3 id="11">1.1 激活张量与权重</h3>
+<p>在嵌入式 AI 部署（如 RA8P1 + Ethos‑U55 + TFLite Micro）中，有两块最关键的内存对象</p>
 <table>
 <thead>
 <tr>
-<th>放置方式</th>
-<th>示例</th>
-<th>适用情况</th>
+<th>对象</th>
+<th>本质</th>
+<th>典型大小</th>
+<th>内存属性</th>
+<th>介质类型</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>片内 Flash</td>
-<td><code>const uint8_t model[] = {...};</code></td>
-<td>小模型，部署简单</td>
+<td><strong>Tensor Arena</strong>(激活张量)</td>
+<td>推理过程中存放<strong>中间激活张量</strong>、输入/输出张量、Ethos‑U 临时工作区</td>
+<td>几十 KB ~ 几 MB</td>
+<td><strong>读写</strong>（每次推理都会刷新）</td>
+<td><strong>RAM</strong></td>
 </tr>
 <tr>
-<td>OSPI Flash</td>
-<td><code>section(".ospi0_cs1")</code>，16 字节对齐</td>
-<td>模型超过片内 Flash 容量</td>
-</tr>
-<tr>
-<td>SDRAM</td>
-<td><code>section(".sdram_from_flash")</code> 或 <code>.sdram_from_ospi0_cs1</code></td>
-<td>启动时复制模型，换取运行读取性能</td>
-</tr>
-<tr>
-<td>SRAM</td>
-<td>非 <code>const</code> 数组或 <code>.ram_from_ospi0_cs1</code></td>
-<td>超小模型且需要极低延迟</td>
+<td><strong>Model</strong>(模型权重)</td>
+<td>神经网络的权重 + 算子图（<code>.vela.tflite</code> / <code>array.h</code>）</td>
+<td>几十 KB ~ 几十 MB</td>
+<td><strong>只读</strong>（运行期不修改）</td>
+<td><strong>ROM</strong></td>
 </tr>
 </tbody>
 </table>
-<p>Tensor Arena 优先放在 SRAM；当 Arena 容量超过 SRAM 时，使用 16 字节对齐的 <code>.sdram</code> 段：</p>
-<pre><code class="language-c">uint8_t tensor_arena[ARENA_SIZE]
-  __attribute__((aligned(16), section(&quot;.sdram&quot;)));
-</code></pre>
-<p>在参考工程中，<code>LOCATE_MODEL_IN_OSPI</code> 控制模型权重是否位于 OSPI，<code>RUN_MODEL_FROM_SDRAM</code> 控制是否从 OSPI 复制到 SDRAM 运行。修改任一宏后，都要重新验证链接区域、启动时间与推理延迟。</p>
-<h2 id="_3">决策路径</h2>
-<pre><code class="language-text">模型可放入片内 Flash？
-  是 -&gt; 评估片内存储和启动时间
-  否 -&gt; 评估外部 Flash 或加载至外部 RAM
-             -&gt; 验证带宽、初始化、地址映射和功耗
-</code></pre>
-<p>在最终选择前，应在目标硬件上测量实际加载时间和单次推理延迟。</p>
-<h2 id="_4">平台配置完成标准</h2>
-<ul>
-<li>CPU、NPU、ICLK 和 MRICLK 时钟组合已经确定。</li>
-<li>Vela 配置中的时钟与存储参数能够对应目标硬件。</li>
-<li>模型只读数据和 Tensor Arena 的存储区域已经确定。</li>
-<li>链接段、对齐和启动复制策略已经记录。</li>
-</ul>
-<p>下一步：<a href="../../05-npu-deployment/inference-flow/">NPU 推理流程</a>。</p>
+<p><strong>关键点</strong>：</p>
+<p>Model = "代码 + 常量"，烧录后永不改变 → 放 Flash 类介质
+Tensor Arena = "栈/堆"，每次推理都会被 NPU/CPU 高频读写 → 必须放在可写且带宽足够高的 RAM 里</p>
+<h3 id="12">1.2 存储介质</h3>
+<h4 id="121-rom-model">1.2.1 ROM放 Model（模型权重）</h4>
+<div class="highlight"><pre><span></span><code><span class="c1">// 这就是 xxd 生成的 array.h</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">networkModelData</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">xx</span><span class="p">,</span><span class="n">xx</span><span class="p">,</span><span class="n">xx</span><span class="p">,......};</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>C 语言变量修饰符</th>
+<th>AI 部署含义</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ROM → OnChipFlash</strong></td>
+<td>无特殊要求，比如这样定义 "const uint8_t buff[] = {xxxx};"</td>
+<td>模型放<strong>片上 Flash</strong>（非常快、最省事，但容量有限）</td>
+<td>小模型（&lt; 1MB），MNIST/KWS 这类</td>
+</tr>
+<tr>
+<td><strong>ROM → OSPI (Unit 0, CS 1)</strong></td>
+<td><strong>attribute</strong>((aligned(16), section(".ospi0_cs1")))</td>
+<td>模型放<strong>外部 OSPI Flash</strong>（容量大，速度次之）</td>
+<td>大模型（YOLO、人脸识别），片上 Flash 装不下</td>
+</tr>
+<tr>
+<td><strong>ROM → SDRAM, init data in OnChipFlash</strong></td>
+<td><strong>attribute</strong>((aligned(16), section(".sdram_from_flash")))</td>
+<td><strong>运行时把模型从片上 Flash 拷贝到 SDRAM 执行</strong></td>
+<td>模型在 SDRAM 中跑得比 OSPI 快</td>
+</tr>
+<tr>
+<td><strong>ROM → SDRAM, init data in OSPI</strong></td>
+<td><strong>attribute</strong>((aligned(16), section(".sdram_from_ospi0_cs1")))</td>
+<td>运行时把模型从 OSPI 拷贝到 SDRAM</td>
+<td>大模型 + 追求推理速度</td>
+</tr>
+<tr>
+<td><strong>ROM → SRAM, init data in OnChipFlash</strong></td>
+<td>无特殊要求，比如这样定义 "uint8_t buff[] = {xxxx};"</td>
+<td>模型加载到<strong>片上 SRAM</strong>（最快！但容量最小）</td>
+<td>超小模型，且要求极致推理延迟</td>
+</tr>
+<tr>
+<td><strong>ROM → SRAM, init data in OSPI</strong></td>
+<td><strong>attribute</strong>((aligned(16), section(".ram_from_ospi0_cs1")))</td>
+<td>模型从 OSPI 拷贝到 SRAM 运行</td>
+<td>同上，启动介质不同</td>
+</tr>
+</tbody>
+</table>
+<p><strong>"initial data in X"</strong> 的含义：
+程序启动时，启动代码（startup.c）会把这块数据从 X 拷贝到目标 RAM。
+这就是为什么 array.h 写成 const 时直接放 Flash 执行，而去掉 const 时会是直接放置到 RAM 使用。</p>
+<h4 id="122-ram-tensor-arena">1.2.2 RAM 放 Tensor Arena（激活张量）</h4>
+<p><div class="highlight"><pre><span></span><code>// 推理时 NPU/CPU 反复读写的工作内存
+uint8_t tensor_arena[ARENA_SIZE] __attribute__((aligned(16), section(&quot;.sdram&quot;)));
+</code></pre></div>
+| 类型 ||C 语言变量修饰符 AI 部署含义 | 适用场景 |
+|---|---|---|---|
+| <strong>RAM → SRAM</strong> | 无特殊要求，比如这样定义 "uint8_t buff[];" |Tensor Arena 放<strong>片上 SRAM</strong>（最高带宽，NPU 访问最快）| <strong>首选</strong>！小/中模型，性能最佳 |
+| <strong>RAM → SDRAM</strong> | <strong>attribute</strong>((aligned(16), section(".sdram")))|Tensor Arena 放<strong>外部 SDRAM</strong>（容量大但带宽低）| Arena 太大放不进 SRAM 时的退路 |</p>
+<p><strong>性能影响</strong>：
+Tensor Arena 放 SRAM 还是 SDRAM，对 NPU 推理时间影响非常大——这正是文档中 Sram_clock_scale 公式的意义所在：所以Vela 在编译时需要知道 SRAM/SDRAM 相对 NPU 的时钟比。</p>
+<pre class="mermaid"><code>flowchart TD
+    A[开始: 模型部署选型] --&gt; B{模型大小&lt;br/&gt;≤ 片上 Flash?}
+
+    B --&gt;|是| C[Model → OnChipFlash&lt;br/&gt;原地执行]
+    B --&gt;|否| D[Model → OSPI Flash]
+
+    C --&gt; E{Tensor Arena&lt;br/&gt;≤ 片上 SRAM?}
+    D --&gt; F{启动速度&lt;br/&gt;敏感?}
+
+    E --&gt;|是| G[✅ Arena → SRAM&lt;br/&gt;最快推理]
+    E --&gt;|否| H[Arena → SDRAM&lt;br/&gt;容量优先]
+
+    F --&gt;|否| I[Model 原地执行&lt;br/&gt;省 RAM]
+    F --&gt;|是| J[Model 拷贝到 SDRAM&lt;br/&gt;.sdram_from_*]
+
+    I --&gt; K{Tensor Arena&lt;br/&gt;≤ 片上 SRAM?}
+    J --&gt; K
+
+    K --&gt;|是| L[✅ Arena → SRAM]
+    K --&gt;|否| M[Arena → SDRAM]
+
+    style G fill:#90EE90,stroke:#333,stroke-width:2px
+    style L fill:#90EE90,stroke:#333,stroke-width:2px
+    style H fill:#FFD700,stroke:#333,stroke-width:1px
+    style M fill:#FFD700,stroke:#333,stroke-width:1px</code></pre>
+<p>工程中的ospi_b_ep.h中，有如下定义。</p>
+<table>
+<thead>
+<tr>
+<th>宏</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LOCATE_MODEL_IN_OSPI</td>
+<td>模型权重放置到OSPI Flash中</td>
+</tr>
+<tr>
+<td>RUN_MODEL_FROM_SDRAM</td>
+<td>模型权重从OSPI Flash 读出，拷贝到SDRAM中运行</td>
+</tr>
+</tbody>
+</table>
+<p>通过修改 LOCATE_MODEL_IN_OSPI，RUN_MODEL_FROM_SDRAM的值，来确定模型权重的存储和运行的介质情况。</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#define LOCATE_MODEL_IN_OSPI                   1</span>
+
+<span class="cp">#define RUN_MODEL_FROM_OSPI                    LOCATE_MODEL_IN_OSPI</span>
+<span class="cp">#define RUN_MODEL_FROM_DOPI                    0</span>
+<span class="cp">#define RUN_MODEL_FROM_SDRAM                   LOCATE_MODEL_IN_OSPI</span>
+</code></pre></div>
+<h4 id="123-tcm-tightly-coupled-memory">1.2.3 TCM（紧耦合内存）使用 / Tightly Coupled Memory</h4>
+<p>RA8P1 的 Cortex‑M85 内核集成了 <strong>128KB ITCM</strong>（指令 TCM）和 <strong>128KB DTCM</strong>（数据 TCM）。TCM 是直接挂在 CPU 总线上的<strong>零等待</strong>高速 RAM，访问延迟仅 1 个时钟周期，<strong>性能远优于普通 SRAM</strong>，适合放置<strong>性能关键的代码与数据</strong>。</p>
+<p>** 使用宏 / Section Placement Macros **</p>
+<table>
+<thead>
+<tr>
+<th>宏</th>
+<th>作用</th>
+<th>使用示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BSP_PLACE_IN_SECTION(".itcm")</code></td>
+<td>将<strong>代码（函数）</strong> 放置到 ITCM</td>
+<td><code>void BSP_PLACE_IN_SECTION(".itcm") fast_isr(void) { ... }</code></td>
+</tr>
+<tr>
+<td><code>BSP_PLACE_IN_SECTION(".dtcm")</code></td>
+<td>将<strong>变量数据</strong>放置到 DTCM</td>
+<td><code>uint32_t BSP_PLACE_IN_SECTION(".dtcm") fast_buffer[256];</code></td>
+</tr>
+</tbody>
+</table>
+<p>下一步：<a href="../../05-npu-deployment/inference-flow/">RA8P1推理流程</a>。</p>
 
 
 
@@ -1699,7 +1705,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      文档版本 v1.0.0 | 2026-08-05
+      文档版本 v1.0.0 | 2026-08-06
     </div>
   
   
@@ -1727,6 +1733,14 @@
     
     
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@11/dist/mermaid.min.js"></script>
+      
+        <script src="../../javascripts/mermaid.js"></script>
       
     
   </body>

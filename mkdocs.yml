@@ -1,7 +1,7 @@
 site_name: Renesas RA8P1 AI 应用开发指南
 site_description: 基于 Ethos-U55 NPU 和 TensorFlow Lite Micro 的 RA8P1 端侧 AI 部署指南
 site_url: https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/
-copyright: 文档版本 v1.0.0 | 2026-08-05
+copyright: 文档版本 v1.0.0 | 2026-08-06
 
 theme:
   name: material
@@ -28,6 +28,23 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+  - https://unpkg.com/mermaid@11/dist/mermaid.min.js
+  - javascripts/mermaid.js
+
 nav:
   - 首页: index.md
   - 1. RA8P1 AI 概述:
@@ -43,20 +60,14 @@ nav:
     - 模型存储介质选择: 04-platform-configuration/storage-selection.md
   - 5. NPU 模型部署:
     - NPU 推理流程: 05-npu-deployment/inference-flow.md
-    - 模型集成: 05-npu-deployment/model-integration.md
-    - 编译、烧录与运行验证: 05-npu-deployment/run-and-verify.md
-  - 6. 性能优化:
-    - 性能与内存优化: 06-optimization/performance.md
-  - 7. 自定义算子:
-    - 算子支持检查: 07-custom-operators/operator-support.md
-    - 自定义算子部署与调试: 07-custom-operators/custom-operator.md
-  - 8. 应用集成:
-    - Renesas RUHMI: 08-application/ruhmi.md
-  - 9. 常见问题: 09-troubleshooting/common-errors.md
-  - 10. 参考资料:
-    - 版本兼容表: 10-reference/version-matrix.md
-    - 源文档与维护说明: 10-reference/source-documents.md
-    - 发行说明: 10-reference/release-notes.md
+  - 6. 自定义算子:
+    - 算子支持检查: 06-custom-operators/operator-support.md
+    - 自定义算子部署与调试: 06-custom-operators/custom-operator.md
+  - 7. 性能调优:
+    - 性能调优: 07-optimization/performance.md
+  - 8. 参考资料:
+    - 源文档与维护说明: 08-reference/source-documents.md
+    - 发行说明: 08-reference/release-notes.md
   - RA8P1官网: https://www.renesas.cn/zh/products/ra8p1
   - ONE FILED JIRA: https://onefieldjira.renesas.com/projects/MPU/queues/custom/1256
   - Wiki Page: https://renesas-wiki.atlassian.net/wiki/spaces/REN/overview

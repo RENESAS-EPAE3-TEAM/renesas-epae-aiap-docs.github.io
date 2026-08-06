@@ -1,0 +1,3424 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="基于 Ethos-U55 NPU 和 TensorFlow Lite Micro 的 RA8P1 端侧 AI 部署指南">
+      
+      
+      
+        <link rel="canonical" href="https://renesas-epae3-team.github.io/renesas-epae-aiap-docs.github.io/06-custom-operators/custom-operator/">
+      
+      
+        <link rel="prev" href="../operator-support/">
+      
+      
+        <link rel="next" href="../../07-optimization/performance/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>自定义算子部署与调试 - Renesas RA8P1 AI 应用开发指南</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Renesas RA8P1 AI 应用开发指南" class="md-header__button md-logo" aria-label="Renesas RA8P1 AI 应用开发指南" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Renesas RA8P1 AI 应用开发指南
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              自定义算子部署与调试
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Renesas RA8P1 AI 应用开发指南" class="md-nav__button md-logo" aria-label="Renesas RA8P1 AI 应用开发指南" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Renesas RA8P1 AI 应用开发指南
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. RA8P1 AI 概述
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. RA8P1 AI 概述
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-overview/platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    平台与软件架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-overview/development-flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    完整开发流程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. 快速入门
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. 快速入门
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-getting-started/prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发前置条件
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-getting-started/quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MNIST：运行第一个 AI 示例
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. 模型转换与量化
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. 模型转换与量化
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-model-preparation/int8-quantization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Keras/ONNX 转换、量化与验证
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. 平台配置
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. 平台配置
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-platform-configuration/clock-and-memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    时钟与内存规划
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-platform-configuration/storage-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    模型存储介质选择
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. NPU 模型部署
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. NPU 模型部署
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-npu-deployment/inference-flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NPU 推理流程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. 自定义算子
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. 自定义算子
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operator-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    算子支持检查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    自定义算子部署与调试
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    自定义算子部署与调试
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        进入本章前的判断
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考工程与目标
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="参考工程与目标">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        模型介绍
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        开发环境版本记录
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        术语
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 概述与流程图
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 概述与流程图">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 为什么需要本工程的算子实现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 本指南最终跑通的目标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 总体流程图
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 自定义算子实现步骤
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 当前参考工程事实摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 模型概览与数据流
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 模型概览与数据流">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 模型结构与节点职责
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-myscale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 模型生成与 MyScale 节点追加
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 输入、输出与张量映射
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 核心实现代码参考列表
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 核心实现代码参考列表">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 模型节点索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-builtin-builtin-custom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 基本概念：builtin、未移植 builtin 与 custom
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 基本概念：builtin、未移植 builtin 与 custom">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 三种情况
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-builtin-kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 为什么 builtin 节点仍要自己实现 kernel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 如何确认模型节点
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 各算子的设计目的与实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 各算子的设计目的与实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-cortex-m85-cmsis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Cortex-M85 上的 CMSIS 优化路径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-rfft2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 RFFT2D：将二维实数输入转换为二维复数频谱
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 RFFT2D：将二维实数输入转换为二维复数频谱">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数学定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与源码的对应关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-complex_abs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 COMPLEX_ABS：将复数频谱变为实数幅值
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-myscale-custom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 MyScale：示范完整的 CUSTOM 算子
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 MyScale：示范完整的 CUSTOM 算子">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Init()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prepare" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prepare()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invokeeval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Invoke()/Eval()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-resolver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 注册与 Resolver 集成
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 注册与 Resolver 集成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 注册接口
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-resolver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Resolver 配置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Resolver 配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#addethosu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AddEthosU() 在当前模型中的作用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 模型中的调用方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-ra8p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. RA8P1 部署步骤
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. RA8P1 部署步骤">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 生成模型和参考数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-vela" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 执行 Vela 命令并正确解读结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 确认算子源文件参与构建
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 分阶段调试方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 分阶段调试方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 第 1 阶段：先检查模型，而非板端
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-2-resolver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 第 2 阶段：Resolver 查询失败
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-3-prepare" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 第 3 阶段：Prepare 失败
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-4-invoke" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 第 4 阶段：Invoke 后数值不正确
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-5-cpunpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 第 5 阶段：确认 CPU/NPU 期望
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 最小验收清单
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. 性能调优
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. 性能调优
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-optimization/performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    性能调优
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. 参考资料
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. 参考资料
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-reference/source-documents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    源文档与维护说明
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-reference/release-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    发行说明
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://www.renesas.cn/zh/products/ra8p1" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RA8P1官网
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://onefieldjira.renesas.com/projects/MPU/queues/custom/1256" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ONE FILED JIRA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://renesas-wiki.atlassian.net/wiki/spaces/REN/overview" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wiki Page
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        进入本章前的判断
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考工程与目标
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="参考工程与目标">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        模型介绍
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        开发环境版本记录
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        术语
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 概述与流程图
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 概述与流程图">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 为什么需要本工程的算子实现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 本指南最终跑通的目标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 总体流程图
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 自定义算子实现步骤
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 当前参考工程事实摘要
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 模型概览与数据流
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 模型概览与数据流">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 模型结构与节点职责
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-myscale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 模型生成与 MyScale 节点追加
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 输入、输出与张量映射
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 核心实现代码参考列表
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 核心实现代码参考列表">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 模型节点索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-builtin-builtin-custom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 基本概念：builtin、未移植 builtin 与 custom
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 基本概念：builtin、未移植 builtin 与 custom">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 三种情况
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-builtin-kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 为什么 builtin 节点仍要自己实现 kernel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 如何确认模型节点
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 各算子的设计目的与实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 各算子的设计目的与实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-cortex-m85-cmsis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Cortex-M85 上的 CMSIS 优化路径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-rfft2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 RFFT2D：将二维实数输入转换为二维复数频谱
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 RFFT2D：将二维实数输入转换为二维复数频谱">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数学定义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与源码的对应关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-complex_abs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 COMPLEX_ABS：将复数频谱变为实数幅值
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-myscale-custom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 MyScale：示范完整的 CUSTOM 算子
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 MyScale：示范完整的 CUSTOM 算子">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Init()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prepare" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prepare()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invokeeval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Invoke()/Eval()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-resolver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 注册与 Resolver 集成
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 注册与 Resolver 集成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 注册接口
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-resolver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Resolver 配置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Resolver 配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#addethosu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AddEthosU() 在当前模型中的作用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 模型中的调用方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-ra8p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. RA8P1 部署步骤
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. RA8P1 部署步骤">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 生成模型和参考数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-vela" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 执行 Vela 命令并正确解读结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 确认算子源文件参与构建
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 分阶段调试方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 分阶段调试方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 第 1 阶段：先检查模型，而非板端
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-2-resolver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 第 2 阶段：Resolver 查询失败
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-3-prepare" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 第 3 阶段：Prepare 失败
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-4-invoke" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 第 4 阶段：Invoke 后数值不正确
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-5-cpunpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 第 5 阶段：确认 CPU/NPU 期望
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 最小验收清单
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">自定义算子部署与调试</h1>
+<p>本章介绍在EK-RA8P1 上的实现自定义算子的过程。
+以 <code>RFFT2D -&gt; COMPLEX_ABS -&gt; MyScale</code> 参考模型，目标是在当前工程中，把模型生成、算子实现、Resolver 注册、模型执行和结果比对串成一条可调试的链路。</p>
+<p>RFFT2D 工程项目下载地址：
+TODO</p>
+<h2 id="_2">进入本章前的判断</h2>
+<pre class="mermaid"><code>flowchart TD
+    A["Vela 将节点留在 CPU"] --&gt; B{"能否调整参数或重写模型？"}
+    B -- "能" --&gt; C["修改模型并重新量化"]
+    C --&gt; D["重新运行 Vela"]
+    B -- "不能" --&gt; E{"TFLM 是否已有 CPU kernel？"}
+    E -- "有" --&gt; F["注册已有 kernel 并评估性能"]
+    E -- "没有" --&gt; G["实现或移植 CPU kernel"]
+    G --&gt; H["注册到 Resolver"]
+    H --&gt; I["板端结果与 PC 参考值比较"]
+    F -- "性能满足要求" --&gt; J["结束"]
+    I -- “精度满足”--&gt; J</code></pre>
+<h2 id="_3">参考工程与目标</h2>
+<p>CMSIS-NN 已包含在工程环境中，但当前三个节点没有使用 CMSIS-NN。<code>RFFT2D</code> 通过 CMSIS-DSP 在 Cortex-M85 上执行。</p>
+<h3 id="_4">模型介绍</h3>
+<ul>
+<li>模型结构图：</li>
+</ul>
+<p><img alt="t" src="../../assets/images/model-rfft2d-overview.png" /></p>
+<p>本文中的“自定义算子”包含两种需要工程侧补充实现的情况：</p>
+<ul>
+<li><code>RFFT2D</code> 与 <code>COMPLEX_ABS</code> 是模型中的 builtin 节点；当前工程在 <code>rfft2d.cc</code> 中提供它们的 kernel 和注册函数。</li>
+<li><code>MyScale</code> 是模型中的真正 <code>CUSTOM</code> 节点；模型用 <code>customCode="MyScale"</code> 标识它，工程以同一字符串注册。</li>
+</ul>
+<p>文中当前部署使用 CMSIS-DSP 实现 RFFT2D；<code>rfft2d.cc</code> 以 <code>USE_CMSIS_DSP</code> 选择该路径。</p>
+<h3 id="_5">开发环境版本记录</h3>
+<p>请在开始构建、模型转换或复现问题前填写下表。版本会影响工程生成、模型转换和运行时行为；调试记录应与本表保持一致。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>版本/配置</th>
+<th>填写说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>e2 studio</td>
+<td>2026-04.2</td>
+<td>IDE 版本号。</td>
+</tr>
+<tr>
+<td>Renesas FSP</td>
+<td>6.5.1</td>
+<td>FSP 包版本号。</td>
+</tr>
+<tr>
+<td>Vela</td>
+<td>4.2.0</td>
+<td>用于模型转换的 Vela 版本。</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>3.10.5</td>
+<td>运行模型生成脚本的 Python 版本。</td>
+</tr>
+<tr>
+<td>TensorFlow</td>
+<td>2.18.0</td>
+<td>模型构建与转换环境中的 TensorFlow 版本。</td>
+</tr>
+<tr>
+<td>TensorFlow Lite</td>
+<td>2.18.0</td>
+<td>Python 环境中 TensorFlow Lite / Interpreter 对应版本。</td>
+</tr>
+<tr>
+<td>CMSIS-DSP</td>
+<td>1.16.2</td>
+<td>RFFT2D 使用的 CMSIS-DSP 版本。</td>
+</tr>
+<tr>
+<td>CMSIS-NN</td>
+<td>7.0.0</td>
+<td>当前模型未使用。</td>
+</tr>
+<tr>
+<td>Ethos-U Stack</td>
+<td>25.2.0</td>
+<td>工程使用的 Ethos-U Core Software / Core Driver 软件栈版本。</td>
+</tr>
+<tr>
+<td>LLVM</td>
+<td>21.1.1</td>
+<td>嵌入式代码toolchain版本。</td>
+</tr>
+<tr>
+<td>SEGGER J-LINK</td>
+<td>9.42</td>
+<td>用于下载、调试和 RTT 日志输出的 SEGGER J-Link 软件版本。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_6">术语</h3>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>本文含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>builtin 节点</td>
+<td>模型使用固定 builtin opcode 表示的节点；本模型中为 <code>RFFT2D</code>、<code>COMPLEX_ABS</code>。</td>
+</tr>
+<tr>
+<td>CUSTOM 节点</td>
+<td>模型使用 <code>CUSTOM</code> opcode 和字符串标识的节点；本模型中为 <code>MyScale</code>。</td>
+</tr>
+<tr>
+<td>Resolver</td>
+<td>将模型节点映射到 <code>TFLMRegistration</code> 的注册表。</td>
+</tr>
+<tr>
+<td>Prepare</td>
+<td>张量分配阶段执行的输入、输出类型和 shape 检查。</td>
+</tr>
+<tr>
+<td>Eval</td>
+<td>每个节点的实际计算回调，在解释器执行阶段被调用。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1">1. 概述与流程图</h2>
+<h3 id="11">1.1 为什么需要本工程的算子实现</h3>
+<p>模型的三个节点并不能只靠模型文件自动执行：每个节点都必须在 Resolver 中找到对应的 registration。当前工程由 <code>rfft2d.cc</code> 提供 <code>Register_RFFT2D()</code> 和 <code>Register_COMPLEX_ABS()</code>，由 <code>my_scale.cc</code> 提供 <code>Register_MY_SCALE()</code>；随后 <code>get_resolver()</code> 创建 <code>micro_op_resolver</code>，调用 <code>AddRfft2D()</code>、<code>AddComplexAbs()</code> 和 <code>AddCustom("MyScale", Register_MY_SCALE())</code>，将这三个节点的 registration 加入 Resolver。</p>
+<p>其中，<code>RFFT2D</code> 和 <code>COMPLEX_ABS</code> 必须按照 builtin opcode 注册；<code>MyScale</code> 则必须使用模型中精确的 custom code <code>"MyScale"</code> 注册。若类型或名称不匹配，问题会在节点查找或 <code>Prepare</code> 阶段出现。</p>
+<h3 id="12">1.2 本指南最终跑通的目标</h3>
+<p>本指南的最小闭环是：用同一套模型和测试数据，让 RA8P1 上的 TFLM 依次完成 <code>RFFT2D</code>、<code>COMPLEX_ABS</code>、<code>MyScale</code> 三个节点的 <code>Prepare</code> 和 <code>Eval</code>，然后把板端结果与脚本生成的参考输出比较。</p>
+<p>当前工程的目标张量关系如下：</p>
+<pre class="mermaid"><code>flowchart TD
+    A["input&lt;br/&gt;float32 [1, 16, 32]&lt;br/&gt;512 elements"] --&gt; B["RFFT2D"]
+    B --&gt; C["rfft output&lt;br/&gt;complex64 [1, 16, 17]"]
+    C --&gt; D["COMPLEX_ABS"]
+    D --&gt; E["absolute-value output&lt;br/&gt;float32 [1, 16, 17]&lt;br/&gt;272 elements"]
+    E --&gt; F["MyScale"]
+    F --&gt; G["final output&lt;br/&gt;float32 [1, 16, 17]&lt;br/&gt;272 elements"]</code></pre>
+<p>当前脚本生成的 MyScale 参数为 <code>scale=3.0</code>、<code>bias=1.0</code>，因此最终参考输出为：</p>
+<div class="arithmatex">\[final=|RFFT2D(input)|\times3.0+1.0\]</div>
+<p>板端调试的成功标志不是只看到程序运行，而是同时满足：</p>
+<ol>
+<li>Resolver 的四项注册均成功：<code>COMPLEX_ABS</code>、<code>RFFT2D</code>、<code>MyScale</code>、<code>EthosU</code>。</li>
+<li>三个算子的 <code>Prepare</code> 均通过，最终输出 tensor 为 272 个 <code>float32</code> 元素，即 1088 字节。</li>
+<li><code>AllocateTensors()</code>、输入拷贝、解释器执行和输出拷贝均返回成功。</li>
+<li>板端输出可与 <code>test_output_ref</code> 比较，并打印最大绝对误差。</li>
+</ol>
+<h3 id="13">1.3 总体流程图</h3>
+<pre class="mermaid"><code>flowchart TD
+    A["Python: build_rfft_model()&lt;br/&gt;RFFT2D -&gt; COMPLEX_ABS"] --&gt; B["append_myscale()&lt;br/&gt;追加 CUSTOM: MyScale"]
+    B --&gt; C["model_rfft2d_myscale.tflite"]
+    B --&gt; D["test_data_for_rfft2d_scale.h&lt;br/&gt;输入与最终参考输出"]
+    C --&gt; E["Vela cmd.txt&lt;br/&gt;当前三节点均放在 CPU"]
+    E --&gt; F["model_rfft2d_scale.h&lt;br/&gt;固件内模型数组"]
+
+    G["rfft2d.cc&lt;br/&gt;Register_RFFT2D / Register_COMPLEX_ABS"] --&gt; H["工程 Resolver"]
+    I["my_scale.cc&lt;br/&gt;Register_MY_SCALE"] --&gt; H
+    H --&gt; J["RFFT2D builtin&lt;br/&gt;COMPLEX_ABS builtin&lt;br/&gt;MyScale custom&lt;br/&gt;EthosU"]
+
+    F --&gt; K["MicroInterpreter"]
+    D --&gt; K
+    J --&gt; K
+    K --&gt; L["AllocateTensors -&gt; Invoke"]
+    L --&gt; M["输出与 test_output_ref 比较"]</code></pre>
+<h3 id="14">1.4 自定义算子实现步骤</h3>
+<p>实现一个自定义算子时，模型侧与 MCU 侧必须使用同一份算子契约：模型定义节点名称、输入输出和参数；MCU 侧实现 <code>Init</code>、<code>Prepare</code>、<code>Eval</code>，再将 registration 加入 Resolver。最后使用同一份输入与参考输出验证完整链路。当前 <code>MyScale</code> 就遵循这一流程。</p>
+<pre class="mermaid"><code>flowchart TD
+  A["定义模型节点&lt;br/&gt;输入、输出、customCode、参数"] --&gt; B["生成 .tflite 与参考数据"]
+  B --&gt; C["实现 MCU kernel&lt;br/&gt;Init -&gt; Prepare -&gt; Eval"]
+  C --&gt; D["实现 Register_XXX()"]
+  D --&gt; E["Resolver: AddCustom(名称, Register_XXX())"]
+  E --&gt; F["编译并链接算子源文件"]
+  F --&gt; G["AllocateTensors -&gt; Invoke"]
+  G --&gt; H["与 test_output_ref 比较"]</code></pre>
+<p>其中 <code>AddCustom()</code> 的名称必须与模型 <code>customCode</code> 完全一致；<code>Prepare()</code> 必须确认 tensor 类型和 shape，<code>Eval()</code> 才执行实际计算。若算子使用 CMSIS-DSP 或 CMSIS-NN，库调用位于 <code>Eval()</code> 内部，不会改变该注册与验证步骤。</p>
+<h3 id="15">1.5 当前参考工程事实摘要</h3>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>当前工程中的事实</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模型</td>
+<td><code>model_rfft2d_myscale.tflite</code> 由 <code>generate_model_rftt2d_myscale.py</code> 生成，节点顺序为 <code>RFFT2D -&gt; COMPLEX_ABS -&gt; MyScale</code>。</td>
+</tr>
+<tr>
+<td>输入与输出</td>
+<td>输入为 <code>float32 [1,16,32]</code>；最终输出为 <code>float32 [1,16,17]</code>。测试数据文件定义输入 512 个 float、输出 272 个 float。</td>
+</tr>
+<tr>
+<td>RFFT2D</td>
+<td><code>rfft2d.cc</code> 要求两个输入、一个输出；其输出类型为 <code>complex64</code>，最后一维为 <code>W/2+1</code>。</td>
+</tr>
+<tr>
+<td>COMPLEX_ABS</td>
+<td>实现位于 <code>rfft2d.cc</code>，读取交错的 <code>real, imag</code> float，并计算 <span class="arithmatex">\(\sqrt{real^2+imag^2}\)</span>。</td>
+</tr>
+<tr>
+<td>MyScale</td>
+<td><code>my_scale.cc</code> 的计算为 <span class="arithmatex">\(out=in\times scale+bias\)</span>；<code>Init()</code> 从 FlexBuffer 读取 <code>scale</code> 和 <code>bias</code>。</td>
+</tr>
+<tr>
+<td>Resolver</td>
+<td><code>kNumberOperators = 4</code>；当前注册 <code>AddComplexAbs()</code>、<code>AddRfft2D()</code>、<code>AddCustom("MyScale", ...)</code> 和 <code>AddEthosU()</code>，并打印每项注册状态。</td>
+</tr>
+<tr>
+<td>调试代码</td>
+<td><code>inference.cpp</code> 可打印模型节点、输入/输出 sample 与最大绝对误差；运行流程会报告 <code>AllocateTensors()</code>、拷贝及 <code>Invoke()</code> 状态。</td>
+</tr>
+<tr>
+<td>Vela 结果</td>
+<td><code>cmd.txt</code> 和模型头文件的注释均表明：<code>RFFT2D</code>、<code>COMPLEX_ABS</code>、<code>MyScale</code> 当前放在 CPU，汇总为 3 个 CPU operators、0 个 NPU operators。</td>
+</tr>
+<tr>
+<td>CMSIS-DSP RFFT2D</td>
+<td>当前部署通过 <code>USE_CMSIS_DSP</code> 选择 <code>CmsisRfft2d()</code>；该实现逐行调用 CMSIS-DSP RFFT、逐列调用 CFFT，替代仅用于小尺寸调试的朴素 DFT。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2">2. 模型概览与数据流</h2>
+<h3 id="21">2.1 模型结构与节点职责</h3>
+<p>本工程模型由 <code>generate_model_rftt2d_myscale.py</code> 生成，最终模型文件为 <code>model_rfft2d_myscale.tflite</code>。脚本先创建 <code>RFFT2D -&gt; COMPLEX_ABS</code> 的 base 模型，再追加 <code>MyScale</code> 作为最终输出节点。</p>
+<p>模型数据流是：</p>
+<div class="highlight"><pre><span></span><code>float32 [1, 16, 32]
+        |
+        v
+RFFT2D (builtin)
+        |
+        v
+complex64 [1, 16, 17]
+        |
+        v
+COMPLEX_ABS (builtin)
+        |
+        v
+float32 [1, 16, 17]
+        |
+        v
+MyScale (CUSTOM)
+        |
+        v
+float32 [1, 16, 17]
+</code></pre></div>
+<p><code>RFFT2D</code> 与 <code>COMPLEX_ABS</code> 是 builtin 节点；<code>MyScale</code> 是 <code>CUSTOM</code> 节点，模型写入的 <code>customCode</code> 为精确字符串 <code>"MyScale"</code>。当前 MyScale 参数为 <span class="arithmatex">\(scale=3.0\)</span>、<span class="arithmatex">\(bias=1.0\)</span>，并通过 FlexBuffer <code>customOptions</code> 保存。</p>
+<h3 id="22-myscale">2.2 模型生成与 MyScale 节点追加</h3>
+<p><code>build_rfft_model()</code> 先建立 base 模型：</p>
+<div class="highlight"><pre><span></span><code><span class="n">inp</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;input&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">rfft2d</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;rfft2d&quot;</span><span class="p">)(</span><span class="n">inp</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;complex_abs&quot;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+<p>随后 <code>append_myscale()</code> 取得 base 模型的原输出张量 <code>old_out</code>，新增同 shape 的 <code>float32</code> 张量作为 MyScale 输出，并将子图输出更新为新张量。</p>
+<div class="highlight"><pre><span></span><code><span class="n">old_out</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">out_shape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sg</span><span class="o">.</span><span class="n">tensors</span><span class="p">[</span><span class="n">old_out</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">schema_fb</span><span class="o">.</span><span class="n">TensorT</span><span class="p">()</span>
+<span class="n">t</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">out_shape</span>
+<span class="n">t</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">schema_fb</span><span class="o">.</span><span class="n">TensorType</span><span class="o">.</span><span class="n">FLOAT32</span>
+<span class="n">t</span><span class="o">.</span><span class="n">buffer</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">t</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;myscale_output&quot;</span>
+<span class="n">sg</span><span class="o">.</span><span class="n">tensors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">new_out</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sg</span><span class="o">.</span><span class="n">tensors</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="n">op</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">old_out</span><span class="p">)]</span>
+<span class="n">op</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">new_out</span><span class="p">)]</span>
+<span class="n">sg</span><span class="o">.</span><span class="n">operators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+<span class="n">sg</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">new_out</span><span class="p">)]</span>
+</code></pre></div>
+<p>MyScale 是逐元素运算，不改变 shape；更新 <code>sg.outputs</code> 能保证部署模型输出来自 MyScale，而不是中间的幅值张量。可通过脚本的 <code>inspect_combined_model()</code> 验证节点顺序和 <code>custom_code='MyScale'</code>。</p>
+<h3 id="23">2.3 输入、输出与张量映射</h3>
+<p>脚本定义 <code>CMSIS_RFFT2D_HEIGHT = 16</code>、<code>CMSIS_RFFT2D_WIDTH = 32</code>。输入共有 <span class="arithmatex">\(1\times16\times32=512\)</span> 个元素；RFFT2D 的输出宽度为 <span class="arithmatex">\(W/2+1=17\)</span>，后续两个节点均保持 <code>[1,16,17]</code>，共有 <span class="arithmatex">\(1\times16\times17=272\)</span> 个实数元素。</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>张量类型</th>
+<th>shape</th>
+<th>元素布局/计算</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入</td>
+<td><code>float32</code></td>
+<td><code>[1,16,32]</code></td>
+<td>512 个实数。</td>
+</tr>
+<tr>
+<td>RFFT2D 输出</td>
+<td><code>complex64</code></td>
+<td><code>[1,16,17]</code></td>
+<td>每个复数由相邻两个 <code>float</code> 保存：<code>real, imag</code>。</td>
+</tr>
+<tr>
+<td>COMPLEX_ABS 输出</td>
+<td><code>float32</code></td>
+<td><code>[1,16,17]</code></td>
+<td>每个元素为 <span class="arithmatex">\(\sqrt{real^2+imag^2}\)</span>。</td>
+</tr>
+<tr>
+<td>MyScale 输出</td>
+<td><code>float32</code></td>
+<td><code>[1,16,17]</code></td>
+<td>每个元素为 <span class="arithmatex">\(input\times scale+bias\)</span>。</td>
+</tr>
+</tbody>
+</table>
+<p>Vela 输出表明这三个节点当前均放在 CPU：<code>CPU operators = 3 (100.0%)</code>、<code>NPU operators = 0 (0.0%)</code>。因此，初次调试应先验证 CPU kernel、Resolver 和参考输出，不应假设三个节点由 Ethos-U55 执行。</p>
+<p><strong>名称不要混淆：</strong> Vela 警告中的 <code>CUSTOM 'myscale_output'</code> 对应脚本为新输出 tensor 设置的 <code>t.name = "myscale_output"</code>；它不是 CUSTOM 节点的 <code>customCode</code>。Resolver 的匹配键仍是 <code>oc.customCode = "MyScale"</code>，因此必须使用 <code>AddCustom("MyScale", Register_MY_SCALE())</code>，不能用 <code>"myscale_output"</code>。</p>
+<hr />
+<h2 id="3">3. 核心实现代码参考列表</h2>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/my_scale.cc</code></td>
+<td><code>MyScaleParams</code>；<code>kInputTensor</code>、<code>kOutputTensor</code>；<code>Init()</code>、<code>Prepare()</code>、<code>Eval()</code>、<code>SetOutputDimsFromInput()</code>、<code>Register_MY_SCALE()</code>；FlexBuffer 键 <code>scale</code>、<code>bias</code>；<code>MyScale Prepare...</code> 日志。</td>
+</tr>
+<tr>
+<td><code>src/rfft2d.cc</code></td>
+<td><code>kInputTensor</code>、<code>kFftLengthTensor</code>、<code>kOutputTensor</code>；<code>Prepare()</code>、<code>Eval()</code>、<code>NaiveRfft2d()</code>、可选的 <code>CmsisRfft2d()</code>、<code>SetTensorDims()</code>、<code>IsPowerOfTwo()</code>、<code>Register_RFFT2D()</code>、<code>Register_COMPLEX_ABS()</code>；<code>USE_CMSIS_DSP</code> 条件编译；三个 <code>Prepare</code> 日志。</td>
+</tr>
+<tr>
+<td><code>src/complex_abs.h</code></td>
+<td><code>Register_COMPLEX_ABS()</code> 的声明。当前允许范围内未发现独立的 <code>complex_abs.c</code> 或 <code>complex_abs.cc</code>；其注册和执行实现位于 <code>rfft2d.cc</code>。</td>
+</tr>
+<tr>
+<td><code>src/py/generate_model_rftt2d_myscale.py</code></td>
+<td>模型构建、<code>append_myscale()</code>、<code>inspect_model()</code>、<code>inspect_combined_model()</code>、<code>run_inference()</code>、<code>generate_all()</code>；<code>CMSIS_RFFT2D_HEIGHT=16</code>、<code>CMSIS_RFFT2D_WIDTH=32</code>、<code>MYSCALE_SCALE=3.0</code>、<code>MYSCALE_BIAS=1.0</code>；模型节点及张量连接。文件名实际为 <code>rftt2d</code>，与任务中所写名称不同。</td>
+</tr>
+<tr>
+<td><code>src/py/model_rfft2d_myscale.tflite</code></td>
+<td>最终部署模型二进制；由 <code>COMBINED_TFLITE_PATH</code> 指向。其节点结构由 schema 检查函数输出。</td>
+</tr>
+<tr>
+<td><code>src/py/vela_convert/cmd.txt</code></td>
+<td>Vela 转换命令；<code>RFFT2D</code>、<code>COMPLEX_ABS</code>、<code>CUSTOM 'myscale_output'</code> 的 CPU 放置警告；<code>CPU operators = 3</code>、<code>NPU operators = 0</code>。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="31">3.1 模型节点索引</h3>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>模型类别</th>
+<th>输入</th>
+<th>输出</th>
+<th>参数或注册标识</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RFFT2D</code></td>
+<td>builtin</td>
+<td><code>float32 [1,16,32]</code> 与 <code>int32</code> FFT 长度张量</td>
+<td><code>complex64 [1,16,17]</code></td>
+<td><code>BuiltinOperator_RFFT2D</code>，<code>Register_RFFT2D()</code></td>
+</tr>
+<tr>
+<td><code>COMPLEX_ABS</code></td>
+<td>builtin</td>
+<td><code>complex64 [1,16,17]</code></td>
+<td><code>float32 [1,16,17]</code></td>
+<td><code>BuiltinOperator_COMPLEX_ABS</code>，<code>Register_COMPLEX_ABS()</code></td>
+</tr>
+<tr>
+<td><code>MyScale</code></td>
+<td><code>CUSTOM</code></td>
+<td><code>float32 [1,16,17]</code></td>
+<td><code>float32 [1,16,17]</code></td>
+<td><code>customCode="MyScale"</code>，FlexBuffer <code>scale</code>/<code>bias</code>，<code>Register_MY_SCALE()</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-builtin-builtin-custom">4. 基本概念：builtin、未移植 builtin 与 custom</h2>
+<h3 id="41">4.1 三种情况</h3>
+<ol>
+<li><strong>模型 builtin 节点</strong>：模型以固定 builtin opcode 表示的节点。本模型的 <code>RFFT2D</code> 和 <code>COMPLEX_ABS</code> 属于这一类。</li>
+<li><strong>工程中需要补充 kernel 的 builtin</strong>：即使模型节点是 builtin，工程仍必须提供与其 opcode 对应的 registration 和执行代码。<code>rfft2d.cc</code> 为两个节点提供了 registration、<code>Prepare</code> 和 <code>Eval</code>。</li>
+<li><strong>真正的 custom 节点</strong>：模型 opcode 为 <code>CUSTOM</code>，并包含字符串 <code>customCode</code>。<code>append_myscale()</code> 追加的 <code>MyScale</code> 正是该情况。</li>
+</ol>
+<p><strong>关键区别：</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// builtin 节点按 builtin opcode 匹配。</span>
+<span class="n">AddBuiltin</span><span class="p">(</span><span class="n">BuiltinOperator_RFFT2D</span><span class="p">,</span><span class="w"> </span><span class="n">Register_RFFT2D</span><span class="p">(),</span><span class="w"> </span><span class="n">ParseNoBuiltinOptions</span><span class="p">);</span>
+
+<span class="c1">// custom 节点按 customCode 字符串匹配。</span>
+<span class="n">AddCustom</span><span class="p">(</span><span class="s">&quot;MyScale&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Register_MY_SCALE</span><span class="p">());</span>
+</code></pre></div>
+<p>上面的注册形式来自工程内参考。对本模型而言，<code>AddCustom("RFFT2D", ...)</code> 不能替代 builtin 注册，因为脚本没有把 <code>RFFT2D</code> 改写成 <code>CUSTOM</code>；它只为 <code>MyScale</code> 新建了 <code>CUSTOM</code> opcode。</p>
+<h3 id="42-builtin-kernel">4.2 为什么 builtin 节点仍要自己实现 kernel</h3>
+<p><code>builtin</code> 只说明模型声明“这里需要执行某个标准算子”，例如 <code>RFFT2D</code>；它不保证 MCU 工程已经有这段算子的执行代码。需要区分三个对象：模型负责声明需要什么算子，TFLM 工程负责提供 kernel 并通过 Resolver 找到它，RA8P1 固件负责把这些工程代码编译、链接后运行在芯片上。</p>
+<p>因此，如果 builtin 节点无法执行，应检查当前 TFLM 工程是否包含对应 kernel，以及该 kernel 是否已加入 Resolver；不应将问题理解为“RA8P1 硬件不支持 builtin 算子”。要让一个 builtin 节点在当前 TFLM 工程中运行，以下三层必须同时存在：</p>
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th><code>RFFT2D</code> / <code>COMPLEX_ABS</code> 在当前工程中的含义</th>
+<th>缺失时的结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模型标识</td>
+<td><code>.tflite</code> 将节点标记为 builtin <code>RFFT2D</code> 或 <code>COMPLEX_ABS</code>。</td>
+<td>运行时不知道模型需要什么运算。</td>
+</tr>
+<tr>
+<td>Resolver 映射</td>
+<td>TFLM Resolver 用 <code>AddBuiltin(BuiltinOperator_..., Register_..., ...)</code> 将 builtin opcode 关联到 registration。</td>
+<td>TFLM 解释器无法由模型 opcode 找到实现。</td>
+</tr>
+<tr>
+<td>Kernel 实现</td>
+<td>TFLM registration 提供 <code>Prepare</code> 和 <code>Eval</code>；前者检查并设置 tensor，后者执行 FFT 或复数幅值计算。</td>
+<td>即使找到 opcode，也没有可执行代码完成计算。</td>
+</tr>
+</tbody>
+</table>
+<p>因此，本工程需要“自己实现”的是当前 TFLM 构建所需的第三层 kernel，并在第二层把它加入 Resolver；不是因为 RA8P1 要求把 <code>RFFT2D</code> 或 <code>COMPLEX_ABS</code> 改写为 <code>CUSTOM</code> 节点。<code>rfft2d.cc</code> 中的两个 registration 就是具体证据：</p>
+<div class="highlight"><pre><span></span><code><span class="n">TFLMRegistration</span><span class="o">*</span><span class="w"> </span><span class="nf">Register_RFFT2D</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="n">TFLMRegistration</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="n">tflite</span><span class="o">::</span><span class="n">micro</span><span class="o">::</span><span class="n">RegisterOp</span><span class="p">(</span><span class="cm">/*init=*/</span><span class="nb">nullptr</span><span class="p">,</span><span class="w"> </span><span class="n">Prepare</span><span class="p">,</span><span class="w"> </span><span class="n">Eval</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="o">&amp;</span><span class="n">r</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">TFLMRegistration</span><span class="o">*</span><span class="w"> </span><span class="nf">Register_COMPLEX_ABS</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="n">TFLMRegistration</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="n">tflite</span><span class="o">::</span><span class="n">micro</span><span class="o">::</span><span class="n">RegisterOp</span><span class="p">(</span><span class="cm">/*init=*/</span><span class="nb">nullptr</span><span class="p">,</span><span class="w"> </span><span class="cm">/*prepare=*/</span><span class="p">...,</span><span class="w"> </span><span class="cm">/*eval=*/</span><span class="p">...);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="o">&amp;</span><span class="n">r</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>Register_RFFT2D()</code> 使用的 <code>Prepare</code> 会检查两个输入、一个输出、类型和 FFT shape；当前部署的 <code>Eval</code> 调用 <code>CmsisRfft2d()</code>，未启用 <code>USE_CMSIS_DSP</code> 时才回退到 <code>NaiveRfft2d()</code>。<code>Register_COMPLEX_ABS()</code> 的 <code>Prepare</code> 检查 <code>complex64 -&gt; float32</code>，其 <code>Eval</code> 对每个复数计算幅值。这些都是 builtin opcode 自身不携带、必须由当前 TFLM 构建链接的代码提供的执行行为。</p>
+<p>可以把三类节点理解为下表：</p>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>模型中的身份</th>
+<th>工程为什么仍需代码</th>
+<th>正确注册键</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RFFT2D</code></td>
+<td>builtin</td>
+<td>当前工程需要提供 FFT 的 <code>Prepare</code> 和 <code>Eval</code>。</td>
+<td><code>BuiltinOperator_RFFT2D</code></td>
+</tr>
+<tr>
+<td><code>COMPLEX_ABS</code></td>
+<td>builtin</td>
+<td>当前工程需要提供复数幅值的 <code>Prepare</code> 和 <code>Eval</code>。</td>
+<td><code>BuiltinOperator_COMPLEX_ABS</code></td>
+</tr>
+<tr>
+<td><code>MyScale</code></td>
+<td><code>CUSTOM</code></td>
+<td>模型没有 builtin opcode 可映射，工程需提供 kernel，并按模型写入的名称查找。</td>
+<td><code>"MyScale"</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>如何验证：</strong> 若 builtin 节点没有正确加入 Resolver，问题会发生在 <code>AllocateTensors()</code> 前后的节点查找阶段；若注册成功但 <code>Prepare</code> 的类型或 shape 检查失败，日志会显示 <code>RFFT2D Prepare failed...</code> 或 <code>COMPLEX_ABS Prepare failed...</code>。当两个 builtin kernel 都执行成功后，数据才会流入 <code>MyScale</code>。</p>
+<h3 id="43">4.3 如何确认模型节点</h3>
+<p>执行生成脚本中的 <code>inspect_combined_model()</code> 会直接使用 schema 遍历 <code>sg.Operators()</code>：builtin 节点打印 builtin 名称，<code>CUSTOM</code> 节点打印 <code>custom_code</code>。</p>
+<p>预期的逻辑顺序为：</p>
+<div class="highlight"><pre><span></span><code>node[0]  BUILTIN RFFT2D
+node[1]  BUILTIN COMPLEX_ABS
+node[2]  CUSTOM  custom_code=&#39;MyScale&#39;
+</code></pre></div>
+<p>这里最关键的验证点是最后一行的字符串必须为 <code>MyScale</code>，且大小写一致。脚本中写入该字符串的位置是：</p>
+<div class="highlight"><pre><span></span><code><span class="n">oc</span><span class="o">.</span><span class="n">builtinCode</span> <span class="o">=</span> <span class="n">schema_fb</span><span class="o">.</span><span class="n">BuiltinOperator</span><span class="o">.</span><span class="n">CUSTOM</span>
+<span class="n">oc</span><span class="o">.</span><span class="n">deprecatedBuiltinCode</span> <span class="o">=</span> <span class="n">schema_fb</span><span class="o">.</span><span class="n">BuiltinOperator</span><span class="o">.</span><span class="n">CUSTOM</span>
+<span class="n">oc</span><span class="o">.</span><span class="n">customCode</span> <span class="o">=</span> <span class="s2">&quot;MyScale&quot;</span>
+</code></pre></div>
+<p>这也是 MCU 侧 <code>AddCustom()</code> 必须使用 <code>"MyScale"</code> 的原因。</p>
+<hr />
+<h2 id="5">5. 各算子的设计目的与实现</h2>
+<h3 id="51-cortex-m85-cmsis">5.1 Cortex-M85 上的 CMSIS 优化路径</h3>
+<p>RA8P1 使用 Cortex-M85 内核。除直接编写 C/C++ 循环外，自定义算子的 <code>Eval()</code> 还可以根据运算类型考虑调用 CMSIS 库完成实现或优化。</p>
+<table>
+<thead>
+<tr>
+<th>库</th>
+<th>适合的自定义算子类型</th>
+<th>当前工程状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CMSIS-DSP</td>
+<td>FFT、滤波、向量数学、复数或其他信号处理运算。</td>
+<td>当前 RFFT2D 通过 <code>USE_CMSIS_DSP</code> 使用 <code>CmsisRfft2d()</code>：逐行调用 CMSIS-DSP RFFT，逐列调用 CFFT。该实现替代 <code>NaiveRfft2d()</code> 的朴素 DFT，当前工程确认其速度快很多。</td>
+</tr>
+<tr>
+<td>CMSIS-NN</td>
+<td>量化神经网络类运算，例如卷积、全连接、激活或池化等可映射的计算。</td>
+<td>工程目录包含 CMSIS-NN；当前 <code>rfft2d.cc</code> 和 <code>my_scale.cc</code> 没有调用 CMSIS-NN API，因此 <code>RFFT2D</code>、<code>COMPLEX_ABS</code>、<code>MyScale</code> 当前并非 CMSIS-NN 实现。</td>
+</tr>
+</tbody>
+</table>
+<p>CMSIS-DSP 与 CMSIS-NN 都只改变 kernel 的内部实现；它们不改变模型节点类型、<code>Register_*()</code> 接口、Resolver 注册方式或张量契约。无论使用手写循环还是 CMSIS 库，仍必须让 <code>Prepare()</code> 验证类型/shape，并让 <code>Eval()</code> 按模型约定读写 tensor。</p>
+<p><strong>当前模型的选择：</strong> RFFT2D 属于信号处理计算，当前工程已经使用 CMSIS-DSP 实现；MyScale 是简单的逐元素浮点计算，当前直接使用循环实现。这里的 CMSIS-DSP 仍在 Cortex-M85 CPU 上运行，并不表示 RFFT2D 被 Ethos-U 执行；性能比较对象是 <code>NaiveRfft2d()</code> 的朴素 DFT 循环。若未来新增量化神经网络类 custom kernel，可评估 CMSIS-NN，但需要先确认输入/输出数据类型、量化参数、所选 API 的约束和构建链接配置。</p>
+<h3 id="52-rfft2d">5.2 RFFT2D：将二维实数输入转换为二维复数频谱</h3>
+<p><code>RFFT2D</code> 的 <code>Prepare()</code> 要求：两个输入、一个输出；第一个输入为 <code>float32</code>，第二个 FFT 长度输入为 <code>int32</code>，输出为 <code>complex64</code>。输入 rank 至少为 2，最后两个维度 <code>H</code>、<code>W</code> 必须是 2 的幂。</p>
+<h4 id="_7">数学定义</h4>
+<p>对一个二维实数输入 <span class="arithmatex">\(x[h,w]\)</span>，本工程的 <code>NaiveRfft2d()</code> 为每一个输出频率坐标 <span class="arithmatex">\((u,v)\)</span> 计算二维离散傅里叶变换：</p>
+<div class="arithmatex">\[
+X[u,v] = \sum_{h=0}^{H-1}\sum_{w=0}^{W-1}
+x[h,w]\cdot e^{-j2\pi\left(\frac{uh}{H}+\frac{vw}{W}\right)}
+\]</div>
+<p>其中，<span class="arithmatex">\(h\)</span>、<span class="arithmatex">\(w\)</span> 是输入空间坐标，<span class="arithmatex">\(u\)</span>、<span class="arithmatex">\(v\)</span> 是频率坐标，<span class="arithmatex">\(H\)</span> 和 <span class="arithmatex">\(W\)</span> 分别是输入最后两维的高度和宽度。因为输入是实数，当前实现仅计算宽度方向的非冗余频率：</p>
+<div class="arithmatex">\[
+0 \leq u &lt; H, \qquad 0 \leq v &lt; \frac{W}{2}+1
+\]</div>
+<p>将复指数展开后，输出复数 <span class="arithmatex">\(X[u,v]=R[u,v]+jI[u,v]\)</span> 的实部和虚部分别为：</p>
+<div class="arithmatex">\[
+R[u,v] = \sum_{h=0}^{H-1}\sum_{w=0}^{W-1}
+x[h,w]\cos\left(-2\pi\left(\frac{uh}{H}+\frac{vw}{W}\right)\right)
+\]</div>
+<div class="arithmatex">\[
+I[u,v] = \sum_{h=0}^{H-1}\sum_{w=0}^{W-1}
+x[h,w]\sin\left(-2\pi\left(\frac{uh}{H}+\frac{vw}{W}\right)\right)
+\]</div>
+<p>这与源码的四重循环一一对应：<code>u</code>、<code>v</code> 遍历输出频率；<code>h</code>、<code>w</code> 累加所有输入点；计算结果以相邻的两个 float 保存为 <code>real, imag</code>。当前模型 <span class="arithmatex">\(H=16\)</span>、<span class="arithmatex">\(W=32\)</span>，故每个 batch 输出 <span class="arithmatex">\(16\times(32/2+1)=272\)</span> 个复数频率点，张量 shape 为 <code>[1,16,17]</code>。</p>
+<h4 id="_8">与源码的对应关系</h4>
+<div class="highlight"><pre><span></span><code><span class="kt">float</span><span class="w"> </span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-2.f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">my_PI</span><span class="w"> </span><span class="o">*</span>
+<span class="w">              </span><span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">v</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">W</span><span class="p">);</span>
+<span class="n">real</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cosf</span><span class="p">(</span><span class="n">angle</span><span class="p">);</span>
+<span class="n">imag</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sinf</span><span class="p">(</span><span class="n">angle</span><span class="p">);</span>
+
+<span class="n">out_complex</span><span class="p">[(</span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Wc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">real</span><span class="p">;</span>
+<span class="n">out_complex</span><span class="p">[(</span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Wc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">imag</span><span class="p">;</span>
+</code></pre></div>
+<p>这里的 <code>Wc</code> 是 <span class="arithmatex">\(W/2+1\)</span>；乘以 2 是因为一个 <code>complex64</code> 在此实现中由两个连续的 <code>float</code> 表示。随后 <code>COMPLEX_ABS</code> 对每个 <span class="arithmatex">\((R,I)\)</span> 计算 <span class="arithmatex">\(\sqrt{R^2+I^2}\)</span>，将复数频谱转换为实数幅值。</p>
+<p>关键代码：</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">input</span><span class="o">-&gt;</span><span class="n">type</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">kTfLiteFloat32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fft_length</span><span class="o">-&gt;</span><span class="n">type</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">kTfLiteInt32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">output</span><span class="o">-&gt;</span><span class="n">type</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">kTfLiteComplex64</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span>
+
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">-&gt;</span><span class="n">dims</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="n">rank</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="p">];</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">-&gt;</span><span class="n">dims</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="n">rank</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">IsPowerOfTwo</span><span class="p">(</span><span class="n">H</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="n">IsPowerOfTwo</span><span class="p">(</span><span class="n">W</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span>
+
+<span class="n">output_dims</span><span class="p">[</span><span class="n">rank</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H</span><span class="p">;</span>
+<span class="n">output_dims</span><span class="p">[</span><span class="n">rank</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</code></pre></div>
+<p><strong>为什么这样设计：</strong> 输出 shape 与输入的前导维度和高度相同，最后一维按 <code>W / 2 + 1</code> 缩减；类型和维度在执行前被拒绝，可避免 <code>Eval()</code> 按错误的数据布局访问内存。</p>
+<p><code>Eval()</code> 计算除最后两维以外的 batch 数，并按 batch 调用实现：</p>
+<div class="highlight"><pre><span></span><code><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">in_stride</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">W</span><span class="p">;</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">out_stride</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">W</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">batch</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">*</span><span class="w"> </span><span class="n">in_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in_data</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">in_stride</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float</span><span class="o">*</span><span class="w"> </span><span class="n">out_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">out_data</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">out_stride</span><span class="p">;</span>
+<span class="cp">#ifdef USE_CMSIS_DSP</span>
+<span class="w">  </span><span class="n">TfLiteStatus</span><span class="w"> </span><span class="n">st</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CmsisRfft2d</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">in_b</span><span class="p">,</span><span class="w"> </span><span class="n">out_b</span><span class="p">,</span><span class="w"> </span><span class="n">H</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">,</span><span class="w"> </span><span class="n">scratch</span><span class="p">,</span><span class="w"> </span><span class="n">col_buf</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">st</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">kTfLiteOk</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">st</span><span class="p">;</span>
+<span class="cp">#else</span>
+<span class="w">  </span><span class="n">NaiveRfft2d</span><span class="p">(</span><span class="n">in_b</span><span class="p">,</span><span class="w"> </span><span class="n">out_b</span><span class="p">,</span><span class="w"> </span><span class="n">H</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">);</span>
+<span class="cp">#endif</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>当前部署定义 <code>USE_CMSIS_DSP</code> 并使用 <code>CmsisRfft2d()</code>；后者先逐行 RFFT，再逐列 CFFT，并使用静态 <code>scratch</code> 与 <code>col_buf</code>。未定义该宏时，代码才回退到 <code>NaiveRfft2d()</code>。朴素路径的复杂度为 <span class="arithmatex">\(O((H\times W)^2)\)</span>，源码明确仅将它用于小尺寸调试；当前 CMSIS-DSP 路径相较该朴素 DFT 实现快很多。</p>
+<p><strong>验证方法：</strong> 观察 <code>RFFT2D Prepare ok: H=16 W=32 Wc=17 ...</code> 日志；若出现 <code>must be power of 2</code>，先检查模型输入 shape，而非先修改 <code>Eval()</code>。</p>
+<h3 id="53-complex_abs">5.3 COMPLEX_ABS：将复数频谱变为实数幅值</h3>
+<p><code>Register_COMPLEX_ABS()</code> 创建的 registration 内含 <code>Prepare</code> 和执行 Lambda。<code>Prepare</code> 要求一个 <code>complex64</code> 输入、一个 <code>float32</code> 输出，并复制输入 shape 到输出。</p>
+<p>关键执行代码：</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">output_count</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">real</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input_data</span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">];</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">imag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input_data</span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="n">output_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sqrtf</span><span class="p">(</span><span class="n">real</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">real</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">imag</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">imag</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>为什么这样设计：</strong> <code>RFFT2D</code> 以交错 <code>real, imag</code> 浮点数保存每个 <code>complex64</code>，而幅值输出为每个复数对应的一个浮点数。因此输入索引步长为 2，输出 shape 保持 <code>[1,16,17]</code>。</p>
+<p><strong>验证方法：</strong> 在日志中确认 <code>COMPLEX_ABS Prepare ok: elements=272 bytes=1088</code>。若报 <code>input type</code> 或 <code>output type</code>，先核对上游 RFFT2D 输出和模型文件，而非改变幅值公式。</p>
+<h3 id="54-myscale-custom">5.4 MyScale：示范完整的 CUSTOM 算子</h3>
+<p><code>MyScale</code> 是本工程专门追加的 custom 节点，用于执行：</p>
+<div class="arithmatex">\[y_i=x_i\times scale+bias\]</div>
+<p>它的输入和输出均为 <code>float32</code>，shape 完全相同。</p>
+<h4 id="init">Init()</h4>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">MyScaleParams</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">scale</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">bias</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="nf">Init</span><span class="p">(</span><span class="n">TfLiteContext</span><span class="o">*</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">length</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">MyScaleParams</span><span class="o">*</span><span class="w"> </span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">MyScaleParams</span><span class="o">*&gt;</span><span class="p">(</span>
+<span class="w">      </span><span class="n">context</span><span class="o">-&gt;</span><span class="n">AllocatePersistentBuffer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">MyScaleParams</span><span class="p">)));</span>
+<span class="w">  </span><span class="n">params</span><span class="o">-&gt;</span><span class="n">scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">;</span>
+<span class="w">  </span><span class="n">params</span><span class="o">-&gt;</span><span class="n">bias</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">buffer</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">nullptr</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">flexbuffers</span><span class="o">::</span><span class="n">Map</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flexbuffers</span><span class="o">::</span><span class="n">GetRoot</span><span class="p">(</span>
+<span class="w">        </span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span><span class="w"> </span><span class="n">length</span><span class="p">).</span><span class="n">AsMap</span><span class="p">();</span>
+<span class="w">    </span><span class="n">params</span><span class="o">-&gt;</span><span class="n">scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">map</span><span class="p">[</span><span class="s">&quot;scale&quot;</span><span class="p">].</span><span class="n">AsFloat</span><span class="p">();</span>
+<span class="w">    </span><span class="n">params</span><span class="o">-&gt;</span><span class="n">bias</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">map</span><span class="p">[</span><span class="s">&quot;bias&quot;</span><span class="p">].</span><span class="n">AsFloat</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">params</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>作用：</strong> 为节点持久化分配 <code>MyScaleParams</code>，初始化默认参数，并在模型提供 <code>custom_options</code> 时解析 <code>scale</code>、<code>bias</code>。</p>
+<p><strong>为什么这样设计：</strong> 模型生成脚本也以 <code>scale</code>、<code>bias</code> 作为 FlexBuffer map 键；两端键名一致，<code>Eval()</code> 可以通过 <code>node-&gt;user_data</code> 取到模型参数。</p>
+<p><strong>验证方法：</strong> 先确认脚本中的：</p>
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">fbb</span><span class="o">.</span><span class="n">Map</span><span class="p">():</span>
+    <span class="n">fbb</span><span class="o">.</span><span class="n">Float</span><span class="p">(</span><span class="s2">&quot;scale&quot;</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+    <span class="n">fbb</span><span class="o">.</span><span class="n">Float</span><span class="p">(</span><span class="s2">&quot;bias&quot;</span><span class="p">,</span> <span class="n">bias</span><span class="p">)</span>
+</code></pre></div>
+<p>再确认 C++ 中键名相同。当前脚本常量为 <code>3.0</code> 和 <code>1.0</code>，其生成的参考输出也采用相同计算。</p>
+<h4 id="prepare">Prepare()</h4>
+<div class="highlight"><pre><span></span><code><span class="n">TF_LITE_ENSURE_EQ</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">NumInputs</span><span class="p">(</span><span class="n">node</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">TF_LITE_ENSURE_EQ</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">NumOutputs</span><span class="p">(</span><span class="n">node</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">input</span><span class="o">-&gt;</span><span class="n">type</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">kTfLiteFloat32</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">output</span><span class="o">-&gt;</span><span class="n">type</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">kTfLiteFloat32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">kTfLiteError</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">TfLiteStatus</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SetOutputDimsFromInput</span><span class="p">(</span>
+<span class="w">    </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">,</span>
+<span class="w">    </span><span class="n">tflite</span><span class="o">::</span><span class="n">micro</span><span class="o">::</span><span class="n">GetEvalOutput</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="n">kOutputTensor</span><span class="p">));</span>
+</code></pre></div>
+<p><code>SetOutputDimsFromInput()</code> 分配持久化维度数组，逐维复制 input shape，并按 <code>float</code> 元素数量更新 <code>output-&gt;bytes</code>。</p>
+<p><strong>为什么这样设计：</strong> MyScale 是逐元素变换，不改变 rank、每维长度或元素类型。提前设置 shape 和字节数，保证 <code>Eval()</code> 能以同一扁平元素数读写。</p>
+<p><strong>验证方法：</strong> 日志应包含：</p>
+<div class="highlight"><pre><span></span><code>MyScale Prepare: inputs=1 outputs=1
+MyScale Prepare input dims: 1 16 17
+MyScale Prepare ok: elements=272 bytes=1088
+</code></pre></div>
+<p>若不是该结果，应先检查上游 <code>COMPLEX_ABS</code> 输出和模型生成脚本输出张量，而不是只检查 scale 或 bias。</p>
+<h4 id="invokeeval">Invoke()/Eval()</h4>
+<p>在该工程 registration 中，第三个函数名为 <code>Eval</code>；它是在解释器执行阶段调用的回调，也就是本文所称的 Invoke 阶段算子执行函数。</p>
+<div class="highlight"><pre><span></span><code><span class="k">const</span><span class="w"> </span><span class="n">MyScaleParams</span><span class="o">*</span><span class="w"> </span><span class="n">params</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="k">const</span><span class="w"> </span><span class="n">MyScaleParams</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">user_data</span><span class="p">);</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">*</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tflite</span><span class="o">::</span><span class="n">micro</span><span class="o">::</span><span class="n">GetTensorData</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
+<span class="kt">float</span><span class="o">*</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tflite</span><span class="o">::</span><span class="n">micro</span><span class="o">::</span><span class="n">GetTensorData</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">output</span><span class="p">);</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tflite</span><span class="o">::</span><span class="n">micro</span><span class="o">::</span><span class="n">GetTensorShape</span><span class="p">(</span><span class="n">input</span><span class="p">).</span><span class="n">FlatSize</span><span class="p">();</span>
+
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">params</span><span class="o">-&gt;</span><span class="n">scale</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">params</span><span class="o">-&gt;</span><span class="n">bias</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>为什么这样设计：</strong> <code>Prepare()</code> 已保证输入、输出类型和 shape 一致，因此该循环使用 input 的 <code>FlatSize()</code>，每个元素恰写入一次输出。</p>
+<p><strong>验证方法：</strong> 脚本的 PC 参考值使用完全同一表达式：</p>
+<div class="highlight"><pre><span></span><code><span class="n">abs_out</span> <span class="o">=</span> <span class="n">run_inference</span><span class="p">(</span><span class="n">BASE_TFLITE_PATH</span><span class="p">,</span> <span class="n">model_input</span><span class="p">)</span>
+<span class="n">ref_output</span> <span class="o">=</span> <span class="n">abs_out</span> <span class="o">*</span> <span class="n">MYSCALE_SCALE</span> <span class="o">+</span> <span class="n">MYSCALE_BIAS</span>
+</code></pre></div>
+<p>将板端最终输出与 <code>test_output_ref</code> 对比时，若 RFFT2D 和 COMPLEX_ABS 已正确，最终差异应能直接暴露 MyScale 参数解析或逐元素计算问题。</p>
+<hr />
+<h2 id="6-resolver">6. 注册与 Resolver 集成</h2>
+<h3 id="61">6.1 注册接口</h3>
+<p>三个 registration 函数如下：</p>
+<div class="highlight"><pre><span></span><code><span class="n">TFLMRegistration</span><span class="o">*</span><span class="w"> </span><span class="nf">Register_RFFT2D</span><span class="p">();</span>
+<span class="n">TFLMRegistration</span><span class="o">*</span><span class="w"> </span><span class="nf">Register_COMPLEX_ABS</span><span class="p">();</span>
+<span class="n">TFLMRegistration</span><span class="o">*</span><span class="w"> </span><span class="nf">Register_MY_SCALE</span><span class="p">();</span>
+</code></pre></div>
+<p>前两个定义于 <code>rfft2d.cc</code>，<code>COMPLEX_ABS</code> 的声明位于 <code>complex_abs.h</code>；MyScale 定义于 <code>my_scale.cc</code>。</p>
+<p>其共同模式是用 <code>tflite::micro::RegisterOp(...)</code> 生成静态 <code>TFLMRegistration</code>。其中 RFFT2D 和 COMPLEX_ABS 的 <code>init</code> 为 <code>nullptr</code>，MyScale 需要 <code>Init</code> 解析自定义参数。</p>
+<h3 id="62-resolver">6.2 Resolver 配置</h3>
+<p>工程内参考给出的配置原则是：</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// 两个模型 builtin 节点：按 builtin opcode 注册。</span>
+<span class="n">AddBuiltin</span><span class="p">(</span><span class="n">BuiltinOperator_RFFT2D</span><span class="p">,</span>
+<span class="w">           </span><span class="n">Register_RFFT2D</span><span class="p">(),</span>
+<span class="w">           </span><span class="n">ParseNoBuiltinOptions</span><span class="p">);</span>
+<span class="n">AddBuiltin</span><span class="p">(</span><span class="n">BuiltinOperator_COMPLEX_ABS</span><span class="p">,</span>
+<span class="w">           </span><span class="n">Register_COMPLEX_ABS</span><span class="p">(),</span>
+<span class="w">           </span><span class="n">ParseNoBuiltinOptions</span><span class="p">);</span>
+
+<span class="c1">// 一个模型 CUSTOM 节点：按 customCode 注册。</span>
+<span class="n">AddCustom</span><span class="p">(</span><span class="s">&quot;MyScale&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Register_MY_SCALE</span><span class="p">());</span>
+</code></pre></div>
+<p><code>ParseNoBuiltinOptions</code> 将 <code>builtin_data</code> 设为 <code>nullptr</code>，适用于文档中说明的 <code>RFFT2D</code>、<code>COMPLEX_ABS</code> 无 builtin options 的配置。</p>
+<h4 id="addethosu"><code>AddEthosU()</code> 在当前模型中的作用</h4>
+<p>当前工程的 <code>get_resolver()</code> 还调用了：</p>
+<div class="highlight"><pre><span></span><code><span class="n">TfLiteStatus</span><span class="w"> </span><span class="n">ethosu_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">micro_op_resolver</span><span class="p">.</span><span class="n">AddEthosU</span><span class="p">();</span>
+</code></pre></div>
+<p>因此当前 <code>kNumberOperators</code> 为 4，分别容纳 <code>COMPLEX_ABS</code>、<code>RFFT2D</code>、<code>MyScale</code> 和 <code>EthosU</code> 四项 Resolver registration。该调用是当前推理框架保留的 Ethos-U registration；它本身不会把 CPU 节点变成 NPU 节点，也不会改变模型中的算子顺序。</p>
+<p>对当前 <code>model_rfft2d_myscale.tflite</code> 而言，Vela 结果明确为 3 个 CPU operators、0 个 NPU operators；<code>RFFT2D</code>、<code>COMPLEX_ABS</code> 和 <code>MyScale</code> 都已被放在 CPU。因此，当前模型实际执行所必需的是前三项 registration，<code>AddEthosU()</code> 不是让这三个节点成功执行的必要条件。</p>
+<p>如果后续替换为包含 Ethos-U 相关节点的模型，则应保留 <code>AddEthosU()</code>，并按实际注册数量调整 <code>kNumberOperators</code>。在没有确认新模型节点之前，不应仅因为工程保留了 <code>AddEthosU()</code> 就推断当前模型会使用 NPU。</p>
+<p><strong>必须满足的四项检查：</strong></p>
+<ol>
+<li>Resolver 容量至少覆盖实际添加的 registration 数量。当前模型有 3 个 CPU 节点，但工程还保留 <code>AddEthosU()</code>，所以当前 <code>kNumberOperators = 4</code>。</li>
+<li><code>RFFT2D</code> 使用 builtin 注册，而不是 <code>AddCustom("RFFT2D", ...)</code>。</li>
+<li><code>COMPLEX_ABS</code> 使用 builtin 注册。</li>
+<li><code>AddCustom</code> 的字符串为精确的 <code>"MyScale"</code>，与脚本的 <code>customCode</code> 逐字符一致。</li>
+</ol>
+<h3 id="63">6.3 模型中的调用方式</h3>
+<p>运行时的顺序可概括为：</p>
+<div class="highlight"><pre><span></span><code>读取 model_rfft2d_myscale.tflite
+  -&gt; 根据节点 opcode 查询 Resolver
+  -&gt; 为 RFFT2D/COMPLEX_ABS 取得 builtin registration
+  -&gt; 为 MyScale 以 &quot;MyScale&quot; 取得 custom registration
+  -&gt; Prepare 分配或确认各输出 tensor
+  -&gt; 执行 RFFT2D Eval
+  -&gt; 执行 COMPLEX_ABS Eval
+  -&gt; 执行 MyScale Eval
+</code></pre></div>
+<p>这个顺序由模型脚本中创建并追加节点的次序，以及每个 registration 的 <code>Prepare</code>/<code>Eval</code> 实现共同确定。</p>
+<hr />
+<h2 id="7-ra8p1">7. RA8P1 部署步骤</h2>
+<h3 id="71">7.1 生成模型和参考数据</h3>
+<p>在 <code>src/py</code> 目录运行实际存在的脚本文件：</p>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="p">.\</span><span class="n">generate_model_rftt2d_myscale</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+<p>脚本会：构建 base 模型、追加 <code>MyScale</code>、写入 <code>model_rfft2d_myscale.tflite</code>、检查节点、运行 base 模型得到 <code>abs_out</code>、按 MyScale 参数生成 <code>ref_output</code>，并写出测试数据头文件。</p>
+<p>检查以下输出是否一致：</p>
+<ul>
+<li>输入 shape 为 <code>[1,16,32]</code>；</li>
+<li>base 模型 <code>COMPLEX_ABS</code> 输出 shape 为 <code>[1,16,17]</code>；</li>
+<li>combined 模型包含 <code>CUSTOM custom_code='MyScale'</code>；</li>
+<li>最终参考输出为 <code>abs_out * 3.0 + 1.0</code>。</li>
+</ul>
+<h3 id="72-vela">7.2 执行 Vela 命令并正确解读结果</h3>
+<p>工程保存的命令为：</p>
+<div class="highlight"><pre><span></span><code>vela ..\model_rfft2d_myscale.tflite --accelerator-config=ethos-u55-256 --optimise Performance --config ra8p1_vela420.ini --system-config=RA8P1 --memory-mode=Sram_Only --output-dir out_0
+</code></pre></div>
+<p>该命令的既有输出已明确指出三个节点均放在 CPU，且它们缺少量化参数。该结果不是 RFFT2D、COMPLEX_ABS 或 MyScale kernel 计算失败的直接证据；它说明当前模型的这些节点没有被 Vela 放到 NPU。</p>
+<p>其中 Vela 的 <code>CUSTOM 'myscale_output'</code> 仅使用 MyScale 输出 tensor 名描述该节点；它不改变模型写入的 <code>customCode="MyScale"</code>。板端 Resolver 仍按 <code>MyScale</code> 注册，不应将 Vela 日志中的 <code>myscale_output</code> 传给 <code>AddCustom()</code>。</p>
+<p>因此，初次联调的顺序应是：先确认 Resolver、<code>Prepare</code>、CPU <code>Eval</code> 和参考输出，再单独讨论是否要调整模型以改变 Vela 的放置结果。后一项不在本指南的事实范围内。</p>
+<h3 id="73">7.3 确认算子源文件参与构建</h3>
+<p>部署时应确认 <code>my_scale.cc</code> 与 <code>rfft2d.cc</code> 被工程编译并链接。否则即使 Resolver 源码写对，<code>Register_MY_SCALE()</code>、<code>Register_RFFT2D()</code> 或 <code>Register_COMPLEX_ABS()</code> 也可能无法被链接到固件。</p>
+<p>这是由函数定义所在源文件直接推导出的构建要求；可以用工程构建日志或目标文件列表检查它们是否参与编译。</p>
+<hr />
+<h2 id="8">8. 分阶段调试方法</h2>
+<h3 id="81-1">8.1 第 1 阶段：先检查模型，而非板端</h3>
+<p>运行 generate_model_rftt2d_myscale.py 中的两个检查函数：</p>
+<div class="highlight"><pre><span></span><code><span class="n">inspect_model</span><span class="p">(</span><span class="n">BASE_TFLITE_PATH</span><span class="p">)</span>
+<span class="n">inspect_combined_model</span><span class="p">(</span><span class="n">COMBINED_TFLITE_PATH</span><span class="p">)</span>
+</code></pre></div>
+<p>检查点：</p>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>正确预期</th>
+<th>异常时优先排查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>base 输入</td>
+<td><code>float32 [1,16,32]</code></td>
+<td><code>CMSIS_RFFT2D_HEIGHT/WIDTH</code> 或模型生成过程。</td>
+</tr>
+<tr>
+<td>base 输出</td>
+<td><code>[1,16,17]</code></td>
+<td>RFFT2D 的最后一维推导。</td>
+</tr>
+<tr>
+<td>custom 名称</td>
+<td><code>MyScale</code></td>
+<td><code>oc.customCode</code> 与 Resolver 字符串。</td>
+</tr>
+<tr>
+<td>MyScale 输入输出</td>
+<td>追加节点输入是原输出、输出是新 tensor</td>
+<td><code>old_out</code>、<code>new_out</code>、<code>sg.outputs</code>。</td>
+</tr>
+</tbody>
+</table>
+<p>这些检查没有目标板依赖，能最快排除“模型文件和 MCU 代码不匹配”。</p>
+<h3 id="82-2-resolver">8.2 第 2 阶段：Resolver 查询失败</h3>
+<p>根据工程内参考，若 builtin registration 不存在，会在张量分配前出现找不到 builtin op 的问题；若 custom registration 不存在或名称不一致，则会出现 custom op 匹配失败。</p>
+<p>排查顺序：</p>
+<ol>
+<li>确认模型中节点类型：<code>RFFT2D</code>/<code>COMPLEX_ABS</code> 为 builtin，<code>MyScale</code> 为 custom。</li>
+<li>确认前两个节点用 <code>AddBuiltin</code>，MyScale 用 <code>AddCustom("MyScale", ...)</code>。</li>
+<li>逐字核对 <code>MyScale</code> 的大小写；不要用输出 tensor 名 <code>myscale_output</code> 代替 custom code。</li>
+<li>检查三个 <code>Register_*()</code> 的声明可见且定义所在源文件被链接。</li>
+</ol>
+<h3 id="83-3-prepare">8.3 第 3 阶段：Prepare 失败</h3>
+<p><code>Prepare()</code> 已提供足够的 <code>printf</code> 日志，应先读取具体失败类别：</p>
+<table>
+<thead>
+<tr>
+<th>日志前缀</th>
+<th>直接含义</th>
+<th>下一步</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RFFT2D Prepare failed: inputs=</code></td>
+<td>节点输入数不等于 2</td>
+<td>检查模型的 RFFT2D 节点及 FFT 长度张量。</td>
+</tr>
+<tr>
+<td><code>RFFT2D Prepare failed: ... type=</code></td>
+<td>输入、长度或输出类型不符合</td>
+<td>对照第 2.3 节的类型表。</td>
+</tr>
+<tr>
+<td><code>RFFT2D Prepare failed: H=... W=... must be power of 2</code></td>
+<td>最后两维未通过 2 的幂检查</td>
+<td>对照脚本中的 16、32 常量。</td>
+</tr>
+<tr>
+<td><code>COMPLEX_ABS Prepare failed: ... type=</code></td>
+<td>复数输入或 float 输出不符</td>
+<td>检查 RFFT2D 输出类型和模型链。</td>
+</tr>
+<tr>
+<td><code>MyScale Prepare failed: unsupported output type=</code></td>
+<td>输出不是 <code>float32</code></td>
+<td>检查 <code>append_myscale()</code> 新 tensor 类型。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="84-4-invoke">8.4 第 4 阶段：Invoke 后数值不正确</h3>
+<p>把问题按数据流切为三段：</p>
+<div class="highlight"><pre><span></span><code>输入 -&gt; RFFT2D -&gt; 复数频谱 -&gt; COMPLEX_ABS -&gt; 幅值 -&gt; MyScale -&gt; 最终输出
+</code></pre></div>
+<p>建议使用相同输入，依次比较：</p>
+<ol>
+<li>脚本的 <code>abs_out</code>：这是 base 模型的 RFFT2D + COMPLEX_ABS 参考值。</li>
+<li>脚本的 <code>ref_output</code>：这是 <code>abs_out * MYSCALE_SCALE + MYSCALE_BIAS</code> 的最终参考值。</li>
+<li>板端 MyScale 输出：若它与幅值之间不满足 <span class="arithmatex">\(y=x\times3+1\)</span>，检查 FlexBuffer 解析和 <code>node-&gt;user_data</code>。</li>
+<li>板端幅值：若最终差异在 MyScale 之前已出现，检查复数布局是否始终采用 <code>real, imag</code> 交错存储，以及 <code>sqrtf</code> 的索引是否按两个 float 取一个复数。</li>
+<li>板端 RFFT2D：当前部署应运行 CMSIS-DSP 路径。<code>inference.cpp</code> 在 <code>USE_CMSIS_DSP</code> 生效时打印 <code>Using CMSIS-DSP FFT implementation</code>；若该日志缺失，检查重新构建时该宏是否仍生效，避免意外回退到朴素 DFT 路径。</li>
+</ol>
+<h3 id="85-5-cpunpu">8.5 第 5 阶段：确认 CPU/NPU 期望</h3>
+<p>若看到 Vela 中关于 <code>RFFT2D</code>、<code>COMPLEX_ABS</code> 或 <code>CUSTOM 'myscale_output'</code> 的 CPU 放置警告，不要把它解释为“MCU 不会执行该节点”。当前工程源码为这三段计算提供 CPU kernel，Vela 结果也明确汇总为 3 个 CPU operator、0 个 NPU operator。</p>
+<p>当前模型的正确验收首先是：三个节点均被 Resolver 找到、三个 <code>Prepare</code> 成功、最终输出与脚本参考值一致。是否将某些节点部署到 NPU 是独立问题。</p>
+<hr />
+<h2 id="9">9. 最小验收清单</h2>
+<p>完成一次完整部署前，逐项确认：</p>
+<ul>
+<li>[ ] 运行的是 <code>src/py/generate_model_rftt2d_myscale.py</code>，并生成 <code>model_rfft2d_myscale.tflite</code>。</li>
+<li>[ ] combined 模型节点顺序为 <code>RFFT2D -&gt; COMPLEX_ABS -&gt; MyScale</code>。</li>
+<li>[ ] 输入为 <code>[1,16,32]</code>，三个阶段的输出 shape 依次为 <code>[1,16,17]</code> 复数、<code>[1,16,17]</code> float、<code>[1,16,17]</code> float。</li>
+<li>[ ] MyScale 的 <code>customCode</code> 和 Resolver 字符串都是精确的 <code>MyScale</code>。</li>
+<li>[ ] RFFT2D 和 COMPLEX_ABS 走 builtin 注册，MyScale 走 <code>AddCustom</code> 注册。</li>
+<li>[ ] 日志显示三个 <code>Prepare</code> 成功，其中 MyScale 为 272 个元素、1088 字节。</li>
+<li>[ ] 最终输出与脚本生成的 <code>ref_output</code> 对比；MyScale 参考表达式为 <span class="arithmatex">\(|RFFT2D(input)|\times3+1\)</span>。</li>
+<li>[ ] Vela 的 <code>CPU operators = 3</code>、<code>NPU operators = 0</code> 被当作当前模型放置结果，而不是遗漏的错误信息。</li>
+</ul>
+<hr />
+<p>完成上述闭环后，进入<a href="../../07-optimization/performance/">性能调优</a>评估模型重写、CMSIS 优化或其他实现方案。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../operator-support/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 算子支持检查">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                算子支持检查
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../07-optimization/performance/" class="md-footer__link md-footer__link--next" aria-label="下一页: 性能调优">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                性能调优
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      文档版本 v1.0.0 | 2026-08-06
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.expand", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@11/dist/mermaid.min.js"></script>
+      
+        <script src="../../javascripts/mermaid.js"></script>
+      
+    
+  </body>
+</html>

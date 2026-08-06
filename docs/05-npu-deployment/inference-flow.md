@@ -1,62 +1,149 @@
-# NPU 推理流程
+# RA8P1推理流程
 
-第 4 章已经确定时钟、内存和存储方案。本章接收 `mnist_quant.tflite` 与平台配置，先使用 Vela 生成 NPU 可部署模型，再完成 TFLM 集成和板端验证。
+本部分描述 RA8P1 上从**上电启动**到**正式进入推理**的完整函数调用流程。
 
-## 部署阶段
+## 1. NPU 上电与推理流程概览
 
-```text
-已验证的全整数 TFLite + RA8P1 Vela 配置
-  -> 检查算子支持与 CPU fallback
-  -> Vela 编译
-  -> .vela.tflite
-  -> C 数组与链接段
-  -> TFLM 工程
+
+1. **板级启动与 NPU 驱动初始化** —— 完成 NPU 模块上电、驱动对象初始化和中断使能
+2. **推理前准备与执行** —— 包括模型解析、张量分配、输入拷贝，最终调用 `Invoke()` 进入推理
+
+
+
+---
+
+## 2. 流程图
+
+```mermaid
+flowchart TD
+    A[main] --> B[hal_entry]
+    B --> C[RM_ETHOSU_Open]
+    C --> C1[R_BSP_MODULE_START]
+    C --> C2[ethosu_init]
+    C --> C3[R_BSP_IrqCfgEnable]
+    C3 --> C4[rm_ethosu_isr ready]
+    B --> D[npu_test_init]
+    D --> D1[RegisterDebugLogCallback]
+    D --> D2[EventRecorderInitialize]
+    D --> E[runInference]
+    E --> E1[memcpy inputDataROM to inputData]
+    E --> E2[build inputs outputs expectedOutputs]
+    E --> E3[create InferenceJob]
+    E --> F[inferenceProcess.runJob]
+    F --> F1[parser.getModel]
+    F --> F2[create MicroInterpreter]
+    F --> F3[AllocateTensors]
+    F --> F4[copyIfm]
+    F4 --> G[interpreter.Invoke]
+    G -. callback .-> H[ethosu_inference_begin]
+    G -. irq .-> I[rm_ethosu_isr]
+    G -. callback .-> J[ethosu_inference_end]
 ```
 
-Vela 编译必须使用与目标工程一致的 NPU 时钟、存储区域和 memory mode。普通量化 `.tflite` 是 Vela 的输入，`.vela.tflite` 才是后续 NPU 模型集成的输入。
+---
 
-## 算子兼容性决策
+## 3. 分步详解
 
-Vela 编译和 TFLM 初始化之间存在一个算子兼容性检查点。先查看 Vela 日志确认各算子的执行后端，再确认 CPU fallback 算子是否具有可注册的 TFLM kernel：
+### 3.1 程序入口
 
-```text
-Vela 编译量化 TFLite
-  -> 所有目标算子均满足 Ethos-U55 约束？
-    是 -> 继续生成 .vela.tflite 并集成模型
-    否 -> 查看 CPU fallback 原因
-      -> 能调整参数或重写为受支持结构？
-        是 -> 回到模型转换、量化与验证，重新运行 Vela
-        否 -> TFLM 已有并可注册 CPU kernel？
-          是 -> 注册 kernel，评估 CPU 性能后继续集成
-          否 -> 进入自定义算子部署与调试
+- `main()` 位于 `ra_gen/main.c`
+- `main()` 只做一件事：调用 `hal_entry()`
+
+### 3.2 板级启动与 NPU Open
+
+- `hal_entry()` 位于 `src/hal_entry.cpp`
+- 在进入主应用前，启动流程先经过 `R_BSP_WarmStart()`，完成 IOPORT 和 SDRAM 等基础初始化
+- `hal_entry()` 中调用 `RM_ETHOSU_Open(&g_rm_ethosu0_ctrl, &g_rm_ethosu0_cfg)`，这是 NPU 驱动的打开入口
+
+`RM_ETHOSU_Open()` 位于 `ra/fsp/src/rm_ethosu/rm_ethosu.c`，主要完成以下工作：
+
+| 调用 | 作用 |
+|---|---|
+| `R_BSP_MODULE_START(FSP_IP_NPU, 0)` | 打开 NPU 模块（取消时钟门控） |
+| `ethosu_init(...)` | 使用 `R_NPU_BASE` 初始化 Ethos-U 驱动对象 |
+| `R_BSP_IrqCfgEnable(...)` | 使能 NPU 中断 |
+
+**相关实例配置**（位于 `ra_gen/common_data.c`）：
+
+| 实例 | 说明 |
+|---|---|
+| `g_ethosu0` | 底层 Ethos-U driver 实例 |
+| `g_rm_ethosu0_ctrl` | FSP 控制块 |
+| `g_rm_ethosu0_cfg` | NPU 配置（IRQ、IPL、安全/特权属性） |
+
+**NPU 中断向量绑定**（位于 `ra_gen/vector_data.c`）：
+
+- `rm_ethosu_isr` —— NPU 完成推理后由此 ISR 处理
+
+### 3.3 推理测试初始化
+
+- `hal_entry()` 在打开 NPU 后调用 `npu_test_init()`
+- `npu_test_init()` 位于 `src/inference.cpp`
+
+它主要做三件事：
+
+1. `RegisterDebugLogCallback(print_log)` —— 注册调试日志输出
+2. `EventRecorderInitialize(EventRecordAll, 1)` —— 初始化事件记录器
+3. 进入 `while(1)` 循环，持续调用 `runInference()`
+
+### 3.4 推理前数据准备
+
+- `runInference()` 位于 `src/inference.cpp`
+- 这里开始组织本次推理所需的数据
+
+**主要步骤：**
+
+1. `memcpy(&inputData, &inputDataROM, sizeof(inputData))` —— 将输入数据从只读区复制到 DTCM 运行缓冲区
+2. 构造 `inputs`、`outputs`、`expectedOutputs`
+3. 使用 `networkModelDataPtr` 和 `networkModelDataSize` 组装 `InferenceJob`
+
+
+
+### 3.5 进入推理流程
+
+- `runInference()` 中调用 `inferenceProcess.runJob(job)`
+- `runJob()` 实现位于 `src/ethos-u-core-software/applications/inference_process/src/inference_process.cpp`
+
+在真正执行推理前，依次完成：
+
+| 调用 | 作用 |
+|---|---|
+| `parser.getModel(...)` | 解析并校验 tflite 模型 |
+| 创建 `tflite::MicroInterpreter` | 构造 TFLM 解释器 |
+| `interpreter.AllocateTensors()` | 在 tensor arena 中分配张量内存 |
+| `copyIfm(job, interpreter)` | 将输入数据拷贝到解释器输入张量 |
+
+> 📌 到这里为止，仍处于"进入推理前"的准备阶段。
+
+### 3.6 正式开始推理
+
+- `interpreter.Invoke()` 是正式开始推理的入口
+- 当 `Invoke()` 内部调度到 Ethos-U NPU 时，会触发以下机制：
+
+| 阶段 | 调用 | 作用 |
+|---|---|---|
+| 推理开始 | `ethosu_inference_begin(...)` | 开始 NPU 监控采样 |
+| NPU 中断 | `rm_ethosu_isr` | 处理 NPU IRQ（推理完成通知） |
+| 推理结束 | `ethosu_inference_end(...)` | 结束监控并释放相关状态 |
+
+---
+
+## 4. 简化调用链
+
+如果只关注主链路，可以简化为：
+
+```
+main
+  └─> hal_entry
+        ├─> RM_ETHOSU_Open                # NPU 模块上电 + 驱动初始化
+        └─> npu_test_init
+              └─> runInference            # 输入准备 + Job 构造
+                    └─> inferenceProcess.runJob
+                          ├─> parser.getModel
+                          ├─> MicroInterpreter 构造
+                          ├─> AllocateTensors
+                          ├─> copyIfm     # 拷贝输入到 input tensor
+                          └─> Invoke      # 🚀 正式推理
 ```
 
-具体支持范围和参数限制参见[Ethos-U55 算子支持检查](../07-custom-operators/operator-support.md)。只有在模型无法合理重写且运行时没有可用 kernel 时，才进入[自定义算子部署与调试](../07-custom-operators/custom-operator.md)。自定义算子通常在 Cortex-M85 CPU 上执行，不会自动获得 Ethos-U55 加速。
-
-## 初始化阶段
-
-1. 初始化板级驱动、时钟和模型存储接口。
-2. 取得模型数据，创建 TFLM 模型与解释器。
-3. 注册模型需要的算子，并初始化 NPU 相关后端。
-4. 分配 Tensor Arena，获取输入输出张量。
-5. 校验张量形状、类型与量化参数。
-
-## 单次推理阶段
-
-```text
-采集输入 -> 前处理 -> 写入输入 Tensor -> Invoke
-  -> 读取输出 Tensor -> 反量化与后处理 -> 上报结果
-```
-
-输入写入前必须与模型期望的数据布局、类型、scale 和 zero point 一致。`Invoke` 成功仅表明运行时调用完成，仍需用参考样本验证结果。
-
-## 验证阶段
-
-| 维度 | 验证内容 |
-| --- | --- |
-| 功能 | 程序稳定运行并输出结果 |
-| 精度 | 与 PC 侧 INT8 参考结果接近 |
-| 后端 | 确认预期算子实际使用 NPU 或记录 CPU fallback |
-| 性能 | 延迟、吞吐和峰值内存达到项目目标 |
-
-下一步：[模型集成](model-integration.md)。
+下一步：[算子支持](../06-custom-operators/operator-support.md)。

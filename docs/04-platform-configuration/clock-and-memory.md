@@ -2,25 +2,16 @@
 
 ## 本章目标
 
-第 3 章已经从 Keras 或 ONNX 模型生成并验证了全整数 TFLite。本章以该模型的接口、大小和精度记录为输入，配置 RA8P1 的 CPU0、Ethos-U55 NPU、ICLK 与 MRICLK，并使 Vela 配置、模型位置和运行时内存保持一致。
+本章以模型的接口、大小和精度记录为输入，配置 RA8P1 的 CPU0(Cortex M85)、Ethos-U55 NPU、ICLK 与 MRICLK，并使 Vela 配置、模型位置和运行时内存保持一致。
 
-## 已验证的工具组合
-
-| 工具 | 版本 |
-| --- | --- |
-| TensorFlow | 2.18.0 |
-| ethos-u-vela | 4.2.0 |
-| Python | 3.10.5 |
-| e2 studio | 2026-04.2 |
-| FSP | 6.5.1 |
-| SEGGER RTT Viewer | 9.42.0 |
-| LLVM | 21.1.1 |
-
-FSP 6.5.1 用于此参考工程；其修复了 FSP 6.5.0 中的 SDRAM 初始化问题。
 
 ## 时钟配置
 
-在工程 `configuration.xml` 的 Clock 页面设置 CPU、NPU、ICLK 与 MRICLK。以下组合是 MNIST 参考工程提供的可选设置：
+在工程 `configuration.xml` 的 Clock 页面设置 CPU、NPU、ICLK 与 MRICLK。
+
+![RA8P1-CLK](../assets/images/ra8p1-clk-setting.png)
+
+以下组合是 MNIST 参考工程提供的可选设置：
 
 | 配置标识 | CPU0 | NPU | ICLK / MRICLK |
 | --- | ---: | ---: | ---: |
@@ -42,7 +33,7 @@ FSP 6.5.1 用于此参考工程；其修复了 FSP 6.5.0 中的 SDRAM 初始化�
 
 ## Vela 参数必须同步
 
-Vela 的 `ra8p1_vela420.ini` 必须与实际工程时钟一致。`core_clock` 对应 NPUCLK，单位为 Hz：
+Vela 的 `ra8p1_vela.ini` 必须与实际工程时钟一致。`core_clock` 对应 NPUCLK，单位为 Hz：
 
 ```ini
 [System_Config.RA8P1]
