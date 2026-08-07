@@ -1510,6 +1510,84 @@ options:
 <li>内存模式</li>
 </ul>
 <p>它用来告诉 Vela：RA8P1 的 Ethos-U55 运行多快、Tensor Arena 和模型分别位于哪类内存、这些内存的访问性能如何，以及模型编译时应该采用哪种内存分配和权重缓存策略。</p>
+<p>下图给出ra8p1_vela.ini文件内容供参考。
+<div class="highlight"><pre><span></span><code><span class="c1">; ------------------------------------------------------------</span>
+<span class="c1">; System Config</span>
+<span class="c1">;</span>
+
+<span class="c1">; System configuration template for RA8P1.</span>
+<span class="c1">; The values that need to be changed are indicated by ???.</span>
+<span class="k">[System_Config.RA8P1]</span>
+<span class="c1">; Ethos-U55 core clock frequency (NPUCLK) in Hz.</span>
+<span class="c1">; e.g., `core_clock=500e6` for 500MHz.</span>
+<span class="na">core_clock</span><span class="o">=</span><span class="s">500e6</span>
+
+<span class="c1">; Memory type connected to each AXI port.</span>
+<span class="c1">; Do not modify this even if the actual memory type is different.</span>
+<span class="na">axi0_port</span><span class="o">=</span><span class="s">Sram</span>
+<span class="na">axi1_port</span><span class="o">=</span><span class="s">OffChipFlash</span>
+
+<span class="c1">; Characteristics of the memory connected to the AXI0 port,</span>
+<span class="c1">; i.e., the memory where the tensor arena is placed.</span>
+<span class="c1">; Only &#39;Sram_clock_scale&#39; should be modified.</span>
+<span class="c1">; Specify the value for the memory where the tensor arena is placed,</span>
+<span class="c1">; regardless of whether it is SRAM or not.</span>
+<span class="c1">;</span>
+<span class="c1">; &#39;Sram_clock_scale&#39; is calculated as follows:</span>
+<span class="c1">;</span>
+<span class="c1">;   Sram_clock_scale = (memory_clock_in_Hz * memory_bus_width_in_bits) /</span>
+<span class="c1">;                      (NPUCLK * 64)</span>
+<span class="c1">;</span>
+<span class="c1">; For example, if you use internal SRAM for the tensor arena,</span>
+<span class="c1">; this parameter is calculated as follows:</span>
+<span class="c1">;</span>
+<span class="c1">;   Sram_clock_scale = (ICLK * 64) / (NPUCLK * 64) = ICLK / NPUCLK</span>
+<span class="c1">;</span>
+<span class="c1">; This parameter must be a float value between 0.0 and 1.0.</span>
+<span class="na">Sram_clock_scale</span><span class="o">=</span><span class="s">0.5</span>
+<span class="na">Sram_burst_length</span><span class="o">=</span><span class="s">128</span>
+<span class="na">Sram_read_latency</span><span class="o">=</span><span class="s">8</span>
+<span class="na">Sram_write_latency</span><span class="o">=</span><span class="s">8</span>
+
+<span class="c1">; Characteristics of the memory connected to AXI1 port,</span>
+<span class="c1">; i.e., the memory where the tflite model is placed.</span>
+<span class="c1">; &#39;OffChipFlash_clock_scale&#39; should be modified only when</span>
+<span class="c1">; the memory for the tensor arena is faster than the memory</span>
+<span class="c1">; for the tflite model.</span>
+<span class="c1">; All other parameters should always be left as default.</span>
+<span class="c1">; Specify the value for the memory where the tflite model is placed,</span>
+<span class="c1">; regardless of whether it is OffChip-Flash or not.</span>
+<span class="c1">;</span>
+<span class="c1">; &#39;OffChipFlash_clock_scale&#39; is calculated with the same formula as</span>
+<span class="c1">; &#39;Sram_clock_scale&#39;.  For example, if you use internal MRAM for</span>
+<span class="c1">; tflite model, this parameter is calculated as follows:</span>
+<span class="c1">;</span>
+<span class="c1">;   OffChipFlash_clock_scale = (MRICLK * 64) / (NPUCLK * 64) = MRICLK / NPUCLK</span>
+<span class="c1">;</span>
+<span class="c1">; This parameter must be a float value between 0.0 and 1.0.</span>
+<span class="na">OffChipFlash_clock_scale</span><span class="o">=</span><span class="s">0.5</span>
+<span class="na">OffChipFlash_burst_length</span><span class="o">=</span><span class="s">128</span>
+<span class="na">OffChipFlash_read_latency</span><span class="o">=</span><span class="s">8</span>
+<span class="na">OffChipFlash_write_latency</span><span class="o">=</span><span class="s">8</span>
+
+<span class="c1">; ------------------------------------------------------------</span>
+<span class="c1">; Memory Mode</span>
+<span class="c1">;</span>
+
+<span class="c1">; Specify `--memory-mode Sram_Only` if the memory for the tensor arena is</span>
+<span class="c1">; slower than or equal to the memory for the model data.</span>
+<span class="k">[Memory_Mode.Sram_Only]</span>
+<span class="na">const_mem_area</span><span class="o">=</span><span class="s">Axi0</span>
+<span class="na">arena_mem_area</span><span class="o">=</span><span class="s">Axi0</span>
+<span class="na">cache_mem_area</span><span class="o">=</span><span class="s">Axi0</span>
+
+<span class="c1">; Specify `--memory-mode Shared_Sram` if the memory for the tensor arena is</span>
+<span class="c1">; faster than the memory for the model data. This memory mode allows the compiled</span>
+<span class="c1">; model to use a part of the tensor arena as cache for the weights in the model data.</span>
+<span class="k">[Memory_Mode.Shared_Sram]</span>
+<span class="na">const_mem_area</span><span class="o">=</span><span class="s">Axi1</span>
+<span class="na">arena_mem_area</span><span class="o">=</span><span class="s">Axi0</span>
+</code></pre></div></p>
 <p><code>Sram_Only</code> 表示转换后的模型的常量、Tensor Arena 和缓存均映射到 AXI0 对应的内存区域</p>
 <p>预期输出：</p>
 <ul>

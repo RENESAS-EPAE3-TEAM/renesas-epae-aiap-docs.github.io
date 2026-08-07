@@ -939,19 +939,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#flowchart-td-avela-cpu-b-b-c-c-d-vela-b-etflm-cpu-kernel-e-f-kernel-e-g-cpu-kernel-g-h-resolver-h-i-pc-f-j-i-j" class="md-nav__link">
     <span class="md-ellipsis">
       
-        参考工程与目标
+        flowchart TD A["Vela 将节点留在 CPU"] --&gt; B{"能否调整参数或重写模型？"} B -- "能" --&gt; C["修改模型并重新量化"] C --&gt; D["重新运行 Vela"] B -- "不能" --&gt; E{"TFLM 是否已有 CPU kernel？"} E -- "有" --&gt; F["注册已有 kernel 并评估性能"] E -- "没有" --&gt; G["实现或移植 CPU kernel"] G --&gt; H["注册到 Resolver"] H --&gt; I["板端结果与 PC 参考值比较"] F -- "性能满足要求" --&gt; J["结束"] I -- “精度满足”--&gt; J
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="参考工程与目标">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cortex-m85mve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cortex M85中的MVE在工程中的应用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cortex M85中的MVE在工程中的应用">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#cortexm85-cmsisdsp-cmsisnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cortex‑M85 在 CMSIS‑DSP 与 CMSIS‑NN 中的作用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         模型介绍
@@ -962,7 +984,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         开发环境版本记录
@@ -973,7 +995,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         术语
@@ -1224,7 +1246,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         数学定义
@@ -1235,7 +1257,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         与源码的对应关系
@@ -1803,19 +1825,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#flowchart-td-avela-cpu-b-b-c-c-d-vela-b-etflm-cpu-kernel-e-f-kernel-e-g-cpu-kernel-g-h-resolver-h-i-pc-f-j-i-j" class="md-nav__link">
     <span class="md-ellipsis">
       
-        参考工程与目标
+        flowchart TD A["Vela 将节点留在 CPU"] --&gt; B{"能否调整参数或重写模型？"} B -- "能" --&gt; C["修改模型并重新量化"] C --&gt; D["重新运行 Vela"] B -- "不能" --&gt; E{"TFLM 是否已有 CPU kernel？"} E -- "有" --&gt; F["注册已有 kernel 并评估性能"] E -- "没有" --&gt; G["实现或移植 CPU kernel"] G --&gt; H["注册到 Resolver"] H --&gt; I["板端结果与 PC 参考值比较"] F -- "性能满足要求" --&gt; J["结束"] I -- “精度满足”--&gt; J
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="参考工程与目标">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cortex-m85mve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cortex M85中的MVE在工程中的应用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cortex M85中的MVE在工程中的应用">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#cortexm85-cmsisdsp-cmsisnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cortex‑M85 在 CMSIS‑DSP 与 CMSIS‑NN 中的作用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         模型介绍
@@ -1826,7 +1870,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         开发环境版本记录
@@ -1837,7 +1881,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         术语
@@ -2088,7 +2132,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         数学定义
@@ -2099,7 +2143,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         与源码的对应关系
@@ -2403,7 +2447,7 @@
 <p>RFFT2D 工程项目下载地址：
 TODO</p>
 <h2 id="_2">进入本章前的判断</h2>
-<pre class="mermaid"><code>flowchart TD
+<h2 id="flowchart-td-avela-cpu-b-b-c-c-d-vela-b-etflm-cpu-kernel-e-f-kernel-e-g-cpu-kernel-g-h-resolver-h-i-pc-f-j-i-j"><pre class="mermaid"><code>flowchart TD
     A["Vela 将节点留在 CPU"] --&gt; B{"能否调整参数或重写模型？"}
     B -- "能" --&gt; C["修改模型并重新量化"]
     C --&gt; D["重新运行 Vela"]
@@ -2413,10 +2457,115 @@ TODO</p>
     G --&gt; H["注册到 Resolver"]
     H --&gt; I["板端结果与 PC 参考值比较"]
     F -- "性能满足要求" --&gt; J["结束"]
-    I -- “精度满足”--&gt; J</code></pre>
-<h2 id="_3">参考工程与目标</h2>
+    I -- “精度满足”--&gt; J</code></pre></h2>
+<h2 id="cortex-m85mve">Cortex M85中的MVE在工程中的应用</h2>
+<h3 id="cortexm85-cmsisdsp-cmsisnn">Cortex‑M85 在 CMSIS‑DSP 与 CMSIS‑NN 中的作用</h3>
+<p>RA8P1的CPU0 是 1Ghz的Cortex M85内核，支持MVE(矢量扩展)，Cortex‑M85 利用 Helium/MVE 128 位向量扩展，加速 CMSIS‑DSP 信号处理和 CMSIS‑NN 量化神经网络推理。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>CMSIS‑DSP</th>
+<th>CMSIS‑NN</th>
+<th>Cortex‑M85 的作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>定位</td>
+<td>数字信号处理库</td>
+<td>神经网络优化算子库</td>
+<td>提供高性能 MCU 运行平台</td>
+</tr>
+<tr>
+<td>典型功能</td>
+<td>FFT、滤波、矩阵、统计运算</td>
+<td>卷积、全连接、池化、激活函数</td>
+<td>加速 DSP 处理与 AI 推理</td>
+</tr>
+<tr>
+<td>主要数据类型</td>
+<td>浮点、Q7/Q15/Q31 定点</td>
+<td><code>int8</code>、<code>int16</code> 量化数据</td>
+<td>支持整数和浮点向量运算</td>
+</tr>
+<tr>
+<td>主要加速技术</td>
+<td>Helium/MVE、FPU、SIMD</td>
+<td>Helium/MVE、SIMD、点积运算</td>
+<td>通过 128 位向量扩展提升并行度</td>
+</tr>
+<tr>
+<td>典型用途</td>
+<td>音频处理、传感器滤波、特征提取</td>
+<td>语音识别、图像分类、异常检测</td>
+<td>实现端侧实时信号处理与 AI</td>
+</tr>
+<tr>
+<td>协同方式</td>
+<td>完成数据预处理和特征提取</td>
+<td>执行神经网络推理</td>
+<td>构成“DSP 前处理 + NN 推理”流程</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>#### Cortex M85 VS 不带 MVE 的普通 Arm Cortex‑M 内核的优势</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>Cortex‑M85（带 MVE）</th>
+<th>普通 Cortex‑M（不带 MVE）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>并行处理</td>
+<td>128 位向量并行计算</td>
+<td>以标量或较窄 SIMD 计算为主</td>
+</tr>
+<tr>
+<td>DSP 性能</td>
+<td>可加速 FFT、滤波和矩阵运算</td>
+<td>通常需要更多指令和周期</td>
+</tr>
+<tr>
+<td>AI 推理</td>
+<td>高效执行 <code>int8</code>/<code>int16</code> 卷积与点积</td>
+<td>量化网络推理效率较低</td>
+</tr>
+<tr>
+<td>CPU 占用</td>
+<td>相同任务通常耗时更短</td>
+<td>CPU 占用时间相对更长</td>
+</tr>
+<tr>
+<td>能效表现</td>
+<td>可用更少周期完成计算，能效更高</td>
+<td>完成同等计算需要更多周期</td>
+</tr>
+<tr>
+<td>应用能力</td>
+<td>更适合实时音频、视觉和边缘 AI</td>
+<td>更适合控制及中低强度计算</td>
+</tr>
+</tbody>
+</table>
+<p><strong>优势总结</strong>：<strong><em>相比不带 MVE、主要依赖标量或较窄 SIMD 运算的 Cortex‑M 内核，Cortex‑M85 可利用 Helium/MVE 128 位向量扩展同时处理多组整数或浮点数据，从而提升 CMSIS‑DSP 和 CMSIS‑NN 的执行效率。实际提升取决于算法、数据类型、存储器性能、编译器和 CMSIS 版本。</em></strong></p>
 <p>CMSIS-NN 已包含在工程环境中，但当前三个节点没有使用 CMSIS-NN。<code>RFFT2D</code> 通过 CMSIS-DSP 在 Cortex-M85 上执行。</p>
-<h3 id="_4">模型介绍</h3>
+<hr />
+<h3 id="_3">模型介绍</h3>
 <ul>
 <li>模型结构图：</li>
 </ul>
@@ -2427,7 +2576,7 @@ TODO</p>
 <li><code>MyScale</code> 是模型中的真正 <code>CUSTOM</code> 节点；模型用 <code>customCode="MyScale"</code> 标识它，工程以同一字符串注册。</li>
 </ul>
 <p>文中当前部署使用 CMSIS-DSP 实现 RFFT2D；<code>rfft2d.cc</code> 以 <code>USE_CMSIS_DSP</code> 选择该路径。</p>
-<h3 id="_5">开发环境版本记录</h3>
+<h3 id="_4">开发环境版本记录</h3>
 <p>请在开始构建、模型转换或复现问题前填写下表。版本会影响工程生成、模型转换和运行时行为；调试记录应与本表保持一致。</p>
 <table>
 <thead>
@@ -2495,7 +2644,7 @@ TODO</p>
 </tr>
 </tbody>
 </table>
-<h3 id="_6">术语</h3>
+<h3 id="_5">术语</h3>
 <table>
 <thead>
 <tr>
@@ -2920,7 +3069,7 @@ node[2]  CUSTOM  custom_code=&#39;MyScale&#39;
 <p><strong>当前模型的选择：</strong> RFFT2D 属于信号处理计算，当前工程已经使用 CMSIS-DSP 实现；MyScale 是简单的逐元素浮点计算，当前直接使用循环实现。这里的 CMSIS-DSP 仍在 Cortex-M85 CPU 上运行，并不表示 RFFT2D 被 Ethos-U 执行；性能比较对象是 <code>NaiveRfft2d()</code> 的朴素 DFT 循环。若未来新增量化神经网络类 custom kernel，可评估 CMSIS-NN，但需要先确认输入/输出数据类型、量化参数、所选 API 的约束和构建链接配置。</p>
 <h3 id="52-rfft2d">5.2 RFFT2D：将二维实数输入转换为二维复数频谱</h3>
 <p><code>RFFT2D</code> 的 <code>Prepare()</code> 要求：两个输入、一个输出；第一个输入为 <code>float32</code>，第二个 FFT 长度输入为 <code>int32</code>，输出为 <code>complex64</code>。输入 rank 至少为 2，最后两个维度 <code>H</code>、<code>W</code> 必须是 2 的幂。</p>
-<h4 id="_7">数学定义</h4>
+<h4 id="_6">数学定义</h4>
 <p>对一个二维实数输入 <span class="arithmatex">\(x[h,w]\)</span>，本工程的 <code>NaiveRfft2d()</code> 为每一个输出频率坐标 <span class="arithmatex">\((u,v)\)</span> 计算二维离散傅里叶变换：</p>
 <div class="arithmatex">\[
 X[u,v] = \sum_{h=0}^{H-1}\sum_{w=0}^{W-1}
@@ -2940,7 +3089,7 @@ I[u,v] = \sum_{h=0}^{H-1}\sum_{w=0}^{W-1}
 x[h,w]\sin\left(-2\pi\left(\frac{uh}{H}+\frac{vw}{W}\right)\right)
 \]</div>
 <p>这与源码的四重循环一一对应：<code>u</code>、<code>v</code> 遍历输出频率；<code>h</code>、<code>w</code> 累加所有输入点；计算结果以相邻的两个 float 保存为 <code>real, imag</code>。当前模型 <span class="arithmatex">\(H=16\)</span>、<span class="arithmatex">\(W=32\)</span>，故每个 batch 输出 <span class="arithmatex">\(16\times(32/2+1)=272\)</span> 个复数频率点，张量 shape 为 <code>[1,16,17]</code>。</p>
-<h4 id="_8">与源码的对应关系</h4>
+<h4 id="_7">与源码的对应关系</h4>
 <div class="highlight"><pre><span></span><code><span class="kt">float</span><span class="w"> </span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-2.f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">my_PI</span><span class="w"> </span><span class="o">*</span>
 <span class="w">              </span><span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">v</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">W</span><span class="p">);</span>
 <span class="n">real</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cosf</span><span class="p">(</span><span class="n">angle</span><span class="p">);</span>

@@ -50,7 +50,7 @@ const unsigned char networkModelData[] = {xx,xx,xx,......};
 // 推理时 NPU/CPU 反复读写的工作内存
 uint8_t tensor_arena[ARENA_SIZE] __attribute__((aligned(16), section(".sdram")));
 ```
-| 类型 ||C 语言变量修饰符 AI 部署含义 | 适用场景 |
+| 类型 |C 语言语法|C 语言变量修饰符 AI 部署含义 | 适用场景 |
 |---|---|---|---|
 | **RAM → SRAM** | 无特殊要求，比如这样定义 "uint8_t buff[];" |Tensor Arena 放**片上 SRAM**（最高带宽，NPU 访问最快）| **首选**！小/中模型，性能最佳 |
 | **RAM → SDRAM** | __attribute__((aligned(16), section(".sdram")))|Tensor Arena 放**外部 SDRAM**（容量大但带宽低）| Arena 太大放不进 SRAM 时的退路 |

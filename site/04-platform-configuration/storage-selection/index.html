@@ -1494,7 +1494,7 @@ Tensor Arena = "栈/堆"，每次推理都会被 NPU/CPU 高频读写 → 必须
 <p><div class="highlight"><pre><span></span><code>// 推理时 NPU/CPU 反复读写的工作内存
 uint8_t tensor_arena[ARENA_SIZE] __attribute__((aligned(16), section(&quot;.sdram&quot;)));
 </code></pre></div>
-| 类型 ||C 语言变量修饰符 AI 部署含义 | 适用场景 |
+| 类型 |C 语言语法|C 语言变量修饰符 AI 部署含义 | 适用场景 |
 |---|---|---|---|
 | <strong>RAM → SRAM</strong> | 无特殊要求，比如这样定义 "uint8_t buff[];" |Tensor Arena 放<strong>片上 SRAM</strong>（最高带宽，NPU 访问最快）| <strong>首选</strong>！小/中模型，性能最佳 |
 | <strong>RAM → SDRAM</strong> | <strong>attribute</strong>((aligned(16), section(".sdram")))|Tensor Arena 放<strong>外部 SDRAM</strong>（容量大但带宽低）| Arena 太大放不进 SRAM 时的退路 |</p>

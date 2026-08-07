@@ -1289,19 +1289,13 @@
 <h2 id="_2">本章目标</h2>
 <p>理解 RA8P1 端侧 AI 工程中模型、运行时、NPU 与应用软件的职责边界。</p>
 <h2 id="_3">架构关系</h2>
-<div class="highlight"><pre><span></span><code>应用任务
-  |
-  +-- 数据采集和前处理
-  +-- TensorFlow Lite Micro (TFLM)
-  |     |
-  |     +-- 算子解析、Tensor Arena、模型调度
-  |
-  +-- Ethos-U55 NPU
-  |     |
-  |     +-- 支持算子的硬件加速
-  |
-  +-- 后处理、显示和业务控制
-</code></pre></div>
+<pre class="mermaid"><code>flowchart TD
+    A["应用任务"] --&gt; B["数据采集和前处理"]
+    B --&gt; C["TensorFlow Lite Micro (TFLM)"]
+    C --&gt; D["算子解析、Tensor Arena、模型调度"]
+    D --&gt; E["Ethos-U55 NPU"]
+    E --&gt; F["支持算子的硬件加速"]
+    F --&gt; G["后处理、显示和业务控制"]</code></pre>
 <ul>
 <li><strong>模型侧</strong>：将训练模型转换并量化为适合微控制器部署的INT8 TFLite 模型。</li>
 <li><strong>运行时</strong>：TFLM 负责模型加载、张量内存和算子调用。</li>

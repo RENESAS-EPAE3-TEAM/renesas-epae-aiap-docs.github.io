@@ -6,19 +6,14 @@
 
 ## 架构关系
 
-```text
-应用任务
-  |
-  +-- 数据采集和前处理
-  +-- TensorFlow Lite Micro (TFLM)
-  |     |
-  |     +-- 算子解析、Tensor Arena、模型调度
-  |
-  +-- Ethos-U55 NPU
-  |     |
-  |     +-- 支持算子的硬件加速
-  |
-  +-- 后处理、显示和业务控制
+```mermaid
+flowchart TD
+    A["应用任务"] --> B["数据采集和前处理"]
+    B --> C["TensorFlow Lite Micro (TFLM)"]
+    C --> D["算子解析、Tensor Arena、模型调度"]
+    D --> E["Ethos-U55 NPU"]
+    E --> F["支持算子的硬件加速"]
+    F --> G["后处理、显示和业务控制"]
 ```
 
 - **模型侧**：将训练模型转换并量化为适合微控制器部署的INT8 TFLite 模型。

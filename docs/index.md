@@ -26,6 +26,7 @@ Ethos-U55 NPU，500MHz 下算力达 256GOPS
 
 本指南面向使用 Renesas RA8P1 开发端侧 AI 应用的工程师，从平台概览和 MNIST 快速入门开始，依次覆盖 TFLite/ONNX 模型转换与量化、平台配置、Ethos-U55 NPU 部署、Ethos-U55 NPU算子支持，自定义算子实现，验证优化和应用集成。
 
+---
 ## 开发生态与工具资源
 
 
@@ -97,9 +98,14 @@ Arm针对Ethos U系列NPU提供了原生态的Arm Ethos-U 工具链，其相关�
 | 项目文档 | 包含安装方法、编译方法、接口说明、支持范围及使用限制 | 可作为 Vela 和 Ethos-U 软件栈的官方技术参考 |
 | Issue、提交和版本信息 | 用于查看问题记录、代码变更、版本标签和发布历史 | 可用于排查工具问题，并确认 Vela、驱动和运行时组件的版本兼容性 |
 
-我们就以使用Arm Ethos-U Vela编译器的方式，来开始RA8P1的AI开发旅程。OK！Let's go!:)
+下面将使用 **Arm Ethos-U Vela 编译器**完成模型编译，并将模型部署到 RA8P1，开启 AI 应用开发之旅。
 
+## 开始前准备
 
-## 部署前确认
+建议从左侧导航栏的 **“1. RA8P1 AI 概述”** 开始，按章节顺序阅读本指南。
 
-请从左侧导航的“1. RA8P1 AI 概述”开始按顺序阅读，或从 [RA8P1 产品页面](https://www.renesas.cn/zh/products/ra8p1) 获取平台资料。
+如需了解 RA8P1 的产品特性、硬件资源及相关资料，请访问：
+
+[RA8P1 产品页面](https://www.renesas.cn/zh/products/ra8p1)
+
+准备好后，让我们开始吧！:)
